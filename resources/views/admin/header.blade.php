@@ -14,6 +14,7 @@
     <div class="flex items-center space-x-2">
         <div class="relative w-10 h-10">
             <img class="w-full h-full rounded-full object-cover" src="https://randomuser.me/api/portraits/men/3.jpg" alt="User Profile Picture">
+            <span class="top-0 start-7 absolute w-3.5 h-3.5 bg-green-500 border-2 border-white dark:border-gray-800 rounded-full"></span>
         </div>
         <div>
             <h2 class="text-sm font-medium text-gray-800">Admin</h2>
