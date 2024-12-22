@@ -12,9 +12,11 @@
 <body>
     <!-- admin side bar -->
     @include('admin.sidebar')
-
     <div class="p-4 sm:ml-64">
-        {{$slot}}
+        @include('admin.header')
+        <main>
+            {{$slot}}
+        </main>
     </div>
 
 </body>

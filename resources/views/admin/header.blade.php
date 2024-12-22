@@ -1,0 +1,1 @@
+    <h1>Hello from the Admin header</h1>

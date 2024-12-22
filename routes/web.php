@@ -66,3 +66,43 @@ Route::get('/member/setting', function () {
 Route::get('/admin/dashboard', function () {
     return view('admin.dashboard');
 });
+//admin - member record
+Route::get('/admin/member-record', function () {
+    return view('admin.member-record-list');
+});
+//admin - member verification
+Route::get('/admin/member-verification', function () {
+    return view('admin.member-verification-list');
+});
+//admin - fee payment
+Route::get('/admin/fee-payment', function () {
+    return view('admin.fee-payment-list');
+});
+//admin - fee collection
+Route::get('/admin/fee-collection', function () {
+    return view('admin.fee-collection-list');
+});
+//admin - event record
+Route::get('/admin/event-record', function () {
+    return view('admin.event-list');
+});
+//admin - event volunteer
+Route::get('/admin/event-volunteer', function () {
+    return view('admin.event-volunteer');
+});
+//admin - achievement merit
+Route::get('/admin/achievement-merit', function () {
+    return view('admin.merit-list');
+});
+//admin - achievement certificate
+Route::get('/admin/achievement-certificate', function () {
+    return view('admin.certificate-list');
+});
+//admin - setting admin
+Route::get('/admin/setting-admin', function () {
+    return view('admin.setting-admin');
+});
+//admin - setting user
+Route::get('/admin/setting-users', function () {
+    return view('admin.setting-user-list');
+});

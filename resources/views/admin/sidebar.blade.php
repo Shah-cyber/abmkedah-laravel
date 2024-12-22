@@ -30,12 +30,12 @@
                 </button>
                 <ul id="dropdown-menu-member" class="hidden py-4 space-y-4 ml-10">
                     <li>
-                        <a href="#" class="block p-2 text-base font-bold text-white hover:bg-gray-700 rounded-lg">
+                        <a href="/admin/member-record" class="block p-2 text-base font-bold text-white hover:bg-gray-700 rounded-lg">
                             Record
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="block p-2 text-base font-bold text-white hover:bg-gray-700 rounded-lg">
+                        <a href="/admin/member-verification" class="block p-2 text-base font-bold text-white hover:bg-gray-700 rounded-lg">
                             Verification
                         </a>
                     </li>
@@ -56,12 +56,12 @@
                 </button>
                 <ul id="dropdown-menu-fee" class="hidden py-4 space-y-4 ml-10">
                     <li>
-                        <a href="#" class="block p-2 text-base font-bold text-white hover:bg-gray-700 rounded-lg">
+                        <a href="/admin/fee-payment" class="block p-2 text-base font-bold text-white hover:bg-gray-700 rounded-lg">
                             Payment
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="block p-2 text-base font-bold text-white hover:bg-gray-700 rounded-lg">
+                        <a href="/admin/fee-collection" class="block p-2 text-base font-bold text-white hover:bg-gray-700 rounded-lg">
                             Collection
                         </a>
                     </li>
@@ -82,12 +82,12 @@
                 </button>
                 <ul id="dropdown-menu-event" class="hidden py-4 space-y-4 ml-10">
                     <li>
-                        <a href="#" class="block p-2 text-base font-bold text-white hover:bg-gray-700 rounded-lg">
+                        <a href="/admin/event-record" class="block p-2 text-base font-bold text-white hover:bg-gray-700 rounded-lg">
                             Record
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="block p-2 text-base font-bold text-white hover:bg-gray-700 rounded-lg">
+                        <a href="/admin/event-volunteer" class="block p-2 text-base font-bold text-white hover:bg-gray-700 rounded-lg">
                             Volunteer
                         </a>
                     </li>
@@ -108,12 +108,12 @@
                 </button>
                 <ul id="dropdown-menu-achievement" class="hidden py-4 space-y-4 ml-10">
                     <li>
-                        <a href="#" class="block p-2 text-base font-bold text-white hover:bg-gray-700 rounded-lg">
+                        <a href="/admin/achievement-merit" class="block p-2 text-base font-bold text-white hover:bg-gray-700 rounded-lg">
                             Merit
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="block p-2 text-base font-bold text-white hover:bg-gray-700 rounded-lg">
+                        <a href="/admin/achievement-certificate" class="block p-2 text-base font-bold text-white hover:bg-gray-700 rounded-lg">
                             Certification
                         </a>
                     </li>
@@ -134,12 +134,12 @@
                 </button>
                 <ul id="dropdown-menu-setting" class="hidden py-4 space-y-4 ml-10">
                     <li>
-                        <a href="#" class="block p-2 text-base font-bold text-white hover:bg-gray-700 rounded-lg">
+                        <a href="/admin/setting-admin" class="block p-2 text-base font-bold text-white hover:bg-gray-700 rounded-lg">
                             Admin
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="block p-2 text-base font-bold text-white hover:bg-gray-700 rounded-lg">
+                        <a href="/admin/setting-users" class="block p-2 text-base font-bold text-white hover:bg-gray-700 rounded-lg">
                             Users
                         </a>
                     </li>
