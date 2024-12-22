@@ -66,7 +66,7 @@
                     <td class="px-4 py-4">MFLS</td>
                     <td class="px-4 py-4 flex space-x-2">
                         <button class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-md">View</button>
-                        <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md">Update</button>
+                        <button class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded-md">Update</button>
                         <button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md">Delete</button>
                     </td>
                 </tr>
@@ -79,7 +79,7 @@
                     <td class="px-4 py-4">Associated Member</td>
                     <td class="px-4 py-4 flex space-x-2">
                         <button class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-md">View</button>
-                        <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md">Update</button>
+                        <button class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded-md">Update</button>
                         <button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md">Delete</button>
                     </td>
                 </tr>
