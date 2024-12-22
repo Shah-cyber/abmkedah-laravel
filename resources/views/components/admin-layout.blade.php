@@ -14,7 +14,7 @@
     @include('admin.sidebar')
     <div class="sm:ml-64">
         @include('admin.header')
-        <main class="mt-4">
+        <main class="p-6 bg-white min-h-screen">
             {{$slot}}
         </main>
     </div>
