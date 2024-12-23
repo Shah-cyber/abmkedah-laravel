@@ -33,7 +33,7 @@
         </table>
     </div>
 
-    <!-- Select Session and Generate Button -->
+    <!-- Select Session & Merit -->
     <div class="mb-4">
         <div class="flex justify-between items-center gap-4">
             <!-- Select Session -->

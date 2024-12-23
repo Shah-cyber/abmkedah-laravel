@@ -57,7 +57,7 @@
                     <td class="px-4 py-4">Mountain Quest: Hiking Adventure</td>
                     <td class="px-4 py-4">RM35.00</td>
                     <td class="px-4 py-4 flex space-x-2">
-                        <button class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-md">Report</button>
+                        <a href="/admin/fee-payment/report" class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-md">Report</a>
                     </td>
                 </tr>
                 <!-- Row 2 -->
@@ -66,7 +66,7 @@
                     <td class="px-4 py-4">Run for Health: Charity Sport Run</td>
                     <td class="px-4 py-4">RM24.90</td>
                     <td class="px-4 py-4 flex space-x-2">
-                        <button class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-md">Report</button>
+                        <a href="/admin/fee-payment/report" class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-md">Report</a>
                     </td>
                 </tr>
                 <!-- Row 3 -->
@@ -75,7 +75,7 @@
                     <td class="px-4 py-4">Khatam al-Quran Ceremony: A Spiritual Milestone</td>
                     <td class="px-4 py-4">RM2.00</td>
                     <td class="px-4 py-4 flex space-x-2">
-                        <button class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-md">Report</button>
+                        <a href="/admin/fee-payment/report" class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-md">Report</a>
                     </td>
                 </tr>
                 <!-- Add More Rows as Needed -->
