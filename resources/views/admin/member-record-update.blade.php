@@ -12,6 +12,8 @@
     </div>
     <!-- Horizontal Line -->
     <hr class="border-gray-300 my-2">
+
+    <!-- Form -->
     <div class="px-6 py-4 bg-white shadow-lg rounded-lg">
         <form action="#" method="POST" class="space-y-4">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
