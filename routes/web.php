@@ -70,6 +70,19 @@ Route::get('/admin/dashboard', function () {
 Route::get('/admin/member-record', function () {
     return view('admin.member-record-list');
 });
+//admin - member record-view
+Route::get('/admin/member-record/view', function () {
+    return view('admin.member-record-view');
+});
+//admin - member record-update
+Route::get('/admin/member-record/update', function () {
+    return view('admin.member-record-update');
+});
+//admin - member record-report
+Route::get('/admin/member-record/report', function () {
+    return view('admin.member-record-report');
+});
+
 //admin - member verification
 Route::get('/admin/member-verification', function () {
     return view('admin.member-verification-list');

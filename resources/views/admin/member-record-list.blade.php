@@ -62,12 +62,14 @@
                     <td class="px-4 py-4">1</td>
                     <td class="px-4 py-4">Robert Fox</td>
                     <td class="px-4 py-4">willie.jennings@example.com</td>
-                    <td class="px-4 py-4 text-blue-500 cursor-pointer">Report</td>
+                    <td class="px-4 py-4">
+                        <a href="/admin/member-record/report" class="text-blue-500 hover:underline cursor-pointer">Report</a>
+                    </td>
                     <td class="px-4 py-4">MFLS</td>
                     <td class="px-4 py-4 flex space-x-2">
-                        <button class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-md">View</button>
-                        <button class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded-md">Update</button>
-                        <button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md">Delete</button>
+                        <a href="/admin/member-record/view" class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-md">View</a>
+                        <a href="/admin/member-record/update" class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded-md">Update</a>
+                        <a class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md">Delete</a>
                     </td>
                 </tr>
                 <!-- Row 2 -->
@@ -75,12 +77,14 @@
                     <td class="px-4 py-4">2</td>
                     <td class="px-4 py-4">Esther Howard</td>
                     <td class="px-4 py-4">nevaeh.simmons@example.com</td>
-                    <td class="px-4 py-4 text-blue-500 cursor-pointer">Report</td>
+                    <td class="px-4 py-4">
+                        <a href="/admin/member-record/report" class="text-blue-500 hover:underline cursor-pointer">Report</a>
+                    </td>
                     <td class="px-4 py-4">Associated Member</td>
                     <td class="px-4 py-4 flex space-x-2">
-                        <button class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-md">View</button>
-                        <button class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded-md">Update</button>
-                        <button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md">Delete</button>
+                        <a href="/admin/member-record/view" class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-md">View</a>
+                        <a href="/admin/member-record/update" class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded-md">Update</a>
+                        <a class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md">Delete</a>
                     </td>
                 </tr>
                 <!-- Add More Rows as Needed -->
