@@ -14,7 +14,7 @@
     <hr class="border-gray-300 my-2">
 
     <!-- Member Information Table -->
-    <div class="mb-4 mt-4 overflow-x-auto bg-gray-50 rounded-md shadow-md">
+    <div class="mb-6 mt-4 overflow-x-auto bg-gray-50 rounded-md shadow-md">
         <table class="table-auto w-full text-sm text-left text-gray-600">
             <tbody>
                 <!-- Payment Information Rows -->
@@ -49,6 +49,16 @@
         </table>
     </div>
 
+    <!-- Search Section -->
+    <div class="mb-4">
+        <div class="relative w-full">
+            <input type="text" class="w-full p-2 pl-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Search">
+            <svg xmlns="http: //www.w3.org/2000/svg" class="absolute left-3 top-3 h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8 4a4 4 0 100 8 4 4 0 000-8zM21 21l-5.197-5.197">
+                </path>
+            </svg>
+        </div>
+    </div>
 
     <!-- Generate Report -->
     <div class="flex items-center justify-end mb-4">
@@ -75,32 +85,50 @@
             <tbody>
                 <tr class="border-b">
                     <td class="px-6 py-3">1</td>
-                    <td class="px-6 py-3">Mountain Quest: Hiking Adventure</td>
-                    <td class="px-6 py-3">4.0</td>
-                    <td class="px-6 py-3 text-blue-500 cursor-pointer hover:underline">
-                        <a href="/path-to-certificate.pdf" target="_blank">View</a>
+                    <td class="px-6 py-3">Leslie Alexander</td>
+                    <td class="px-6 py-3">-</td>
+                    <td class="px-6 py-3">-</td>
+                    <td class="px-6 py-3">
+                        <span class="inline-flex items-center bg-yellow-100 text-yellow-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                            <span class="w-2 h-2 me-1 bg-yellow-500 rounded-full"></span>
+                            Pending
+                        </span>
                     </td>
                 </tr>
                 <tr class="border-b">
                     <td class="px-6 py-3">2</td>
-                    <td class="px-6 py-3">Run for Health: Charity Sport Run</td>
-                    <td class="px-6 py-3">8.5</td>
-                    <td class="px-6 py-3 text-gray-400">-</td>
+                    <td class="px-6 py-3">Wade Warren</td>
+                    <td class="px-6 py-3">18/09/2016</td>
+                    <td class="px-6 py-3">17:27:17</td>
+                    <td class="px-6 py-3">
+                        <span class="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                            <span class="w-2 h-2 me-1 bg-green-500 rounded-full"></span>
+                            Complete
+                        </span>
+                    </td>
                 </tr>
                 <tr class="border-b">
                     <td class="px-6 py-3">3</td>
-                    <td class="px-6 py-3">Khatam al-Quran Ceremony: A Spiritual Milestone</td>
-                    <td class="px-6 py-3">3.0</td>
-                    <td class="px-6 py-3 text-blue-500 cursor-pointer hover:underline">
-                        <a href="/path-to-certificate.pdf" target="_blank">View</a>
+                    <td class="px-6 py-3">Savannah Nguyen</td>
+                    <td class="px-6 py-3">-</td>
+                    <td class="px-6 py-3">-</td>
+                    <td class="px-6 py-3">
+                        <span class="inline-flex items-center bg-yellow-100 text-yellow-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                            <span class="w-2 h-2 me-1 bg-yellow-500 rounded-full"></span>
+                            Pending
+                        </span>
                     </td>
                 </tr>
-                <tr>
+                <tr class="border-b">
                     <td class="px-6 py-3">4</td>
-                    <td class="px-6 py-3">Hari Raya Fest: Unity and Celebration</td>
-                    <td class="px-6 py-3">14.5</td>
-                    <td class="px-6 py-3 text-blue-500 cursor-pointer hover:underline">
-                        <a href="/path-to-certificate.pdf" target="_blank">View</a>
+                    <td class="px-6 py-3">Darrell Steward</td>
+                    <td class="px-6 py-3">28/10/2012</td>
+                    <td class="px-6 py-3">13:11:35</td>
+                    <td class="px-6 py-3">
+                        <span class="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                            <span class="w-2 h-2 me-1 bg-green-500 rounded-full"></span>
+                            Complete
+                        </span>
                     </td>
                 </tr>
             </tbody>
