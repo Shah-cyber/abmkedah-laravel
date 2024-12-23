@@ -66,7 +66,8 @@ Route::get('/member/setting', function () {
 Route::get('/admin/dashboard', function () {
     return view('admin.dashboard');
 });
-//admin - member record
+// MEMBER RECORD
+//admin - member record-list
 Route::get('/admin/member-record', function () {
     return view('admin.member-record-list');
 });
@@ -83,10 +84,16 @@ Route::get('/admin/member-record/report', function () {
     return view('admin.member-record-report');
 });
 
+// MEMBER VERIFICATION
 //admin - member verification
 Route::get('/admin/member-verification', function () {
     return view('admin.member-verification-list');
 });
+//admin - member verification-view
+Route::get('/admin/member-verification/view', function () {
+    return view('admin.member-verification-view');
+});
+
 //admin - fee payment
 Route::get('/admin/fee-payment', function () {
     return view('admin.fee-payment-list');

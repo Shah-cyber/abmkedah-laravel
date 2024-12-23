@@ -54,7 +54,7 @@
                         </span>
                     </td>
                     <td class="px-4 py-4 flex space-x-2">
-                        <button class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-md">View</button>
+                        <a href="/admin/member-verification/view" class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-md">View</a>
                     </td>
                 </tr>
                 <!-- Row 2 -->
@@ -69,7 +69,7 @@
                         </span>
                     </td>
                     <td class="px-4 py-4 flex space-x-2">
-                        <button class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-md">View</button>
+                        <a href="/admin/member-verification/view" class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-md">View</a>
                     </td>
                 </tr>
                 <!-- Row 3 -->
@@ -84,7 +84,7 @@
                         </span>
                     </td>
                     <td class="px-4 py-4 flex space-x-2">
-                        <button class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-md">View</button>
+                        <a href="/admin/member-verification/view" class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-md">View</a>
                     </td>
                 </tr>
                 <!-- Add More Rows as Needed -->
