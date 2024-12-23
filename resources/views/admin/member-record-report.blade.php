@@ -17,15 +17,15 @@
     <div class="mb-4 mt-4 overflow-x-auto bg-gray-50 rounded-md shadow-md">
         <table class="table-auto w-full text-sm text-left text-gray-600">
             <tbody>
-                <tr>
+                <tr class="border-b">
                     <th class="px-4 py-2 text-gray-800 font-semibold bg-gray-100">Full Name</th>
                     <td class="px-4 py-2">Albert Flores</td>
                 </tr>
-                <tr>
+                <tr class="border-b">
                     <th class="px-4 py-2 text-gray-800 font-semibold bg-gray-100">IC Number</th>
                     <td class="px-4 py-2">910202025432</td>
                 </tr>
-                <tr>
+                <tr class="border-b">
                     <th class="px-4 py-2 text-gray-800 font-semibold bg-gray-100">Member Status</th>
                     <td class="px-4 py-2">Associate Member</td>
                 </tr>
