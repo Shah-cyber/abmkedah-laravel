@@ -112,7 +112,7 @@
                         type="date"
                         id="birth-date"
                         name="birth-date"
-                        value="20/12/2024"
+                        value="2024-12-20"
                         class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
                 </div>
 

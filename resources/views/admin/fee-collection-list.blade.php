@@ -32,9 +32,9 @@
     <!-- Export and Total Members Section -->
     <div class="flex items-center justify-between mb-6">
         <!-- Export Button -->
-        <button class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg font-medium shadow">
+        <a href="/admin/fee-collection/add" class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg font-medium shadow">
             Add New Payment
-        </button>
+        </a>
         <!-- Total Members -->
         <p class="text-gray-600">Total Fee Collection:
             <span class="font-medium text-gray-900">4</span>
@@ -61,8 +61,8 @@
                     <td class="px-4 py-4">ABMK Yearly Fee</td>
                     <td class="px-4 py-4">RM5.00</td>
                     <td class="px-4 py-4 flex space-x-2">
-                        <button class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-md">Report</button>
-                        <button class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded-md">Update</button>
+                        <a href="/admin/fee-collection/report" class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-md">Report</a>
+                        <a href="/admin/fee-collection/update" class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded-md">Update</a>
                         <button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md">Delete</button>
                     </td>
                 </tr>
@@ -72,8 +72,8 @@
                     <td class="px-4 py-4">ABMK Lanyard</td>
                     <td class="px-4 py-4">RM10.90</td>
                     <td class="px-4 py-4 flex space-x-2">
-                        <button class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-md">Report</button>
-                        <button class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded-md">Update</button>
+                        <a href="/admin/fee-collection/report" class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-md">Report</a>
+                        <a href="/admin/fee-collection/update" class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded-md">Update</a>
                         <button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md">Delete</button>
                     </td>
                 </tr>
