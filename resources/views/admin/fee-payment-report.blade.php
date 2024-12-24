@@ -87,6 +87,33 @@
         </table>
     </div>
 
+    <!-- Pagination -->
+    <div class="flex justify-between items-center mt-6">
+        <p class="text-sm text-gray-600">Showing 1 to 10 of 155 entries</p>
+        <div class="flex items-center space-x-1">
+            <button
+                class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
+                Previous
+            </button>
+            <button
+                class="px-3 py-1 text-sm text-white bg-blue-500 rounded-md hover:bg-blue-600">
+                1
+            </button>
+            <button
+                class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
+                2
+            </button>
+            <button
+                class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
+                3
+            </button>
+            <button
+                class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
+                Next
+            </button>
+        </div>
+    </div>
+
     <!-- JavaScript to Handle PDF Generation -->
     <script>
         function generatePDF() {

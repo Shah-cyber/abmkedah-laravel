@@ -169,7 +169,7 @@
                 <button
                     type="submit"
                     class="px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                    Add Event
+                    Update Event
                 </button>
             </div>
         </form>
