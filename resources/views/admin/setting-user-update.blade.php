@@ -1,0 +1,103 @@
+<x-admin-layout>
+    <!-- Header Section -->
+    <div class="mb-4 flex items-center">
+        <!-- Icon Back Button -->
+        <a href="/admin/setting-users" class="text-gray-600 hover:text-gray-800">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+            </svg>
+        </a>
+        <!-- Title -->
+        <h1 class="ml-4 text-2xl font-bold text-gray-800">Update User</h1>
+    </div>
+    <!-- Horizontal Line -->
+    <hr class="border-gray-300 my-2">
+
+    <!-- Form -->
+    <div class="mt-4 px-6 py-4 bg-white shadow-lg rounded-lg">
+        <form action="#" method="POST" class="space-y-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Username -->
+                <div>
+                    <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        value="Akash2411"
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
+                </div>
+
+                <!-- Email -->
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        value="akash2411@gmail.com"
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
+                </div>
+
+                <!-- New Password -->
+                <div class="relative">
+                    <label for="new-password" class="block text-sm font-medium text-gray-700">New Password</label>
+                    <input
+                        type="password"
+                        id="new-password"
+                        name="new-password"
+                        value="akash123123"
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
+                </div>
+
+                <!-- Confirm Password -->
+                <div class="relative">
+                    <label for="confirm-password" class="block text-sm font-medium text-gray-700">Confirm Password</label>
+                    <input
+                        type="password"
+                        id="confirm-password"
+                        name="confirm-password"
+                        value="akash123123"
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
+                </div>
+
+                <!-- Select Status -->
+                <div>
+                    <label for="select-status" class="block text-sm font-medium text-gray-700">Select Status</label>
+                    <select
+                        id="select-status"
+                        name="select-status"
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                        <option value="" selected>Choose</option>
+                        <option value="active" selected>Active</option>
+                        <option value="deactivate">Deactivate</option>
+                    </select>
+                </div>
+
+                <!-- Kalau role = Member, disable section select role,  value="member" -->
+                <!-- Select Role -->
+                <div>
+                    <label for="select-role" class="block text-sm font-medium text-gray-700">Select Role</label>
+                    <select
+                        id="select-role"
+                        name="select-role"
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                        <option value="" selected>Choose</option>
+                        <option value="super-admin" selected>Super Admin</option>
+                        <option value="sub-admin">Sub Admin</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="text-right">
+                <button
+                    type="submit"
+                    class="px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                    Update User
+                </button>
+            </div>
+    </div>
+    </form>
+    </div>
+</x-admin-layout>

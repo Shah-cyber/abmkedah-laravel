@@ -32,9 +32,9 @@
     <!-- Export and Total Members Section -->
     <div class="flex items-center justify-between mb-6">
         <!-- Export Button -->
-        <button class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg font-medium shadow">
+        <a href="/admin/setting-users/add" class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg font-medium shadow">
             Add Admin
-        </button>
+        </a>
         <!-- Total Members -->
         <p class="text-gray-600">Total Users:
             <span class="font-medium text-gray-900">300</span>
@@ -62,7 +62,7 @@
                     <td class="px-4 py-4">1</td>
                     <td class="px-4 py-4">Viveka</td>
                     <td class="px-4 py-4">ulfaha@mail.ru</td>
-                    <td class="px-4 py-4">Admin</td>
+                    <td class="px-4 py-4">Super Admin</td>
                     <td class="px-4 py-4">
                         <span class="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
                             <span class="w-2 h-2 me-1 bg-green-500 rounded-full"></span>
@@ -70,7 +70,7 @@
                         </span>
                     </td>
                     <td class="px-4 py-4 flex space-x-2">
-                        <button class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded-md">Update</button>
+                        <a href="/admin/setting-users/update" class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded-md">Update</a>
                     </td>
                 </tr>
                 <!-- Row 2 -->
@@ -82,11 +82,11 @@
                     <td class="px-4 py-4">
                         <span class="inline-flex items-center bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
                             <span class="w-2 h-2 me-1 bg-red-500 rounded-full"></span>
-                            Deactive
+                            Deactivate
                         </span>
                     </td>
                     <td class="px-4 py-4 flex space-x-2">
-                        <button class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded-md">Update</button>
+                        <a href="/admin/setting-users/update" class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded-md">Update</a>
                     </td>
                 </tr>
                 <!-- Add More Rows as Needed -->
