@@ -32,9 +32,9 @@
     <!-- Export and Total Members Section -->
     <div class="flex items-center justify-between mb-6">
         <!-- Export Button -->
-        <button class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg font-medium shadow">
+        <a href="/admin/achievement-certificate/add" class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg font-medium shadow">
             Add Certificate
-        </button>
+        </a>
         <!-- Total Members -->
         <p class="text-gray-600">Total Certificate:
             <span class="font-medium text-gray-900">4</span>
@@ -63,7 +63,7 @@
                     <td class="px-4 py-4">15/08/2017</td>
                     <td class="px-4 py-4">12</td>
                     <td class="px-4 py-4 flex space-x-2">
-                        <button class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded-md">Update</button>
+                        <a href="/admin/achievement-certificate/update" class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded-md">Update</a>
                         <button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md">Delete</button>
                     </td>
                 </tr>
@@ -74,7 +74,7 @@
                     <td class="px-4 py-4">07/05/2016</td>
                     <td class="px-4 py-4">30</td>
                     <td class="px-4 py-4 flex space-x-2">
-                        <button class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded-md">Update</button>
+                        <a href="/admin/achievement-certificate/update" class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded-md">Update</a>
                         <button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md">Delete</button>
                     </td>
                 </tr>
