@@ -2,7 +2,6 @@
     <!-- Header Section -->
     <div class="mb-4">
         <h1 class="text-2xl font-bold text-gray-800">Event Record</h1>
-        <!-- Horizontal Line -->
         <hr class="border-gray-300 my-2">
     </div>
 
@@ -29,19 +28,13 @@
         </div>
     </div>
 
-    <!-- Add and Total Members Section -->
+    <!-- Add and Total Events Section -->
     <div class="flex items-center justify-between mb-6">
-        <!-- Add Button -->
         <a href="/admin/event-record/add" class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg font-medium shadow">
             Add Event
         </a>
-        <!-- Total Members -->
-        <p class="text-gray-600">Total Event:
-            <span class="font-medium text-gray-900">12</span>
-        </p>
+        <p class="text-gray-600">Total Events: <span class="font-medium text-gray-900">{{ $events->total() }}</span></p>
     </div>
-
-
 
     <!-- Table -->
     <div class="overflow-x-auto bg-white rounded-lg shadow-md">
@@ -57,96 +50,113 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- Row 1 -->
+                @forelse ($events as $index => $event)
                 <tr class="border-b">
-                    <td class="px-4 py-4">1</td>
-                    <td class="px-4 py-4">InspireFest 2024</td>
+                    <td class="px-4 py-4">{{ $loop->iteration + ($events->currentPage() - 1) * $events->perPage() }}</td>
+                    <td class="px-4 py-4">{{ $event->event_name }}</td>
                     <td class="px-4 py-4">
-                        <img src="https://picsum.photos/150/150?random=1" alt="Event Banner" class="w-16 h-auto rounded-md">
+                        @if ($event->banner)
+                        <img src="data:image/png;base64,{{ base64_encode($event->banner) }}" alt="Event Banner" class="w-16 h-auto rounded-md">
+                        @else
+                        <span class="text-gray-500">No Banner</span>
+                        @endif
                     </td>
-                    <td class="px-4 py-4">15/08/2017</td>
+                    <td class="px-4 py-4">{{ \Carbon\Carbon::parse($event->event_date)->format('d/m/Y') }}</td>
                     <td class="px-4 py-4">
-                        <span class="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
-                            <span class="w-2 h-2 me-1 bg-green-500 rounded-full">
+                        @if ($event->event_status === 'running')
+                            <span class="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                                <span class="w-2 h-2 me-1 bg-green-500 rounded-full"></span>
+                                Running
                             </span>
-                            Running
-                        </span>
+                        @elseif ($event->event_status === 'draft')
+                            <span class="inline-flex items-center bg-yellow-100 text-yellow-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                                <span class="w-2 h-2 me-1 bg-yellow-500 rounded-full"></span>
+                                Draft
+                            </span>
+                        @elseif ($event->event_status === 'ended')
+                            <span class="inline-flex items-center bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                                <span class="w-2 h-2 me-1 bg-red-500 rounded-full"></span>
+                                Ended
+                            </span>
+                        @else
+                            <span class="inline-flex items-center bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                                <span class="w-2 h-2 me-1 bg-gray-500 rounded-full"></span>
+                                Unknown
+                            </span>
+                        @endif
                     </td>
+                    
                     <td class="px-4 py-4 flex space-x-2">
-                        <a href="/admin/event-record/report" class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-md">Report</a>
-                        <a href="/admin/event-record/update" class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded-md">Update</a>
-                        <button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md">Delete</button>
+                        <a href="/admin/event-record/report/{{ $event->event_id }}" class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-md">Report</a>
+                        <a href="/admin/event-record/update/{{ $event->event_id }}" class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded-md">Update</a>
+                        <form action="#" method="POST" onsubmit="return confirm('Are you sure?');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md">Delete</button>
+                        </form>
                     </td>
                 </tr>
-                <!-- Row 2 -->
-                <tr class="border-b">
-                    <td class="px-4 py-4">2</td>
-                    <td class="px-4 py-4">TechVibe Summit</td>
-                    <td class="px-4 py-4">
-                        <img src="https://picsum.photos/150/150?random=2" alt="Event Banner" class="w-16 h-auto rounded-md">
-                    </td>
-                    <td class="px-4 py-4">16/08/2013</td>
-                    <td class="px-4 py-4">
-                        <span class="inline-flex items-center bg-yellow-100 text-yellow-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
-                            <span class="w-2 h-2 me-1 bg-yellow-500 rounded-full"></span>
-                            Draft
-                        </span>
-                    </td>
-                    <td class="px-4 py-4 flex space-x-2">
-                        <a href="/admin/event-record/report" class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-md">Report</a>
-                        <a href="/admin/event-record/update" class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded-md">Update</a>
-                        <button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md">Delete</button>
-                    </td>
+                @empty
+                <tr>
+                    <td colspan="6" class="text-center text-gray-500">No events found.</td>
                 </tr>
-                <!-- Row 3 -->
-                <tr class="border-b">
-                    <td class="px-4 py-4">3</td>
-                    <td class="px-4 py-4">Fusion Creators Conference</td>
-                    <td class="px-4 py-4">
-                        <img src="https://picsum.photos/150/150?random=3" alt="Event Banner" class="w-16 h-auto rounded-md">
-                    </td>
-                    <td class="px-4 py-4">28/10/2012</td>
-                    <td class="px-4 py-4">
-                        <span class="inline-flex items-center bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
-                            <span class="w-2 h-2 me-1 bg-red-500 rounded-full"></span>
-                            Ended
-                        </span>
-                    </td>
-                    <td class="px-4 py-4 flex space-x-2">
-                        <a href="/admin/event-record/report" class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-md">Report</a>
-                        <a href="/admin/event-record/update" class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded-md">Update</a>
-                        <button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md">Delete</button>
-                    </td>
-                </tr>
-                <!-- Add More Rows as Needed -->
+                @endforelse
             </tbody>
         </table>
     </div>
 
     <!-- Pagination -->
     <div class="flex justify-between items-center mt-6">
-        <p class="text-sm text-gray-600">Showing 1 to 10 of 155 entries</p>
-        <div class="flex items-center space-x-1">
-            <button
-                class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
-                Previous
-            </button>
-            <button
-                class="px-3 py-1 text-sm text-white bg-blue-500 rounded-md hover:bg-blue-600">
-                1
-            </button>
-            <button
-                class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
-                2
-            </button>
-            <button
-                class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
-                3
-            </button>
-            <button
-                class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
-                Next
-            </button>
+       
+        @if ($events->hasPages())
+        <div class="flex justify-between items-center mt-6">
+            <!-- Previous Page Link -->
+            @if ($events->onFirstPage())
+                <button class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md cursor-not-allowed" disabled>
+                    Previous
+                </button>
+            @else
+                <a href="{{ $events->previousPageUrl() }}" class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
+                    Previous
+                </a>
+            @endif
+    
+            <!-- Pagination Elements -->
+            <div class="flex items-center space-x-1">
+                @foreach ($events->links()->elements as $element)
+                    <!-- "Three Dots" Separator -->
+                    @if (is_string($element))
+                        <span class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md">{{ $element }}</span>
+                    @endif
+    
+                    <!-- Array of Links -->
+                    @if (is_array($element))
+                        @foreach ($element as $page => $url)
+                            @if ($page == $events->currentPage())
+                                <span class="px-3 py-1 text-sm text-white bg-blue-500 rounded-md">{{ $page }}</span>
+                            @else
+                                <a href="{{ $url }}" class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
+                                    {{ $page }}
+                                </a>
+                            @endif
+                        @endforeach
+                    @endif
+                @endforeach
+            </div>
+    
+            <!-- Next Page Link -->
+            @if ($events->hasMorePages())
+                <a href="{{ $events->nextPageUrl() }}" class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
+                    Next
+                </a>
+            @else
+                <button class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md cursor-not-allowed" disabled>
+                    Next
+                </button>
+            @endif
         </div>
+    @endif
+    
+    
     </div>
 </x-admin-layout>

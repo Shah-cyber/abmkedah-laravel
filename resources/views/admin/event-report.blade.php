@@ -11,7 +11,7 @@
         <h1 class="ml-4 text-2xl font-bold text-gray-800">Event Report</h1>
     </div>
     <!-- Horizontal Line -->
-    <hr class="border-gray-300 my-2">
+    <hr class="border-gray-300 my-2"> 
 
     <!-- Member Information Table -->
     <div class="mb-4 mt-4 overflow-x-auto bg-gray-50 rounded-md shadow-md">
@@ -22,7 +22,7 @@
                     <td class="px-4 py-2">TechVIbe Summits</td>
                 </tr>
                 <tr class="border-b">
-                    <th class="px-4 py-2 text-gray-800 font-semibold bg-gray-100">Event Date</th>
+                    <th class="px-4 py-2 text-gray-800 font-semibold bg-gray-100">Event Date</th> 
                     <td class="px-4 py-2">12/10/2024</td>
                 </tr>
                 <tr class="border-b">
