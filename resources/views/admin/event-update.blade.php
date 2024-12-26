@@ -11,11 +11,13 @@
         <h1 class="ml-4 text-2xl font-bold text-gray-800">Update Event</h1>
     </div>
     <!-- Horizontal Line -->
-    <hr class="border-gray-300 my-2">
+    <hr class="border-gray-300 my-2"> 
 
-    <!-- Form -->
-    <div class="mt-4 px-6 py-4 bg-white shadow-lg rounded-lg">
-        <form action="#" method="POST" class="space-y-4">
+     <!-- Form -->
+     <div class="mt-4 px-6 py-4 bg-white shadow-lg rounded-lg">
+        <form id="update-event-form" action="{{ route('event.record.update', $event->event_id) }}" method="POST" class="space-y-4">
+            @csrf
+            @method('POST') <!-- Use POST for updating -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <!-- Event Name -->
                 <div class="md:col-span-2">
@@ -24,33 +26,35 @@
                         type="text"
                         id="event-name"
                         name="event-name"
-                        value="TechVibe Summit"
+                        value="{{ old('event-name', $event->event_name) }}"
                         class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
                 </div>
 
                 <!-- Description -->
                 <div class="md:col-span-2">
-                    <label for="ic-number" class="block text-sm font-medium text-gray-700">Description</label>
+                    <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
                     <input
                         type="text"
                         id="description"
                         name="description"
-                        value="TechVibe Summit is a dynamic event bringing together tech enthusiasts, innovators, and industry leaders to explore the latest trends in technology. "
+                        value="{{ old('description', $event->event_description) }}"
                         class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
                 </div>
 
                 <!-- Event Banner -->
                 <div>
                     <label for="event-banner" class="block text-sm font-medium text-gray-700">Event Banner</label>
-                    <!-- File Upload Input -->
                     <input
                         type="file"
                         id="event-banner"
                         name="event-banner"
                         class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
-                    <!-- Display Current Image -->
                     <div class="mt-2">
-                        <img src="https://picsum.photos/600/300?random=3" alt="Event Banner" class="h-auto rounded-sm">
+                        @if ($event->banner)
+                            <img src="{{ asset('storage/' . $event->banner) }}" alt="Event Banner" class="h-auto rounded-sm">
+                        @else
+                            <span class="text-gray-500">No Banner</span>
+                        @endif
                     </div>
                 </div>
 
@@ -61,7 +65,7 @@
                         type="number"
                         id="total-participant"
                         name="total-participant"
-                        value="60"
+                        value="{{ old('total-participant', $event->total_participation) }}"
                         class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
                 </div>
 
@@ -72,8 +76,8 @@
                         id="category"
                         name="category"
                         class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
-                        <option value="private" selected>Private</option>
-                        <option value="public">Public</option>
+                        <option value="private" {{ $event->event_category === 'private' ? 'selected' : '' }}>Private</option>
+                        <option value="public" {{ $event->event_category === 'public' ? 'selected' : '' }}>Public</option>
                     </select>
                 </div>
 
@@ -84,9 +88,9 @@
                         id="event-status"
                         name="event-status"
                         class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
-                        <option value="running" selected>Running</option>
-                        <option value="draft">Draft</option>
-                        <option value="ended">Ended</option>
+                        <option value="running" {{ $event->event_status === 'running' ? 'selected' : '' }}>Running</option>
+                        <option value="draft" {{ $event->event_status === 'draft' ? 'selected' : '' }}>Draft</option>
+                        <option value="ended" {{ $event->event_status === 'ended' ? 'selected' : '' }}>Ended</option>
                     </select>
                 </div>
 
@@ -97,7 +101,7 @@
                         type="text"
                         id="event-session"
                         name="event-session"
-                        value="2024"
+                        value="{{ old('event-session', $event->event_session) }}"
                         class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
                 </div>
 
@@ -108,7 +112,7 @@
                         type="text"
                         id="location"
                         name="location"
-                        value="Online"
+                        value="{{ old('location', $event->event_location) }}"
                         class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
                 </div>
 
@@ -119,7 +123,7 @@
                         type="time"
                         id="start-time"
                         name="start-time"
-                        value="08:00:00"
+                        value="{{ old('start-time', $event->event_start_time) }}"
                         class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
                 </div>
 
@@ -130,7 +134,7 @@
                         type="time"
                         id="end-time"
                         name="end-time"
-                        value="10:00:00"
+                        value="{{ old('end-time', $event->event_end_time) }}"
                         class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
                 </div>
 
@@ -141,7 +145,7 @@
                         type="date"
                         id="event-date"
                         name="event-date"
-                        value="2024-09-01"
+                        value="{{ old('event-date', $event->event_date) }}"
                         class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
                 </div>
 
@@ -157,7 +161,7 @@
                             id="amount"
                             name="amount"
                             step="0.01"
-                            value="100.00"
+                            value="{{ old('amount', $event->event_price) }}"
                             class="flex-1 block w-full px-3 py-2 border border-gray-300 rounded-r-lg focus:ring-indigo-500 focus:border-indigo-500"
                             placeholder="0.00" />
                     </div>

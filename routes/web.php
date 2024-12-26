@@ -124,18 +124,26 @@ Route::prefix('admin')->group(function () {
         });
     });
 
-    // EVENT RECORD
+   // EVENT RECORD
     Route::prefix('event-record')->group(function () {
         Route::get('/', [AdminEventController::class, 'index'])->name('event.record.index');
         Route::get('/add', function () {
             return view('admin.event-add');
         });
-        Route::get('/update', function () {
-            return view('admin.event-update');
-        });
+        Route::post('/add', [AdminEventController::class, 'store'])->name('event.record.store');
+        
+        // Update routes
+        Route::get('/update/{id}', [AdminEventController::class, 'edit'])->name('event.record.edit');
+        Route::post('/update/{id}', [AdminEventController::class, 'update'])->name('event.record.update');
+
+        //Delete
+         // Delete route
+        Route::delete('/delete/{id}', [AdminEventController::class, 'destroy'])->name('event.record.delete');
+
         Route::get('/report', function () {
             return view('admin.event-report');
         });
+        Route::get('/report/{id}', [AdminEventController::class, 'report'])->name('event.record.report');
     });
 
     // EVENT VOLUNTEER
