@@ -89,7 +89,7 @@
                     <td class="px-4 py-4 flex space-x-2">
                         <a href="/admin/event-record/report/{{ $event->event_id }}" class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-md">Report</a>
                         <a href="/admin/event-record/update/{{ $event->event_id }}" class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded-md">Update</a>
-                        <form action="#" method="POST" onsubmit="return confirm('Are you sure?');">
+                        <form action="{{ route('event.record.delete', $event->event_id) }}" method="POST" class="delete-form">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md">Delete</button>
@@ -107,10 +107,8 @@
 
     <!-- Pagination -->
     <div class="flex justify-between items-center mt-6">
-       
         @if ($events->hasPages())
         <div class="flex justify-between items-center mt-6">
-            <!-- Previous Page Link -->
             @if ($events->onFirstPage())
                 <button class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md cursor-not-allowed" disabled>
                     Previous
@@ -121,15 +119,12 @@
                 </a>
             @endif
     
-            <!-- Pagination Elements -->
             <div class="flex items-center space-x-1">
                 @foreach ($events->links()->elements as $element)
-                    <!-- "Three Dots" Separator -->
                     @if (is_string($element))
                         <span class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md">{{ $element }}</span>
                     @endif
     
-                    <!-- Array of Links -->
                     @if (is_array($element))
                         @foreach ($element as $page => $url)
                             @if ($page == $events->currentPage())
@@ -144,7 +139,6 @@
                 @endforeach
             </div>
     
-            <!-- Next Page Link -->
             @if ($events->hasMorePages())
                 <a href="{{ $events->nextPageUrl() }}" class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
                     Next
@@ -155,8 +149,22 @@
                 </button>
             @endif
         </div>
-    @endif
-    
-    
+        @endif
     </div>
+
+    <!-- Hidden Success Message -->
+    @if(session('success'))
+        <div id="success-message" style="display: none;">{{ session('success') }}</div>
+    @endif
+
+    <!-- Hidden Error Message -->
+    @if($errors->any())
+        <div id="error-message" style="display: none;">{{ implode(', ', $errors->all()) }}</div>
+    @endif
+
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Custom JavaScript to handle messages -->
+    <script src="{{ asset('admin/adminEvent.js') }}"></script>
 </x-admin-layout>
