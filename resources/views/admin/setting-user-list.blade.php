@@ -32,7 +32,7 @@
     <!-- Export and Total Members Section -->
     <div class="flex items-center justify-between mb-6">
         <!-- Export Button -->
-        <a href="/admin/setting-users/add" class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg font-medium shadow">
+        <a href="/admin/setting/users/add" class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg font-medium shadow">
             Add Admin
         </a>
         <!-- Total Members -->
@@ -70,7 +70,7 @@
                         </span>
                     </td>
                     <td class="px-4 py-4 flex space-x-2">
-                        <a href="/admin/setting-users/update" class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded-md">Update</a>
+                        <a href="/admin/setting/users/update" class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded-md">Update</a>
                     </td>
                 </tr>
                 <!-- Row 2 -->
@@ -86,7 +86,7 @@
                         </span>
                     </td>
                     <td class="px-4 py-4 flex space-x-2">
-                        <a href="/admin/setting-users/update" class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded-md">Update</a>
+                        <a href="/admin/setting/users/update" class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded-md">Update</a>
                     </td>
                 </tr>
                 <!-- Add More Rows as Needed -->
