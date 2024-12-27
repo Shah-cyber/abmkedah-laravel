@@ -10,8 +10,9 @@
 <body>
     <!-- member side bar -->
     @include('member.sidebar')
-
+    
     <div class="p-4 sm:ml-64">
+    @include('member.header')
         {{$slot}}
     </div>
 
