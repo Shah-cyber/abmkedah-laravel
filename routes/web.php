@@ -59,6 +59,10 @@ Route::get('/member/setting', function () {
     return view('member.setting-account');
 });
 
+//member event registration
+Route::get('/member/event-registration', function () {
+    return view('member.event-registration');
+});
 ///////////////////
 // ADMIN FUNCTION//
 ///////////////////
