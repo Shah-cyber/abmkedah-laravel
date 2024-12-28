@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('email', 50)->nullable();
             $table->foreign('member_id')->references('member_id')->on('member');
             $table->foreign('admin_id')->references('admin_id')->on('admin');
+            $table->foreign('application_id')->references('application_id')->on('application');
         });
     }
 

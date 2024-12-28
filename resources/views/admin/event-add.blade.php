@@ -15,7 +15,8 @@
 
     <!-- Form -->
     <div class="mt-4 px-6 py-4 bg-white shadow-lg rounded-lg">
-        <form action="#" method="POST" class="space-y-4">
+        <form action="{{ route('event.record.store') }}" method="POST" enctype="multipart/form-data" class="space-y-4">
+            @csrf
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <!-- Event Name -->
                 <div class="md:col-span-2">
@@ -167,5 +168,21 @@
                 </button>
             </div>
         </form>
+        @if(session('success'))
+            <div id="success-message" style="display: none;">{{ session('success') }}</div>
+        @endif
+        
+        @if($errors->any())
+            <div id="error-message" style="display: none;">{{ implode(', ', $errors->all()) }}</div>
+        @endif
     </div>
+
+       <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Custom JS for Events -->
+    <script src="{{ asset('admin/adminEvent.js') }}"></script>
+
+   
 </x-admin-layout>
+

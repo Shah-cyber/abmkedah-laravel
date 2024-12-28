@@ -16,6 +16,7 @@ return new class extends Migration
             $table->binary('prove_letter')->nullable();
             $table->string('applicant_status', 20)->nullable();
             $table->date('date_application')->nullable();
+            $table->foreign('admin_id')->references('admin_id')->on('admin');
         });
     }
 
