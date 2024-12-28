@@ -8,13 +8,19 @@
 </head>
 
 <body>
-    <!-- member side bar -->
-    @include('member.sidebar')
-    
-    <div class="p-4 sm:ml-64">
+<!-- Member Sidebar -->
+@include('member.sidebar')
+
+<!-- Content Wrapper -->
+<div class="sm:ml-64">
+    <!-- member Header -->
     @include('member.header')
-        {{$slot}}
-    </div>
+
+    <!-- Main Content -->
+    <main class="p-6 bg-white min-h-screen">
+        {{ $slot }}
+    </main>
+</div>
 
     @stack('scripts')
 </body>
