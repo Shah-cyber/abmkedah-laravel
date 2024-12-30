@@ -50,28 +50,22 @@ Route::get('/contact', function () {
 // MEMBER FUNCTION//
 ////////////////////
 //member dashboard
-Route::get('/member/dashboard', function () {
-    return view('member.dashboard');
-});
-
-//member fee
-Route::get('/member/fee', function () {
-    return view('member.fee');
-});
-
-//member event
-Route::get('/member/event', function () {
-    return view('member.event-list');
-});
-
-//member achievement
-Route::get('/member/achievement', function () {
-    return view('member.achievement-list');
-});
-
-//member setting
-Route::get('/member/setting', function () {
-    return view('member.setting-account');
+Route::middleware('auth')->prefix('member')->group(function () {
+    Route::get('/member/dashboard', function () {
+        return view('member.dashboard');
+    })->name('member.dashboard')->middleware('auth');
+    Route::get('/fee', function () {
+        return view('member.fee'); // Member fee page
+    });
+    Route::get('/event', function () {
+        return view('member.event-list'); // Member event list
+    });
+    Route::get('/achievement', function () {
+        return view('member.achievement-list'); // Member achievement list
+    });
+    Route::get('/setting', function () {
+        return view('member.setting-account'); // Member account settings
+    });
 });
 
 /////////////////////
