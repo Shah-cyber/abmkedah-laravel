@@ -10,37 +10,27 @@
             <h2 class="flex font-bold justify-center mb-2 text-2xl">Registration</h2>
             <p class="flex justify-center mb-6 text-gray-500 text-sm">Already a member? <a href="#" onclick="openLoginForm()" class="ml-2 text-green-500 hover:underline"> Login now</a></p>
             <div class="relative bg-white rounded shadow border border-neutral-200 p-6">
-                <form>
-                    <!-- Form Inputs -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                        <div>
-                            <label class="mb-1 block text-sm font-medium text-gray-700">Username</label>
-                            <input type="text" placeholder="" class="w-full border border-gray-300 rounded-lg p-2" required>
-                        </div>
-                        <div>
-                            <label class="mb-1 block text-sm font-medium text-gray-700">Email</label>
-                            <input type="email" placeholder="" class="w-full border border-gray-300 rounded-lg p-2" required>
-                        </div>
-                    </div>
-                    <div class="mb-2">
-                        <label class="mb-1 block text-sm font-medium text-gray-700">Password</label>
-                        <input type="password" placeholder="" class="w-full border border-gray-300 rounded-lg p-2" required>
-                    </div>
-                    <div class="mb-2">
-                        <label class="mb-1 block text-sm font-medium text-gray-700">Confirm Password</label>
-                        <input type="password" placeholder="" class="w-full border border-gray-300 rounded-lg p-2" required>
-                    </div>
-                    <div class="mb-2">
-                        <label class="mb-1 block text-sm font-medium text-gray-700">Proof of Participation</label>
-                        <input type="file" class="w-full border border-gray-300 rounded-lg p-2 mb-4" required>
+                <form id="registration-form" method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
+                    @csrf
+                    <div class="mb-4">
+                        <label class="mb-1 block text-sm font-medium text-gray-700">Username</label>
+                        <input type="text" name="username" class="w-full border border-gray-300 rounded-lg p-2" required>
                     </div>
                     <div class="mb-4">
-                        <label class="inline-flex items-center">
-                            <input type="checkbox" class="border-gray-300 rounded" required>
-                            <span class="ml-2 text-sm text-gray-600">
-                                I agree to the terms and conditions.
-                            </span>
-                        </label>
+                        <label class="mb-1 block text-sm font-medium text-gray-700">Email</label>
+                        <input type="email" name="email" class="w-full border border-gray-300 rounded-lg p-2" required>
+                    </div>
+                    <div class="mb-4">
+                        <label class="mb-1 block text-sm font-medium text-gray-700">Password</label>
+                        <input type="password" name="password" class="w-full border border-gray-300 rounded-lg p-2" required>
+                    </div>
+                    <div class="mb-4">
+                        <label class="mb-1 block text-sm font-medium text-gray-700">Confirm Password</label>
+                        <input type="password" name="password_confirmation" class="w-full border border-gray-300 rounded-lg p-2" required>
+                    </div>
+                    <div class="mb-4">
+                        <label class="mb-1 block text-sm font-medium text-gray-700">Proof of Participation</label>
+                        <input type="file" name="prove_letter" class="w-full border border-gray-300 rounded-lg p-2" required>
                     </div>
                     <button type="submit" class="w-full bg-black text-white hover:bg-gray-800 font-medium py-2 px-4 rounded-lg">
                         Register now
@@ -65,3 +55,7 @@
         setTimeout(() => modal.classList.add("hidden"), 300); // Wait for the transition
     }
 </script>
+<!-- Include SweetAlert2 -->
+{{-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> --}}
+<!-- Include your custom JS file -->
+<script src="{{ asset('non-member/register.js') }}"></script>

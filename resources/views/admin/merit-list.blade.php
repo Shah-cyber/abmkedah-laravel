@@ -37,18 +37,18 @@
         </a>
         <!-- Total Members -->
         <p class="text-gray-600">Total Merit:
-            <span class="font-medium text-gray-900">4</span>
+            <span class="font-medium text-gray-900">{{ $merits->total() }}</span> <!-- Use total() to get the count of all records -->
         </p>
     </div>
 
 
 
-    <!-- Table -->
-    <div class="overflow-x-auto bg-white rounded-lg shadow-md">
+     <!-- Table -->
+     <div class="overflow-x-auto bg-white rounded-lg shadow-md">
         <table class="w-full text-sm text-left text-gray-500">
             <thead class="bg-gray-50 text-gray-700 uppercase text-xs">
                 <tr>
-                    <th class="px-4 py-3">#</th>
+                    <th class="px-4 py-3">No.</th>
                     <th class="px-4 py-3 w-2/5">Event Name</th>
                     <th class="px-4 py-3">Allocation Date</th>
                     <th class="px-4 py-3">Merit</th>
@@ -56,57 +56,88 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- Row 1 -->
-                <tr class="border-b">
-                    <td class="px-4 py-4">1</td>
-                    <td class="px-4 py-4">Visionary Ventures Gala</td>
-                    <td class="px-4 py-4">15/08/2017</td>
-                    <td class="px-4 py-4">12.0</td>
-                    <td class="px-4 py-4 flex space-x-2">
-                        <a href="/admin/achievement-merit/update" class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded-md">Update</a>
-                        <button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md">Delete</button>
-                    </td>
-                </tr>
-                <!-- Row 2 -->
-                <tr class="border-b">
-                    <td class="px-4 py-4">2</td>
-                    <td class="px-4 py-4">Fusion Creators Conference</td>
-                    <td class="px-4 py-4">07/05/2016</td>
-                    <td class="px-4 py-4">2.0</td>
-                    <td class="px-4 py-4 flex space-x-2">
-                        <a href="/admin/achievement-merit/update" class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded-md">Update</a>
-                        <button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md">Delete</button>
-                    </td>
-                </tr>
-                <!-- Add More Rows as Needed -->
+                @foreach ($merits as $index => $merit)
+                    <tr class="border-b">
+                        <td class="px-4 py-4">{{ $index + 1 + ($merits->currentPage() - 1) * $merits->perPage() }}</td>
+                        <td class="px-4 py-4">{{ $merit->event->event_name ?? 'N/A' }}</td>
+                        <td class="px-4 py-4">{{ \Carbon\Carbon::parse($merit->allocation_date)->format('d/m/Y') }}</td>
+                        <td class="px-4 py-4">{{ $merit->merit_point }}</td>
+                        <td class="px-4 py-4 flex space-x-2">
+                            <a href="/admin/achievement-merit/update/{{ $merit->merit_id }}" class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded-md">Update</a>
+                            <form action="{{ route('merit.delete', $merit->merit_id) }}" method="POST" class="delete-form">
+                                @csrf
+                                @method('DELETE') <!-- Specify the method for deletion -->
+                                <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
     </div>
 
-    <!-- Pagination -->
+   <!-- Pagination -->
     <div class="flex justify-between items-center mt-6">
-        <p class="text-sm text-gray-600">Showing 1 to 10 of 155 entries</p>
-        <div class="flex items-center space-x-1">
-            <button
-                class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
-                Previous
-            </button>
-            <button
-                class="px-3 py-1 text-sm text-white bg-blue-500 rounded-md hover:bg-blue-600">
-                1
-            </button>
-            <button
-                class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
-                2
-            </button>
-            <button
-                class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
-                3
-            </button>
-            <button
-                class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
-                Next
-            </button>
-        </div>
+        @if ($merits->hasPages())
+            <div class="flex justify-between items-center mt-6">
+                @if ($merits->onFirstPage())
+                    <button class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md cursor-not-allowed" disabled>
+                        Previous
+                    </button>
+                @else
+                    <a href="{{ $merits->previousPageUrl() }}" class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
+                        Previous
+                    </a>
+                @endif
+
+                <div class="flex items-center space-x-1">
+                    @foreach ($merits->links()->elements as $element)
+                        @if (is_string($element))
+                            <span class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md">{{ $element }}</span>
+                        @endif
+
+                        @if (is_array($element))
+                            @foreach ($element as $page => $url)
+                                @if ($page == $merits->currentPage())
+                                    <span class="px-3 py-1 text-sm text-white bg-blue-500 rounded-md">{{ $page }}</span>
+                                @else
+                                    <a href="{{ $url }}" class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
+                                        {{ $page }}
+                                    </a>
+                                @endif
+                            @endforeach
+                        @endif
+                    @endforeach
+                </div>
+
+                @if ($merits->hasMorePages())
+                    <a href="{{ $merits->nextPageUrl() }}" class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
+                        Next
+                    </a>
+                @else
+                    <button class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md cursor-not-allowed" disabled>
+                        Next
+                    </button>
+                @endif
+            </div>
+        @endif
     </div>
+
+      <!-- Hidden Success and Error Messages -->
+            @if(session('success'))
+            <div id="success-message" style="display: none;">{{ session('success') }}</div>
+        @endif
+        
+        @if($errors->any())
+            <div id="error-message" style="display: none;">{{ implode(', ', $errors->all()) }}</div>
+        @endif
+
+
+
+    
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Custom JavaScript to handle messages -->
+    <script src="{{ asset('admin/adminMerit.js') }}"></script>
 </x-admin-layout>

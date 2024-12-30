@@ -4,9 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
 
     <!-- Page Title -->
-    <title>{{ $title ?? 'Admin Panel' }}</title>
+    <title>{{ $title ?? 'Admin Dashboard' }}</title>
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -41,3 +43,5 @@
 </body>
 
 </html>
+
+

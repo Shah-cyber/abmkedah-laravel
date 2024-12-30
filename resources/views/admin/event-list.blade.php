@@ -41,7 +41,7 @@
         <table class="w-full text-sm text-left text-gray-500">
             <thead class="bg-gray-50 text-gray-700 uppercase text-xs">
                 <tr>
-                    <th class="px-4 py-3">#</th>
+                    <th class="px-4 py-3">NO.</th>
                     <th class="px-4 py-3">Event Name</th>
                     <th class="px-4 py-3">Banner</th>
                     <th class="px-4 py-3">Event Date</th>

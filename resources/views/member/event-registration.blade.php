@@ -41,7 +41,7 @@
                     <!-- event description -->
                     <div class="m-4 flex-1">
                         <p class="font-semibold">CATEGORY</p>
-                        <ul class="list-disc text-sm ml-6">
+                        <ul class="list-disc text-sm ml-6"> 
                             <li>
                                 Participant's age category is based on his/her age on the date of the Race.
                             </li>

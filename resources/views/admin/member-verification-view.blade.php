@@ -23,9 +23,10 @@
                     <input
                         type="text"
                         id="username"
-                        name="username"
-                        value="Albert123"
-                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
+                        name="username" 
+                        value="{{ $application->login->username ?? 'N/A' }}"
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" 
+                        readonly />
                 </div>
 
                 <!-- Email -->
@@ -35,45 +36,63 @@
                         type="email"
                         id="email"
                         name="email"
-                        value="albert@flowbite.com"
-                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
+                        value="{{ $application->login->email ?? 'N/A' }}"
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" 
+                        readonly />
                 </div>
 
-                <!-- Password -->
-                <div class="relative">
-                    <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-                    <input
-                        type="password"
-                        id="password"
-                        name="password"
-                        value="albert123123"
-                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
-                </div>
+                <!-- Applicant Status -->
+                @if ($application->applicant_status === 'approve' || $application->applicant_status === 'reject')
+                    <div>
+                        <label for="status" class="block text-sm font-medium text-gray-700">Applicant Status</label>
+                        <input
+                            type="text"
+                            id="status"
+                            name="status"
+                            value="{{ ucfirst($application->applicant_status) }}"
+                            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" 
+                            readonly />
+                    </div>
+                @endif
 
                 <!-- Proof of Participation -->
                 <div>
                     <label for="proof-file" class="block text-sm font-medium text-gray-700">Proof of Participation</label>
-                    <input
-                        type="file"
-                        id="proof-file"
-                        name="proof-file"
-                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
+                    <div class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm">
+                        @if ($application->prove_letter)
+                            <a href="{{ Storage::url($application->prove_letter) }}" 
+                               target="_blank" 
+                               class="text-blue-500 underline">View Proof</a>
+                        @else
+                            <p class="text-gray-500">No proof available.</p>
+                        @endif
+                    </div>
                 </div>
             </div>
 
             <!-- Buttons -->
             <div class="flex justify-end space-x-2">
-                <button
-                    type="button"
-                    class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500">
-                    Reject
-                </button>
-                <button
-                    type="submit"
-                    class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500">
-                    Approve
-                </button>
+                @if ($application->applicant_status === 'pending')
+                    <!-- Reject Button -->
+                    <button 
+                        type="button"
+                        class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md"
+                        onclick="rejectMember({{ $application->application_id }})">
+                        Reject
+                    </button>
+
+                    <!-- Approve Button -->
+                    <button 
+                        type="button"
+                        class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-md"
+                        onclick="approveMember({{ $application->application_id }})">
+                        Approve
+                    </button>
+                @endif
             </div>
         </form>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> 
+<script src="{{ asset('admin/adminMemberVerification.js') }}"></script> <!-- Link to your SweetAlert JS file -->
 </x-admin-layout>
+

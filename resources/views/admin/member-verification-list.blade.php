@@ -35,60 +35,44 @@
             <thead class="bg-gray-50 text-gray-700 uppercase text-xs">
                 <tr>
                     <th class="px-4 py-3">#</th>
-                    <th class="px-4 py-3">Name</th>
+                    <th class="px-4 py-3">Username</th>
                     <th class="px-4 py-3">Email</th>
                     <th class="px-4 py-3">Status</th>
                     <th class="px-4 py-3">Action</th>
                 </tr>
             </thead>
             <tbody>
-                <!-- Row 1 -->
-                <tr class="border-b">
-                    <td class="px-4 py-4">1</td>
-                    <td class="px-4 py-4">Robert Fox</td>
-                    <td class="px-4 py-4">willie.jennings@example.com</td>
-                    <td class="px-4 py-2">
-                        <span class="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
-                            <span class="w-2 h-2 me-1 bg-green-500 rounded-full"></span>
-                            Approve
-                        </span>
-                    </td>
-                    <td class="px-4 py-4 flex space-x-2">
-                        <a href="/admin/member-verification/view" class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-md">View</a>
-                    </td>
-                </tr>
-                <!-- Row 2 -->
-                <tr class="border-b">
-                    <td class="px-4 py-4">2</td>
-                    <td class="px-4 py-4">Esther Howard</td>
-                    <td class="px-4 py-4">nevaeh.simmons@example.com</td>
-                    <td class="px-4 py-2">
-                        <span class="inline-flex items-center bg-yellow-100 text-yellow-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
-                            <span class="w-2 h-2 me-1 bg-yellow-500 rounded-full"></span>
-                            Pending
-                        </span>
-                    </td>
-                    <td class="px-4 py-4 flex space-x-2">
-                        <a href="/admin/member-verification/view" class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-md">View</a>
-                    </td>
-                </tr>
-                <!-- Row 3 -->
-                <tr class="border-b">
-                    <td class="px-4 py-4">3</td>
-                    <td class="px-4 py-4">Jerome Bell</td>
-                    <td class="px-4 py-4">tim.jennings@example.com</td>
-                    <td class="px-4 py-2">
-                        <span class="inline-flex items-center bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
-                            <span class="w-2 h-2 me-1 bg-red-500 rounded-full"></span>
-                            Reject
-                        </span>
-                    </td>
-                    <td class="px-4 py-4 flex space-x-2">
-                        <a href="/admin/member-verification/view" class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-md">View</a>
-                    </td>
-                </tr>
-                <!-- Add More Rows as Needed -->
+                @foreach ($applications as $key => $application)
+                    <tr class="border-b">
+                        <td class="px-4 py-4">{{ $key + 1 }}</td>
+                        <td class="px-4 py-4">{{ $application->login->username ?? 'N/A' }}</td>
+                        <td class="px-4 py-4">{{ $application->login->email ?? 'N/A' }}</td>
+                        <td class="px-4 py-2">
+                            @if ($application->applicant_status === 'approve')
+                                <span class="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                                    <span class="w-2 h-2 me-1 bg-green-500 rounded-full"></span>
+                                    Approve
+                                </span>
+                            @elseif ($application->applicant_status === 'pending')
+                                <span class="inline-flex items-center bg-yellow-100 text-yellow-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                                    <span class="w-2 h-2 me-1 bg-yellow-500 rounded-full"></span>
+                                    Pending
+                                </span>
+                            @elseif ($application->applicant_status === 'reject')
+                                <span class="inline-flex items-center bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                                    <span class="w-2 h-2 me-1 bg-red-500 rounded-full"></span>
+                                    Reject
+                                </span>
+                            @endif
+                        </td>
+                        <td class="px-4 py-4 flex space-x-2">
+                            <a href="{{ route('admin.member.verification.view', $application->application_id) }}" 
+                               class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-md">View</a>
+                        </td>
+                    </tr>
+                @endforeach
             </tbody>
+            
         </table>
     </div>
 
@@ -118,4 +102,6 @@
             </button>
         </div>
     </div>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> 
+<script src="{{ asset('admin/adminMemberVerification.js') }}"></script> <!-- Link to your SweetAlert JS file --> --}}
 </x-admin-layout>

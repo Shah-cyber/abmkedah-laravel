@@ -31,10 +31,26 @@ class Member extends Model
         'login_id',
     ];
 
-    // Define relationships
+     // Define relationships
+
+    // Relationship with Login model
+    public function login()
+    {
+        return $this->belongsTo(Login::class, 'login_id', 'login_id'); // Assuming login_id is the foreign key
+    }
+
+    // Relationship with Application model
+    public function application()
+    {
+        return $this->hasOne(Application::class, 'login_id', 'login_id'); // Assuming login_id links to Application
+    }
+
+    // Relationship with Joinevent model
     public function joinevents()
     {
         return $this->hasMany(Joinevent::class, 'member_id');
     }
+
+
 
 }

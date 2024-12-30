@@ -12,26 +12,21 @@
                 <a href="#" onclick="openRegistrationFromLogin()" class="ml-2 text-green-500 hover:underline">Register now</a>
             </p>
             <div class="relative bg-white rounded shadow border border-neutral-200 p-6">
-                <form>
+                <form id="login-form" method="POST" action="{{ route('login') }}">
+                    @csrf
                     <div class="mb-4">
                         <label class="mb-1 block text-sm font-medium text-gray-700">Email</label>
-                        <input type="email" placeholder="" class="w-full border border-gray-300 rounded-lg p-2" required>
+                        <input type="email" name="email" placeholder="Enter your email" class="w-full border border-gray-300 rounded-lg p-2" required>
                     </div>
                     <div class="mb-4">
                         <label class="mb-1 block text-sm font-medium text-gray-700">Password</label>
-                        <input type="password" placeholder="" class="w-full border border-gray-300 rounded-lg p-2" required>
-                    </div>
-                    <div class="flex justify-between items-center mb-4">
-                        <label class="inline-flex items-center">
-                            <input type="checkbox" class="border-gray-300 rounded">
-                            <span class="ml-2 text-sm text-gray-600">Remember me</span>
-                        </label>
-                        <a href="#" class="text-sm text-green-500 hover:underline">Forgot password?</a>
+                        <input type="password" name="password" placeholder="Enter your password" class="w-full border border-gray-300 rounded-lg p-2" required>
                     </div>
                     <button type="submit" class="w-full bg-black text-white hover:bg-gray-800 font-medium py-2 px-4 rounded-lg">
                         Login
                     </button>
                 </form>
+                
             </div>
         </div>
     </div>
@@ -46,7 +41,7 @@
     }
 
     function closeLoginForm() {
-        closeRegistrationForm()
+        closeRegistrationForm();
         loginModal.children[0].classList.add("translate-x-full");
         setTimeout(() => loginModal.classList.add("hidden"), 300); // Wait for the transition
     }
@@ -60,3 +55,5 @@
         }, 300); // Wait for login modal's close transition
     }
 </script>
+{{-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> --}}
+<script src="{{ asset('non-member/login.js') }}"></script> <!-- Link to your SweetAlert JS file -->

@@ -17,17 +17,17 @@ return new class extends Migration
             $table->double('total_merit', 8, 2)->default(0);
             $table->boolean('registration_status')->default(0);
             $table->integer('intake_session')->nullable();
-            $table->string('name', 200);
-            $table->string('ic_number', 15);
-            $table->integer('age')->default(0);
-            $table->char('gender', 20)->default('0');
-            $table->char('race', 20)->default('0');
-            $table->char('religion', 20)->default('0');
-            $table->date('birthdate');
-            $table->string('birthplace', 100)->default('');
-            $table->string('address', 100)->default('');
-            $table->string('phone_number', 15)->default('');
-            $table->char('member_status', 20)->default('');
+            $table->string('name', 200); //null
+            $table->string('ic_number', 15); //null
+            $table->integer('age')->default(0); 
+            $table->char('gender', 20)->default('0'); //null
+            $table->char('race', 20)->default('0'); //null
+            $table->char('religion', 20)->default('0'); //null
+            $table->date('birthdate'); //null
+            $table->string('birthplace', 100)->default(''); //null
+            $table->string('address', 100)->default(''); //null
+            $table->string('phone_number', 15)->default(''); //null
+            $table->char('member_status', 20)->default(''); //null
             $table->integer('login_id')->unsigned();
             $table->foreign('application_id')->references('application_id')->on('application');
         });

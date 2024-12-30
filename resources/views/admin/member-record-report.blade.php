@@ -46,7 +46,7 @@
                     <option>2021</option>
                 </select>
             </div>
-            <!-- Total Merit -->
+            <!-- Total Merit --> 
             <div class="flex-1">
                 <label class="block text-sm font-semibold text-gray-600 mb-1">Total Merit</label>
                 <div class="bg-gray-100 p-2 rounded-md shadow-sm text-gray-800">23.00</div>

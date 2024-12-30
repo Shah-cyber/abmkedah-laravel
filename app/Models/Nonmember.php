@@ -25,4 +25,6 @@ class Nonmember extends Model
         return $this->hasMany(Joinevent::class, 'nonmember_id');
     }
 
+    
+
 }

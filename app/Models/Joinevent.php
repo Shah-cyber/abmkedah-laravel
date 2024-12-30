@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App\Models\Member;
 use App\Models\AbmEvent;
+use App\Models\Nonmember;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 

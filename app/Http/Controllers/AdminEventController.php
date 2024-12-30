@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\AbmEvent;
 use App\Models\Joinevent;
 use Illuminate\Http\Request;
+use App\Models\AllocatedMerit;
 use App\Http\Controllers\Controller;
 
 class AdminEventController extends Controller
@@ -132,15 +133,55 @@ class AdminEventController extends Controller
         {
             // Retrieve the event details
             $event = AbmEvent::findOrFail($eventId);
-
+        
             // Retrieve participants who joined the event, including their details
             $participants = Joinevent::with(['member', 'nonmember']) // Load both relationships
                 ->where('event_id', $eventId)
                 ->get();
-
+        
             // Count the number of participants
             $totalParticipants = $participants->count();
-
+        
             return view('admin.event-report', compact('event', 'participants', 'totalParticipants'));
         }
+
+        public function allocateMerit(Request $request)
+        {
+            $request->validate([
+                'selected_ids' => 'required|array', // Expecting an array of selected IDs
+                'selected_ids.*' => 'exists:member,member_id', // Validate each selected ID
+            ]);
+        
+            foreach ($request->selected_ids as $id) {
+                AllocatedMerit::create([
+                    'member_id' => $id, // Assuming you are allocating merit to members
+                    'event_id' => $request->event_id, // Pass the event ID if needed
+                    'admin_id' => auth()->user()->id, // Assuming the admin is logged in
+                    'merit_point' => 1.00, // Set the merit point as needed
+                    'allocation_date' => now(), // Set the allocation date to now
+                ]);
+            }
+        
+            return redirect()->route('event.record.index')->with('success', 'Merit allocated successfully!');
+        }
+
+        public function showParticipants($eventId)
+{
+    // Retrieve the event details
+    $event = AbmEvent::findOrFail($eventId);
+
+    // Retrieve participants who joined the event, including their details
+    $participants = Joinevent::with(['member.login', 'event']) // Load member and event relationships
+        ->where('event_id', $eventId)
+        ->get();
+
+    // Count the number of participants
+    $totalParticipants = $participants->count();
+
+    // Pass the event and participants to the view
+    return view('admin.event-volunteer', compact('event', 'participants', 'totalParticipants'));
+}
+        
+
+        
 }
