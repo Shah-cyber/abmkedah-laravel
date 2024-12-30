@@ -1,7 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\MeritController;
 use App\Http\Controllers\AdminEventController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\AdminMemberVerification;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -13,9 +18,18 @@ use App\Http\Controllers\AdminEventController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-////////////////////////
-// NON MEMBER FUNCTION//
-////////////////////////
+
+
+// Authentication Routes
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [LoginController::class, 'login']);
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+// Registration Routes
+Route::get('/register', [LoginController::class, 'showRegistrationForm'])->name('register');
+Route::post('/register', [LoginController::class, 'register']);
+
+// Non-Member Functionality
 Route::get('/', function () {
     return view('non-member.home');
 });
@@ -32,47 +46,36 @@ Route::get('/contact', function () {
     return view('non-member.contact');
 });
 
-////////////////////
-// MEMBER FUNCTION//
-////////////////////
-//member dashboard
-Route::get('/member/dashboard', function () {
-    return view('member.dashboard');
-});
 
-//member fee
-Route::get('/member/fee', function () {
-    return view('member.fee');
-});
-
-//member event
-Route::get('/member/event', function () {
-    return view('member.event-list');
-});
-
-//member achievement
-Route::get('/member/achievement', function () {
-    return view('member.achievement-list');
-});
-
-//member setting
-Route::get('/member/setting', function () {
-    return view('member.setting-account');
-});
-
-/////////////////////
-// ADMIN FUNCTIONS //
-/////////////////////
-
-// ADMIN DASHBOARD
-Route::prefix('admin')->group(function () {
-
-    // Dashboard
-    Route::get('/dashboard', function () {
-        return view('admin.dashboard');
+// Member Functionality
+Route::middleware('auth')->prefix('member')->group(function () {
+    Route::get('/member/dashboard', function () {
+        return view('member.dashboard');
+    })->name('member.dashboard')->middleware('auth');
+    Route::get('/fee', function () {
+        return view('member.fee'); // Member fee page
     });
+    Route::get('/event', function () {
+        return view('member.event-list'); // Member event list
+    });
+    Route::get('/achievement', function () {
+        return view('member.achievement-list'); // Member achievement list
+    });
+    Route::get('/setting', function () {
+        return view('member.setting-account'); // Member account settings
+    });
+});
 
-    // MEMBER RECORD
+// Admin Functions
+Route::middleware('auth')->prefix('admin')->group(function () {
+    Route::get('/admin/dashboard', function () {
+        return view('admin.dashboard');
+    })->name('admin.dashboard')->middleware('auth');
+
+    Route::get('/create-admin', [AdminController::class, 'showCreateAdminForm'])->name('admin.create');
+    Route::post('/create-admin', [AdminController::class, 'store'])->name('admin.store');
+
+    // Member Record
     Route::prefix('member-record')->group(function () {
         Route::get('/', function () {
             return view('admin.member-record-list');
@@ -88,17 +91,25 @@ Route::prefix('admin')->group(function () {
         });
     });
 
-    // MEMBER VERIFICATION
+    // Member Verification
     Route::prefix('member-verification')->group(function () {
-        Route::get('/', function () {
-            return view('admin.member-verification-list');
-        });
-        Route::get('/view', function () {
-            return view('admin.member-verification-view');
-        });
+         //display list member for verification
+    Route::get('/admin/member-verification', function () {
+        return view('admin.member-verification-list');
+    });
+    //display view of verification member details
+    Route::get('/admin/member-verification/view', function () {
+        return view('admin.member-verification-view');
+    });
+    //approve and reject.
+    Route::post('/admin/member-verification/approve/{id}', [AdminMemberVerification::class, 'approve'])->name('admin.member.verification.approve');
+    Route::post('/admin/member-verification/reject/{id}', [AdminMemberVerification::class, 'reject'])->name('admin.member.verification.reject');
+    Route::get('/admin/member-verification', [AdminMemberVerification::class, 'index'])->name('admin.member.verification.list');
+    Route::get('/admin/member-verification/view/{id}', [AdminMemberVerification::class, 'view'])->name('admin.member.verification.view');
+
     });
 
-    // FEE PAYMENT
+    // Fee Payment
     Route::prefix('fee-payment')->group(function () {
         Route::get('/', function () {
             return view('admin.fee-payment-list');
@@ -108,7 +119,7 @@ Route::prefix('admin')->group(function () {
         });
     });
 
-    // FEE COLLECTION
+    // Fee Collection
     Route::prefix('fee-collection')->group(function () {
         Route::get('/', function () {
             return view('admin.fee-collection-list');
@@ -124,7 +135,7 @@ Route::prefix('admin')->group(function () {
         });
     });
 
-   // EVENT RECORD
+    // Event Record
     Route::prefix('event-record')->group(function () {
         Route::get('/', [AdminEventController::class, 'index'])->name('event.record.index');
         Route::get('/add', function () {
@@ -136,35 +147,37 @@ Route::prefix('admin')->group(function () {
         Route::get('/update/{id}', [AdminEventController::class, 'edit'])->name('event.record.edit');
         Route::post('/update/{id}', [AdminEventController::class, 'update'])->name('event.record.update');
 
-        //Delete
-         // Delete route
+        // Delete
         Route::delete('/delete/{id}', [AdminEventController::class, 'destroy'])->name('event.record.delete');
 
         Route::get('/report', function () {
             return view('admin.event-report');
         });
-        Route::get('/report/{id}', [AdminEventController::class, 'report'])->name('event.record.report');
-    });
-
-    // EVENT VOLUNTEER
+        Route::get('/report/{id}', [AdminEventController::class, 'report'])->name('event.record.report');  
+        
+        // Event Volunteer
     Route::get('/event-volunteer', function () {
         return view('admin.event-volunteer');
     });
-
-    // ACHIEVEMENT MERIT
-    Route::prefix('achievement-merit')->group(function () {
-        Route::get('/', function () {
-            return view('admin.merit-list');
-        });
-        Route::get('/add', function () {
-            return view('admin.merit-add');
-        });
-        Route::get('/update', function () {
-            return view('admin.merit-update');
-        });
+    Route::get('/event-volunteer/{eventId}', [AdminEventController::class, 'showParticipants'])->name('event.volunteer');
     });
 
-    // ACHIEVEMENT CERTIFICATE
+    
+
+    
+
+    // Achievement Merit
+    Route::prefix('achievement-merit')->group(function () {
+        Route::get('/', [MeritController::class, 'index'])->name('merit.list');
+        Route::get('/add', [MeritController::class, 'create'])->name('merit.create');
+        Route::post('/add', [MeritController::class, 'store'])->name('merit.store');
+        Route::get('/update/{id}', [MeritController::class, 'edit'])->name('merit.edit');
+        Route::post('/update/{id}', [MeritController::class, 'update'])->name('merit.update');
+        Route::delete('/delete/{id}', [MeritController::class, 'destroy'])->name('merit.delete');
+        Route::post('/achievement-merit/allocate', [AdminEventController::class, 'allocateMerit'])->name('merit.allocate');
+    });
+
+    // Achievement Certificate
     Route::prefix('achievement-certificate')->group(function () {
         Route::get('/', function () {
             return view('admin.certificate-list');
@@ -177,7 +190,7 @@ Route::prefix('admin')->group(function () {
         });
     });
 
-    // SETTINGS
+    // Settings
     Route::prefix('setting')->group(function () {
         Route::get('/admin', function () {
             return view('admin.setting-admin');
@@ -196,3 +209,23 @@ Route::prefix('admin')->group(function () {
         });
     });
 });
+
+
+
+    //display list member for verification
+    // Route::get('/admin/member-verification', function () {
+    //     return view('admin.member-verification-list');
+    // });
+    // //display view of verification member details
+    // Route::get('/admin/member-verification/view', function () {
+    //     return view('admin.member-verification-view');
+    // });
+    // //approve and reject.
+    // Route::post('/admin/member-verification/approve/{id}', [AdminMemberVerification::class, 'approve'])->name('admin.member.verification.approve');
+    // Route::post('/admin/member-verification/reject/{id}', [AdminMemberVerification::class, 'reject'])->name('admin.member.verification.reject');
+    // Route::get('/admin/member-verification', [AdminMemberVerification::class, 'index'])->name('admin.member.verification.list');
+    // Route::get('/admin/member-verification/view/{id}', [AdminMemberVerification::class, 'view'])->name('admin.member.verification.view');
+
+
+
+    
