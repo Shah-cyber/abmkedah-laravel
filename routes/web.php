@@ -46,29 +46,43 @@ Route::get('/contact', function () {
     return view('non-member.contact');
 });
 
-
-// Member Functionality
-Route::middleware('auth')->prefix('member')->group(function () {
-    Route::get('/member/dashboard', function () {
-        return view('member.dashboard');
-    })->name('member.dashboard')->middleware('auth');
-    Route::get('/fee', function () {
-        return view('member.fee'); // Member fee page
-    });
-    Route::get('/event', function () {
-        return view('member.event-list'); // Member event list
-    });
-    Route::get('/achievement', function () {
-        return view('member.achievement-list'); // Member achievement list
-    });
-    Route::get('/setting', function () {
-        return view('member.setting-account'); // Member account settings
-    });
+////////////////////
+// MEMBER FUNCTION//
+////////////////////
+//member dashboard
+Route::get('/member/dashboard', function () {
+    return view('member.dashboard');
 });
 
-// Admin Functions
-Route::middleware('auth')->prefix('admin')->group(function () {
-    Route::get('/admin/dashboard', function () {
+//member fee
+Route::get('/member/fee', function () {
+    return view('member.fee');
+});
+
+//member event
+Route::get('/member/event', function () {
+    return view('member.event-list');
+});
+
+//member achievement
+Route::get('/member/achievement', function () {
+    return view('member.achievement-list');
+});
+
+//member setting
+Route::get('/member/setting', function () {
+    return view('member.setting-account');
+});
+
+/////////////////////
+// ADMIN FUNCTIONS //
+/////////////////////
+
+// ADMIN DASHBOARD
+Route::prefix('admin')->group(function () {
+
+    // Dashboard
+    Route::get('/dashboard', function () {
         return view('admin.dashboard');
     })->name('admin.dashboard')->middleware('auth');
 

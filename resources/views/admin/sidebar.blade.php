@@ -146,12 +146,12 @@
                     </button>
                     <ul id="dropdown-menu-setting" class="hidden py-4 space-y-4 ml-10">
                         <li>
-                            <a href="/admin/setting-admin" class="block p-2 text-base font-bold text-white hover:bg-gray-700 rounded-lg">
+                            <a href="/admin/setting/admin" class="block p-2 text-base font-bold text-white hover:bg-gray-700 rounded-lg">
                                 Admin
                             </a>
                         </li>
                         <li>
-                            <a href="/admin/setting-users" class="block p-2 text-base font-bold text-white hover:bg-gray-700 rounded-lg">
+                            <a href="/admin/setting/users" class="block p-2 text-base font-bold text-white hover:bg-gray-700 rounded-lg">
                                 Users
                             </a>
                         </li>
