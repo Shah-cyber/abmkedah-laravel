@@ -6,7 +6,7 @@
         <hr class="border-gray-300 my-2">
     </div>
 
-    <!-- Search Section -->
+    <!-- Search Section --> 
     <div class="mb-6">
         <div class="relative w-full">
             <input
@@ -85,7 +85,7 @@
                 class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
                 Previous
             </button>
-            <button
+            <button 
                 class="px-3 py-1 text-sm text-white bg-blue-500 rounded-md hover:bg-blue-600">
                 1
             </button>

@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Models;
-
+ 
 use App\Models\Merit;
 use App\Models\Member;
 use App\Models\AbmEvent;

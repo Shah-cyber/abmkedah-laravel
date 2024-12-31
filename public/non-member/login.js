@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const loginForm = document.getElementById('login-form'); // Use an explicit ID
+    const loginForm = document.getElementById('login-form'); // Use an explicit ID 
 
     if (loginForm) {
         loginForm.addEventListener('submit', async function (e) {

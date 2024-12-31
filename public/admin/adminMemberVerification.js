@@ -4,7 +4,7 @@ window.approveMember = function(applicationId) {
         title: 'Are you sure?',
         text: "You are about to approve this user as a member.",
         icon: 'warning',
-        showCancelButton: true,
+        showCancelButton: true, 
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
         confirmButtonText: 'Yes, approve it!'

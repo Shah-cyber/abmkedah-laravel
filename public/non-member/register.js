@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const registrationForm = document.getElementById('registration-form');
+    const registrationForm = document.getElementById('registration-form'); 
 
     if (registrationForm) {
         registrationForm.addEventListener('submit', function (e) {

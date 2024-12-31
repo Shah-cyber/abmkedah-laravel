@@ -1,5 +1,5 @@
 <x-non-member-layout>
-    <h1>Welcome. This is the homepage.</h1>
+    <h1>Welcome. This is the homepage.</h1> 
 
     @if(session('success'))
         <div id="success-message" style="display: none;">{{ session('success') }}</div>

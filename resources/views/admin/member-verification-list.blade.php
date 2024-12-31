@@ -34,7 +34,7 @@
         <table class="w-full text-sm text-left text-gray-500">
             <thead class="bg-gray-50 text-gray-700 uppercase text-xs">
                 <tr>
-                    <th class="px-4 py-3">#</th>
+                    <th class="px-4 py-3">#</th> 
                     <th class="px-4 py-3">Username</th>
                     <th class="px-4 py-3">Email</th>
                     <th class="px-4 py-3">Status</th>

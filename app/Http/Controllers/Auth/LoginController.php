@@ -76,7 +76,7 @@ class LoginController extends Controller
         return response()->json(['message' => 'An unexpected error occurred. Please try again later.'], 500);
     }
 }
-
+ 
 
 //login 
 public function login(Request $request)

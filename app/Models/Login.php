@@ -19,7 +19,7 @@ class Login extends Authenticatable
         'admin_id',
         'acc_status',
         'username',
-        'password',
+        'password', 
         'email',
         'application_id',
     ];

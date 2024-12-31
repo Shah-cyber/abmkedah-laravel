@@ -58,4 +58,4 @@
 <!-- Include SweetAlert2 -->
 {{-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> --}}
 <!-- Include your custom JS file -->
-<script src="{{ asset('non-member/register.js') }}"></script>
+<script src="{{ asset('non-member/register.js') }}"></script> 

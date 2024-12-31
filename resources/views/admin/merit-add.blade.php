@@ -1,6 +1,6 @@
 <x-admin-layout>
     <!-- Header Section -->
-    <div class="mb-4 flex items-center">
+    <div class="mb-4 flex items-center"> 
         <!-- Icon Back Button -->
         <a href="/admin/achievement-merit" class="text-gray-600 hover:text-gray-800">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">

@@ -152,7 +152,7 @@ class AdminEventController extends Controller
                 'selected_ids.*' => 'exists:member,member_id', // Validate each selected ID
             ]);
         
-            foreach ($request->selected_ids as $id) {
+            foreach ($request->selected_ids as $id) { 
                 AllocatedMerit::create([
                     'member_id' => $id, // Assuming you are allocating merit to members
                     'event_id' => $request->event_id, // Pass the event ID if needed

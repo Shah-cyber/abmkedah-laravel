@@ -12,7 +12,7 @@ class Member extends Model
     protected $table = 'member';  // Specify the table name if it doesn't follow Laravel's naming convention
     protected $primaryKey = 'member_id';  // Specify the primary key if it's not 'id'
 
-    protected $fillable = [
+    protected $fillable = [ 
         'application_id',
         'total_merit',
         'registration_status',

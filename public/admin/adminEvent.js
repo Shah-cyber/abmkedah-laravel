@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
-//event update
+//event update 
 document.addEventListener('DOMContentLoaded', function () {
     // Handle success message
     const successMessage = document.getElementById('success-message');

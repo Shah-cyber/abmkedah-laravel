@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Member;
 use App\Models\Application;
 use App\Models\Login;
-use Illuminate\Http\Request;
+use Illuminate\Http\Request;  
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 

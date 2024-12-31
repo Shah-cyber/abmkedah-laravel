@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function () { 
     // Handle success message
     const successMessage = document.getElementById('success-message');
     if (successMessage) {

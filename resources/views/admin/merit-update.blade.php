@@ -39,7 +39,7 @@
                     <label for="merit_point" class="block text-sm font-medium text-gray-700">Merit Point</label>
                     <input
                         type="number"
-                        id="merit_point"
+                        id="merit_point" 
                         name="merit_point"
                         step="0.01"
                         value="{{ old('merit_point', $merit->merit_point) }}"
