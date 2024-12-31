@@ -65,7 +65,7 @@ return [
             'model' => App\Models\Login::class,
         ],
 
-        // 'users' => [
+        // 'users' => [ 
         //     'driver' => 'database',
         //     'table' => 'users',
         // ],
