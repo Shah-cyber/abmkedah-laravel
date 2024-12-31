@@ -47,7 +47,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="/admin/member-verification" class="block p-2 text-base font-bold text-white hover:bg-gray-700 rounded-lg">
+                            <a href="{{ route('admin.member.verification.list') }}" class="block p-2 text-base font-bold text-white hover:bg-gray-700 rounded-lg">
                                 Verification
                             </a>
                         </li>
