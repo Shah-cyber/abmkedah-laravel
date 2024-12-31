@@ -21,27 +21,51 @@ document.addEventListener('DOMContentLoaded', function () {
                 const data = await response.json();
 
                 if (response.ok) {
-                    // SweetAlert for success
+                    // SweetAlert with success animation and countdown timer
+                    let timerInterval;
                     Swal.fire({
                         icon: 'success',
                         title: 'Login Successful',
-                        text: data.message || 'Redirecting to your dashboard...',
-                        showConfirmButton: false,
-                        timer: 1500,
+                        html: 'Redirecting to your dashboard in <b></b> seconds.',
+                        timer: 3000, // Countdown duration in milliseconds
+                        timerProgressBar: true,
+                        didOpen: () => {
+                            Swal.showLoading();
+                            const timer = Swal.getHtmlContainer().querySelector('b');
+                            timerInterval = setInterval(() => {
+                                timer.textContent = (Swal.getTimerLeft() / 1000).toFixed(1); // Convert to seconds
+                            }, 100);
+                        },
+                        willClose: () => {
+                            clearInterval(timerInterval);
+                        },
                     }).then(() => {
                         window.location.href = data.redirect; // Redirect to the dashboard
                     });
                 } else {
-                    // SweetAlert for errors
+                    // SweetAlert with error animation and countdown timer
+                    let timerInterval;
                     Swal.fire({
                         icon: 'error',
                         title: 'Login Failed',
-                        text: data.message || 'Invalid email or password.',
-                        confirmButtonText: 'OK',
+                        html: 'Invalid email or password. Closing in <b></b> seconds.',
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: () => {
+                            Swal.showLoading();
+                            const timer = Swal.getHtmlContainer().querySelector('b');
+                            timerInterval = setInterval(() => {
+                                timer.textContent = (Swal.getTimerLeft() / 1000).toFixed(1); // Convert to seconds
+                            }, 100);
+                        },
+                        willClose: () => {
+                            clearInterval(timerInterval);
+                        },
                     });
                 }
             } catch (error) {
                 console.error(error);
+                // SweetAlert for unexpected errors
                 Swal.fire({
                     icon: 'error',
                     title: 'Unexpected Error',
