@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         icon: 'success',
                         title: 'Login Successful',
                         html: 'Redirecting to your dashboard in <b></b> seconds.',
-                        timer: 3000, // Countdown duration in milliseconds
+                        timer: 1000, // Countdown duration in milliseconds
                         timerProgressBar: true,
                         didOpen: () => {
                             Swal.showLoading();
@@ -75,6 +75,18 @@ document.addEventListener('DOMContentLoaded', function () {
             } finally {
                 submitButton.disabled = false; // Re-enable the submit button
             }
+        });
+    }
+});
+
+//log out
+document.addEventListener('DOMContentLoaded', function () {
+    const successMessage = document.getElementById('success-message');
+    if (successMessage) {
+        Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: successMessage.innerText,
         });
     }
 });

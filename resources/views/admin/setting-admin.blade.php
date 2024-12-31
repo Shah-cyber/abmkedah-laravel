@@ -69,29 +69,45 @@
             </form>
         </div>
 
-        <!-- Right Column: Profile Section -->
-        <div class="bg-white shadow-md rounded-lg p-6 text-center">
-            <h2 class="text-lg font-semibold text-gray-800 mb-2 text-left">My Profile</h2>
-            <hr class="border-gray-300 my-2 mb-4">
-            <!-- Avatar -->
-            <div class="relative w-24 h-24 mx-auto mb-4">
-                <img
-                    src=" https://randomuser.me/api/portraits/men/3.jpg"
-                    alt="Profile Avatar"
-                    class="w-24 h-24 rounded-full border" />
-            </div>
-            <!-- Change Avatar -->
-            <button
-                type="button"
-                class="w-full bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-md mb-2">
-                Change Avatar
-            </button>
-            <!-- Delete Account -->
-            <button
-                type="button"
-                class="w-full bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md">
-                Delete Account
-            </button>
+      <!-- Right Column: Profile Section -->
+      <div class="bg-white shadow-md rounded-lg p-6 text-center">
+        <h2 class="text-lg font-semibold text-gray-800 mb-2 text-left">My Profile</h2>
+        <hr class="border-gray-300 my-2 mb-4">
+        <!-- Avatar -->
+        <div class="relative w-24 h-24 mx-auto mb-4">
+            <img
+                src="https://randomuser.me/api/portraits/men/3.jpg"
+                alt="Profile Avatar"
+                class="w-24 h-24 rounded-full border" />
         </div>
+        <!-- Change Avatar -->
+        <button
+            type="button"
+            class="w-full bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-md mb-2">
+            Change Avatar
+        </button>
+        <!-- Delete Account -->
+        <button
+            type="button"
+            class="w-full bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md">
+            Delete Account
+        </button>
+
+        <!-- Log Out Button -->
+        <form action="{{ route('admin.logout') }}" method="POST" class="mt-4">
+            @csrf
+            <button
+                type="submit"
+                class="w-full bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md">
+                Log Out
+            </button>
+        </form>
     </div>
+</div>
+
+@if(session('success'))
+<div id="success-message" style="display: none;">{{ session('success') }}</div>
+@endif
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{{ asset('non-member/login.js') }}"></script> <!-- Include your existing login.js -->
 </x-admin-layout>

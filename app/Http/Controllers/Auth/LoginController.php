@@ -127,6 +127,13 @@ public function login(Request $request)
 }
 
 
+public function logout(Request $request)
+{
+    Auth::logout(); // Log the user out
+
+    return redirect('/')->with('success', 'You have been logged out successfully.'); // Redirect to the home page with a success message
+}
+
 
 
     

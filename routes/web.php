@@ -23,7 +23,8 @@ use App\Http\Controllers\AdminMemberVerification;
 // Authentication Routes
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
-Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+// Logout Route
+Route::post('/admin/logout', [LoginController::class, 'logout'])->name('admin.logout');
 
 // Registration Routes
 Route::get('/register', [LoginController::class, 'showRegistrationForm'])->name('register');
