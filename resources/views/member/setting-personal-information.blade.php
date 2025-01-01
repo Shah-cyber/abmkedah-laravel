@@ -31,7 +31,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-1 gap-4">
                     <!-- Full Name -->
                     <div>
-                        <label for="username" class="block text-sm font-medium text-gray-700">Full name</label>
+                        <label for="full_name" class="block text-sm font-medium text-gray-700">Full name</label>
                         <input
                             type="text"
                             id="full_name"
@@ -42,7 +42,7 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <!-- IC number -->
                         <div>
-                            <label for="username" class="block text-sm font-medium text-gray-700">IC Number</label>
+                            <label for="ic_num" class="block text-sm font-medium text-gray-700">IC Number</label>
                             <input
                                 type="text"
                                 id="IC_Number"
@@ -53,7 +53,7 @@
 
                         <!-- Age -->
                         <div>
-                            <label for="email" class="block text-sm font-medium text-gray-700">Age</label>
+                            <label for="age" class="block text-sm font-medium text-gray-700">Age</label>
                             <input
                                 type="number"
                                 id="age"
@@ -64,7 +64,7 @@
 
                         <!-- Race -->
                         <div class="relative">
-                            <label for="password" class="block text-sm font-medium text-gray-700">Race</label>
+                            <label for="race" class="block text-sm font-medium text-gray-700">Race</label>
                             <input
                                 type="text"
                                 id="race"
@@ -75,7 +75,7 @@
 
                         <!-- Gender -->
                         <div class="relative">
-                            <label for="password" class="block text-sm font-medium text-gray-700">Gender</label>
+                            <label for="gender" class="block text-sm font-medium text-gray-700">Gender</label>
                             <input
                                 type="text"
                                 id="gender"
@@ -86,7 +86,7 @@
 
                         <!-- Religion -->
                         <div class="relative">
-                            <label for="password" class="block text-sm font-medium text-gray-700">Religion</label>
+                            <label for="religion" class="block text-sm font-medium text-gray-700">Religion</label>
                             <input
                                 type="text"
                                 id="religion"
@@ -97,7 +97,7 @@
 
                         <!-- Phone Number -->
                         <div class="relative">
-                            <label for="password" class="block text-sm font-medium text-gray-700">Phone Number</label>
+                            <label for="phone_num" class="block text-sm font-medium text-gray-700">Phone Number</label>
                             <input
                                 type="tel"
                                 id="phone_num"
@@ -108,7 +108,7 @@
 
                         <!-- Birth Place -->
                         <div class="relative">
-                            <label for="password" class="block text-sm font-medium text-gray-700">Birth Place</label>
+                            <label for="birth_place" class="block text-sm font-medium text-gray-700">Birth Place</label>
                             <input
                                 type="text"
                                 id="birth_place"
@@ -119,7 +119,7 @@
 
                         <!-- Birth Date -->
                         <div class="relative">
-                            <label for="password" class="block text-sm font-medium text-gray-700">Birth Date</label>
+                            <label for="birth_date" class="block text-sm font-medium text-gray-700">Birth Date</label>
                             <input
                                 type="text"
                                 id="birth_date"
@@ -130,7 +130,7 @@
                     </div>
                     <!-- Address -->
                     <div>
-                        <label for="username" class="block text-sm font-medium text-gray-700">Address</label>
+                        <label for="address" class="block text-sm font-medium text-gray-700">Address</label>
                         <input
                             type="text"
                             id="Address"
