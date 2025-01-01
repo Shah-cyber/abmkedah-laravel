@@ -60,10 +60,22 @@ Route::get('/member/setting', function () {
     return view('member.setting-account');
 });
 
+//member setting personal information
+Route::get('/member/setting-personal', function () {
+    return view('member.setting-personal-information');
+});
+
 ////member event registration
 Route::get('/member/event-registration', function () {
     return view('member.event-registration');
 });
+
+////member event registration
+Route::get('/member/fee-receipt', function () {
+    return view('member.fee-receipt');
+});
+
+
 ///////////////////
 // ADMIN FUNCTIONS //
 /////////////////////
