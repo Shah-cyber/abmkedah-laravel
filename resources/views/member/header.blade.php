@@ -17,8 +17,8 @@
             <span class="top-0 start-7 absolute w-3.5 h-3.5 bg-green-500 border-2 border-white rounded-full"></span>
         </div>
         <div>
-            <h2 class="text-sm font-medium text-gray-800">Member</h2>
-            <p class="text-xs text-gray-500">memberabm@gmail.com</p>
+            <h2 class="text-sm font-medium text-gray-800">Amin</h2>
+            <p class="text-xs text-gray-500">amin@gmail.com</p>
         </div>
     </div>
 </header>
