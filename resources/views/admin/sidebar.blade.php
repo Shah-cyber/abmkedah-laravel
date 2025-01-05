@@ -99,10 +99,13 @@
                             </a>
                         </li>
                         <li>
-                            <a href="/admin/event-volunteer" class="block p-2 text-base font-bold text-white hover:bg-gray-700 rounded-lg">
+                            <a href="{{ route('event.volunteer') }}" 
+                               class="block p-2 text-base font-bold text-white hover:bg-gray-700 rounded-lg">
                                 Volunteer
                             </a>
                         </li>
+                        
+                        
                     </ul>
                 </li>
                 <!-- ACHIEVEMENT -->

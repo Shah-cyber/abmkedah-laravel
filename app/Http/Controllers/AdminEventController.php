@@ -165,22 +165,26 @@ class AdminEventController extends Controller
             return redirect()->route('event.record.index')->with('success', 'Merit allocated successfully!');
         }
 
-        public function showParticipants($eventId)
-{
-    // Retrieve the event details
-    $event = AbmEvent::findOrFail($eventId);
 
-    // Retrieve participants who joined the event, including their details
-    $participants = Joinevent::with(['member.login', 'event']) // Load member and event relationships
-        ->where('event_id', $eventId)
-        ->get();
+        public function showParticipants()
+        {
+            // Retrieve all participants who are members, including their event and member details
+            $participants = Joinevent::with(['member', 'member.login', 'event'])
+                ->whereNotNull('member_id') // Ensure only members are retrieved
+                ->get();
+        
+            // Count the number of participants
+            $totalParticipants = $participants->count();
+        
+            // Pass the participants and total count to the view
+            return view('admin.event-volunteer', compact('participants', 'totalParticipants'));
+        }
+        
+        
+        
+        
 
-    // Count the number of participants
-    $totalParticipants = $participants->count();
 
-    // Pass the event and participants to the view
-    return view('admin.event-volunteer', compact('event', 'participants', 'totalParticipants'));
-}
         
 
         

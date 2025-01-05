@@ -37,14 +37,14 @@
         </button>
         <!-- Total Members -->
         <p class="text-gray-600">Total Volunteers:
-            <span class="font-medium text-gray-900">123</span>
+            <span class="font-medium text-gray-900">{{ $totalParticipants }}</span>
         </p>
     </div>
 
 
 
-    <!-- Table -->
-    <div class="overflow-x-auto bg-white rounded-lg shadow-md">
+      <!-- Table -->
+      <div class="overflow-x-auto bg-white rounded-lg shadow-md">
         <table class="w-full text-sm text-left text-gray-500">
             <thead class="bg-gray-50 text-gray-700 uppercase text-xs">
                 <tr>
@@ -56,23 +56,15 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- Row 1 -->
-                <tr class="border-b">
-                    <td class="px-4 py-4">1</td>
-                    <td class="px-4 py-4">Robert Fox</td>
-                    <td class="px-4 py-4">willie.jennings@example.com</td>
-                    <td class="px-4 py-4">Future Forward Forum</td>
-                    <td class="px-4 py-4">MFLS</td>
-                </tr>
-                <!-- Row 2 -->
-                <tr class="border-b">
-                    <td class="px-4 py-4">2</td>
-                    <td class="px-4 py-4">Esther Howard</td>
-                    <td class="px-4 py-4">nevaeh.simmons@example.com</td>
-                    <td class="px-4 py-4">Visionary Ventures Gala</td>
-                    <td class="px-4 py-4">Associated Member</td>
-                </tr>
-                <!-- Add More Rows as Needed -->
+                @foreach ($participants as $index => $participant)
+                    <tr class="border-b">
+                        <td class="px-4 py-4">{{ $index + 1 }}</td>
+                        <td class="px-4 py-4">{{ $participant->member->name ?? 'N/A' }}</td>
+                        <td class="px-4 py-4">{{ $participant->member->login->email ?? 'N/A' }}</td>
+                        <td class="px-4 py-4">{{ $participant->event->event_name ?? 'N/A' }}</td>
+                        <td class="px-4 py-4">{{ $participant->member->member_status ?? 'N/A' }}</td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
     </div>

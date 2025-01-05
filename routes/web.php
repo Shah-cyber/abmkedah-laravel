@@ -81,6 +81,7 @@ Route::prefix('admin')->group(function () {
         return view('admin.dashboard');
     })->name('admin.dashboard')->middleware('auth');
 
+    // Create Admin
     Route::get('/create-admin', [AdminController::class, 'showCreateAdminForm'])->name('admin.create');
     Route::post('/create-admin', [AdminController::class, 'store'])->name('admin.store');
 
@@ -102,20 +103,15 @@ Route::prefix('admin')->group(function () {
 
     // Member Verification
     Route::prefix('member-verification')->group(function () {
-         //display list member for verification
-    Route::get('/admin/member-verification', function () {
-        return view('admin.member-verification-list');
-    });
-    //display view of verification member details
-    Route::get('/admin/member-verification/view', function () {
-        return view('admin.member-verification-view');
-    });
-    //approve and reject.
-    Route::post('/admin/member-verification/approve/{id}', [AdminMemberVerification::class, 'approve'])->name('admin.member.verification.approve');
-    Route::post('/admin/member-verification/reject/{id}', [AdminMemberVerification::class, 'reject'])->name('admin.member.verification.reject');
-    Route::get('/admin/member-verification', [AdminMemberVerification::class, 'index'])->name('admin.member.verification.list');
-    Route::get('/admin/member-verification/view/{id}', [AdminMemberVerification::class, 'view'])->name('admin.member.verification.view');
-
+        // Display list of members for verification
+        Route::get('/', [AdminMemberVerification::class, 'index'])->name('admin.member.verification.list');
+        
+        // Display view of verification member details
+        Route::get('/view/{id}', [AdminMemberVerification::class, 'view'])->name('admin.member.verification.view');
+        
+        // Approve and reject
+        Route::post('/approve/{id}', [AdminMemberVerification::class, 'approve'])->name('admin.member.verification.approve');
+        Route::post('/reject/{id}', [AdminMemberVerification::class, 'reject'])->name('admin.member.verification.reject');
     });
 
     // Fee Payment
@@ -147,11 +143,12 @@ Route::prefix('admin')->group(function () {
     // Event Record
     Route::prefix('event-record')->group(function () {
         Route::get('/', [AdminEventController::class, 'index'])->name('event.record.index');
+
         Route::get('/add', function () {
             return view('admin.event-add');
         });
         Route::post('/add', [AdminEventController::class, 'store'])->name('event.record.store');
-        
+
         // Update routes
         Route::get('/update/{id}', [AdminEventController::class, 'edit'])->name('event.record.edit');
         Route::post('/update/{id}', [AdminEventController::class, 'update'])->name('event.record.update');
@@ -162,18 +159,12 @@ Route::prefix('admin')->group(function () {
         Route::get('/report', function () {
             return view('admin.event-report');
         });
-        Route::get('/report/{id}', [AdminEventController::class, 'report'])->name('event.record.report');  
-        
-        // Event Volunteer
-    Route::get('/event-volunteer', function () {
-        return view('admin.event-volunteer');
-    });
-    Route::get('/event-volunteer/{eventId}', [AdminEventController::class, 'showParticipants'])->name('event.volunteer');
-    });
+        Route::get('/report/{id}', [AdminEventController::class, 'report'])->name('event.record.report');
+        //event volunteer
+        Route::get('/admin/event-volunteer', [AdminEventController::class, 'showParticipants'])->name('event.volunteer');
 
-    
 
-    
+    });
 
     // Achievement Merit
     Route::prefix('achievement-merit')->group(function () {
@@ -183,7 +174,7 @@ Route::prefix('admin')->group(function () {
         Route::get('/update/{id}', [MeritController::class, 'edit'])->name('merit.edit');
         Route::post('/update/{id}', [MeritController::class, 'update'])->name('merit.update');
         Route::delete('/delete/{id}', [MeritController::class, 'destroy'])->name('merit.delete');
-        Route::post('/achievement-merit/allocate', [AdminEventController::class, 'allocateMerit'])->name('merit.allocate');
+        Route::post('/allocate', [AdminEventController::class, 'allocateMerit'])->name('merit.allocate');
     });
 
     // Achievement Certificate
@@ -221,19 +212,8 @@ Route::prefix('admin')->group(function () {
 
 
 
-    //display list member for verification
-    // Route::get('/admin/member-verification', function () {
-    //     return view('admin.member-verification-list');
-    // });
-    // //display view of verification member details
-    // Route::get('/admin/member-verification/view', function () {
-    //     return view('admin.member-verification-view');
-    // });
-    // //approve and reject.
-    // Route::post('/admin/member-verification/approve/{id}', [AdminMemberVerification::class, 'approve'])->name('admin.member.verification.approve');
-    // Route::post('/admin/member-verification/reject/{id}', [AdminMemberVerification::class, 'reject'])->name('admin.member.verification.reject');
-    // Route::get('/admin/member-verification', [AdminMemberVerification::class, 'index'])->name('admin.member.verification.list');
-    // Route::get('/admin/member-verification/view/{id}', [AdminMemberVerification::class, 'view'])->name('admin.member.verification.view');
+
+ 
 
 
 
