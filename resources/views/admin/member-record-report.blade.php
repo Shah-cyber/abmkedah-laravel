@@ -102,7 +102,7 @@
                         <td class="px-6 py-3">{{ $achievement->event_name }}</td>
                         <td class="px-6 py-3">{{ $achievement->merit_point ?? '0.00' }}</td>
                         <td class="px-6 py-3 text-blue-500 cursor-pointer hover:underline">
-                            <a href="#" target="_blank">View</a>
+                            <a href="#" >View</a>
                         </td>
                     </tr>
                 @empty
