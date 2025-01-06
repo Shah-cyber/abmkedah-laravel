@@ -7,6 +7,7 @@ use App\Models\Joinevent;
 use Illuminate\Http\Request;
 use App\Models\AllocatedMerit;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 
 class AdminEventController extends Controller
 {
@@ -44,13 +45,14 @@ class AdminEventController extends Controller
             // Handle file upload
             $bannerPath = null;
             if ($request->hasFile('event-banner')) {
-                $bannerPath = $request->file('event-banner')->store('event_banners', 'public');
+                // Store the file in the 'event_banner' directory
+                $bannerPath = $request->file('event-banner')->store('event_banner', 'public');
             }
 
             // Create a new event
             AbmEvent::create([
                 'event_name' => $request->input('event-name'),
-                'banner' => $bannerPath,
+                'banner' => $bannerPath, // Store the path in the database
                 'event_description' => $request->input('description'),
                 'total_participation' => $request->input('total-participant'),
                 'event_category' => $request->input('category'),
@@ -67,7 +69,7 @@ class AdminEventController extends Controller
             return redirect()->route('event.record.index')->with('success', 'Event added successfully!');
         }
 
-            public function edit($id)
+        public function edit($id)
         {
             $event = AbmEvent::findOrFail($id);
             return view('admin.event-update', compact('event'));
@@ -94,31 +96,55 @@ class AdminEventController extends Controller
             // Find the event
             $event = AbmEvent::findOrFail($id);
 
-            // Handle file upload
+            // Track if any changes are made
+            $changesMade = false;
+
+            // Handle file upload for event-banner
             if ($request->hasFile('event-banner')) {
-                // You can delete the old file if necessary
-                $bannerPath = $request->file('event-banner')->store('event_banners', 'public');
-                $event->banner = $bannerPath; // Update the banner path
+                // Delete the old banner if it exists
+                if ($event->banner) {
+                    Storage::disk('public')->delete($event->banner);
+                }
+
+                // Store the new banner
+                $bannerPath = $request->file('event-banner')->store('event_banner', 'public');
+                $event->banner = $bannerPath;
+                $changesMade = true; // Mark that a change was made
             }
 
-            // Update the event details
-            $event->update([
-                'event_name' => $request->input('event-name'),
-                'event_description' => $request->input('description'),
-                'total_participation' => $request->input('total-participant'),
-                'event_category' => $request->input('category'),
-                'event_status' => $request->input('event-status'),
-                'event_date' => $request->input('event-date'),
-                'event_session' => $request->input('event-session'),
-                'event_start_time' => $request->input('start-time'),
-                'event_end_time' => $request->input('end-time'),
-                'event_location' => $request->input('location'),
-                'event_price' => $request->input('amount'),
-            ]);
+            // Update the event fields if they have changed
+            $fields = [
+                'event_name' => 'event-name',
+                'event_description' => 'description',
+                'total_participation' => 'total-participant',
+                'event_category' => 'category',
+                'event_status' => 'event-status',
+                'event_date' => 'event-date',
+                'event_session' => 'event-session',
+                'event_start_time' => 'start-time',
+                'event_end_time' => 'end-time',
+                'event_location' => 'location',
+                'event_price' => 'amount',
+            ];
 
-            // Redirect with success message
-            return redirect()->route('event.record.index')->with('success', 'Event updated successfully!');
+            foreach ($fields as $dbField => $formField) {
+                $newValue = $request->input($formField);
+                if ($event->$dbField != $newValue) { // Check if the value has changed
+                    $event->$dbField = $newValue;
+                    $changesMade = true; // Mark that a change was made
+                }
+            }
+
+            // Save the event only if changes were made
+            if ($changesMade) {
+                $event->save();
+                return redirect()->route('event.record.index')->with('success', 'Event updated successfully!');
+            }
+
+            // If no changes were made, redirect with a neutral message
+            return redirect()->route('event.record.index')->with('info', 'No changes were made to the event.');
         }
+
 
         //delete event
         public function destroy($id)

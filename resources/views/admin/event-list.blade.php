@@ -39,7 +39,7 @@
     <!-- Table -->
     <div class="overflow-x-auto bg-white rounded-lg shadow-md">
         <table class="w-full text-sm text-left text-gray-500">
-            <thead class="bg-gray-50 text-gray-700 uppercase text-xs">
+            <thead class="bg-gray-50 text-gray-700 uppercase text-xs"> 
                 <tr>
                     <th class="px-4 py-3">NO.</th>
                     <th class="px-4 py-3">Event Name</th>
@@ -56,7 +56,11 @@
                     <td class="px-4 py-4">{{ $event->event_name }}</td>
                     <td class="px-4 py-4">
                         @if ($event->banner)
-                        <img src="data:image/png;base64,{{ base64_encode($event->banner) }}" alt="Event Banner" class="w-16 h-auto rounded-md">
+                        <img 
+                            src="{{ asset('storage/' . $event->banner) }}" 
+                            alt="Event Banner" 
+                            class="w-32 h-auto rounded-md cursor-pointer" 
+                            onclick="openModal('{{ asset('storage/' . $event->banner) }}')">
                         @else
                         <span class="text-gray-500">No Banner</span>
                         @endif
@@ -105,6 +109,15 @@
         </table>
     </div>
 
+    
+    <!-- Modal -->
+<div id="bannerModal" class="fixed inset-0 z-50 hidden bg-black bg-opacity-50 flex items-center justify-center">
+    <div class="bg-white rounded-lg p-4 max-w-xl mx-auto"> <!-- Increased max-width -->
+        <span id="closeModal" class="absolute top-2 right-2 cursor-pointer text-gray-500">&times;</span>
+        <img id="modalBannerImage" src="" alt="Event Banner" class="w-full h-auto rounded-md max-h-[80vh] object-contain">
+    </div>
+</div>
+
     <!-- Pagination -->
     <div class="flex justify-between items-center mt-6">
         @if ($events->hasPages())
@@ -152,15 +165,16 @@
         @endif
     </div>
 
-    <!-- Hidden Success Message -->
-    @if(session('success'))
-        <div id="success-message" style="display: none;">{{ session('success') }}</div>
+    @if (session('success'))
+    <span id="success-message" class="hidden">{{ session('success') }}</span>
+    @endif
+    @if (session('info'))
+        <span id="info-message" class="hidden">{{ session('info') }}</span>
+    @endif
+    @if ($errors->any())
+        <span id="error-message" class="hidden">{{ implode(', ', $errors->all()) }}</span>
     @endif
 
-    <!-- Hidden Error Message -->
-    @if($errors->any())
-        <div id="error-message" style="display: none;">{{ implode(', ', $errors->all()) }}</div>
-    @endif
 
     <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -168,4 +182,24 @@
 
     <!-- Custom JavaScript to handle messages -->
     <script src="{{ asset('admin/adminEvent.js') }}"></script>
+    <script>
+        function openModal(imageSrc) {
+            const modal = document.getElementById('bannerModal');
+            const modalImage = document.getElementById('modalBannerImage');
+            modalImage.src = imageSrc; // Set the source of the modal image
+            modal.classList.remove('hidden'); // Show the modal
+        }
+    
+        // Close the modal when the close button is clicked
+        document.getElementById('closeModal').onclick = function() {
+            document.getElementById('bannerModal').classList.add('hidden');
+        }
+    
+        // Close the modal when clicking outside of the modal content
+        document.getElementById('bannerModal').onclick = function(event) {
+            if (event.target === this) {
+                this.classList.add('hidden');
+            }
+        }
+    </script>
 </x-admin-layout>

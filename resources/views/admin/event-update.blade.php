@@ -15,9 +15,9 @@
 
      <!-- Form -->
      <div class="mt-4 px-6 py-4 bg-white shadow-lg rounded-lg">
-        <form id="update-event-form" action="{{ route('event.record.update', $event->event_id) }}" method="POST" class="space-y-4">
+        <form id="update-event-form" action="{{ route('event.record.update', $event->event_id) }}" method="POST" enctype="multipart/form-data" class="space-y-4" >
             @csrf
-            @method('POST') <!-- Use POST for updating -->
+            @method('PUT') <!-- Use POST for updating -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <!-- Event Name -->
                 <div class="md:col-span-2">
@@ -41,7 +41,7 @@
                         class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
                 </div>
 
-                <!-- Event Banner -->
+               <!-- Event Banner -->
                 <div>
                     <label for="event-banner" class="block text-sm font-medium text-gray-700">Event Banner</label>
                     <input
@@ -51,12 +51,13 @@
                         class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
                     <div class="mt-2">
                         @if ($event->banner)
-                            <img src="{{ asset('storage/' . $event->banner) }}" alt="Event Banner" class="h-auto rounded-sm">
+                            <img src="{{ asset('storage/' . $event->banner) }}" alt="Event Banner" class="h-24 w-auto rounded-sm">
                         @else
                             <span class="text-gray-500">No Banner</span>
                         @endif
                     </div>
                 </div>
+
 
                 <!-- Total Participants -->
                 <div>
@@ -178,4 +179,15 @@
             </div>
         </form>
     </div>
+
+     <!-- Hidden Success Message -->
+     {{-- @if(session('success'))
+     <div id="success-message" style="display: none;">{{ session('success') }}</div>
+ @endif
+
+ <!-- Hidden Error Message -->
+ @if($errors->any())
+     <div id="error-message" style="display: none;">{{ implode(', ', $errors->all()) }}</div>
+ @endif
+ <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> --}}
 </x-admin-layout>
