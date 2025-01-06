@@ -6,6 +6,7 @@ use App\Http\Controllers\MeritController;
 use App\Http\Controllers\AdminEventController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\AdminMemberVerification;
+use App\Http\Controllers\AdminMemberRecordController;
 
 
 /*
@@ -87,18 +88,25 @@ Route::prefix('admin')->group(function () {
 
     // Member Record
     Route::prefix('member-record')->group(function () {
-        Route::get('/', function () {
-            return view('admin.member-record-list');
-        });
-        Route::get('/view', function () {
-            return view('admin.member-record-view');
-        });
-        Route::get('/update', function () {
-            return view('admin.member-record-update');
-        });
-        Route::get('/report', function () {
-            return view('admin.member-record-report');
-        });
+        Route::get('/', [AdminMemberRecordController::class, 'index'])->name('admin.member.record.index');
+        Route::get('/view/{id}', [AdminMemberRecordController::class, 'view'])->name('admin.member.record.view');
+        //update
+        Route::get('/update/{id}', [AdminMemberRecordController::class, 'edit'])
+            ->name('admin.member.record.edit');
+        Route::put('/update/{id}', [AdminMemberRecordController::class, 'update'])
+            ->name('admin.member.record.update');
+        //delete
+        Route::delete('/delete/{id}', [AdminMemberRecordController::class, 'destroy'])
+            ->name('admin.member.record.destroy');
+        //report
+        Route::get('/member-record/report/{id}', [AdminMemberRecordController::class, 'report'])
+            ->name('admin.member.record.report');
+        Route::get('/member-record/merit/{id}', [AdminMemberRecordController::class, 'getMeritBySession'])
+            ->name('admin.member.record.merit');
+
+        // Route::get('/report', function () {
+        //     return view('admin.member-record-report');
+        // });
     });
 
     // Member Verification

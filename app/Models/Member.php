@@ -50,8 +50,15 @@ class Member extends Model
     // Relationship with Joinevent model
     public function joinevents()
     {
-        return $this->hasMany(Joinevent::class, 'member_id');
+        return $this->hasMany(Joinevent::class, 'member_id', 'member_id');
     }
+
+    public function allocatedMerits()
+    {
+        return $this->hasMany(AllocatedMerit::class, 'member_id', 'member_id');
+    }
+
+
 
 
 
