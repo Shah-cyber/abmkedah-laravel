@@ -31,6 +31,16 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    // Handle info message
+    const infoMessage = document.getElementById('info-message');
+    if (infoMessage) {
+        Swal.fire({
+            icon: 'info',
+            title: 'No Changes',
+            text: infoMessage.innerText,
+        });
+    }
+
     // Handle error message
     const errorMessage = document.getElementById('error-message');
     if (errorMessage) {
@@ -40,28 +50,8 @@ document.addEventListener('DOMContentLoaded', function () {
             text: errorMessage.innerText || 'There were some problems with your input!',
         });
     }
-
-    // SweetAlert confirmation before form submission for event update
-    const updateForm = document.getElementById('update-event-form');
-    if (updateForm) {
-        updateForm.onsubmit = function (e) {
-            e.preventDefault(); // Prevent the default form submission
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, update it!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    this.submit(); // Submit the form if confirmed
-                }
-            });
-        };
-    }
 });
+
 
 //delete event
 document.addEventListener('DOMContentLoaded', function () {

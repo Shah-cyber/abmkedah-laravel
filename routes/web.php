@@ -151,7 +151,8 @@ Route::prefix('admin')->group(function () {
 
         // Update routes
         Route::get('/update/{id}', [AdminEventController::class, 'edit'])->name('event.record.edit');
-        Route::post('/update/{id}', [AdminEventController::class, 'update'])->name('event.record.update');
+        Route::put('/update/{id}', [AdminEventController::class, 'update'])->name('event.record.update');
+        
 
         // Delete
         Route::delete('/delete/{id}', [AdminEventController::class, 'destroy'])->name('event.record.delete');

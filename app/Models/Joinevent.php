@@ -26,17 +26,17 @@ class Joinevent extends Model
 
     public function event()
     {
-        return $this->belongsTo(AbmEvent::class, 'event_id', 'event_id'); // Replace column names if needed
+        return $this->belongsToMany(AbmEvent::class, 'event_id', 'event_id'); // Replace column names if needed
     }
 
     public function member()
     {
-        return $this->belongsTo(Member::class, 'member_id', 'member_id'); // Replace column names if needed
+        return $this->belongsToMany(Member::class, 'member_id', 'member_id'); // Replace column names if needed
     }
     
     public function nonmember()
     {
-        return $this->belongsTo(NonMember::class, 'nonmember_id', 'nonmember_id');
+        return $this->belongsToMany(NonMember::class, 'nonmember_id', 'nonmember_id');
     }
 
 }
