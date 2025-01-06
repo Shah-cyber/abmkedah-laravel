@@ -37,85 +37,111 @@
         </button>
         <!-- Total Members -->
         <p class="text-gray-600">Total Members:
-            <span class="font-medium text-gray-900">155</span>
+            <span class="font-medium text-gray-900">{{ $members->total() }}</span>
         </p>
     </div>
 
-
-
-    <!-- Table -->
-    <div class="overflow-x-auto bg-white rounded-lg shadow-md">
-        <table class="w-full text-sm text-left text-gray-500">
-            <thead class="bg-gray-50 text-gray-700 uppercase text-xs">
+ 
+ <!-- Table -->
+ <div class="overflow-x-auto bg-white rounded-lg shadow-md">
+    <table class="w-full text-sm text-left text-gray-500">
+        <thead class="bg-gray-50 text-gray-700 uppercase text-xs">
+            <tr>
+                <th class="px-4 py-3">#</th>
+                <th class="px-4 py-3">Name</th>
+                <th class="px-4 py-3">Email</th>
+                <th class="px-4 py-3">Achievement</th>
+                <th class="px-4 py-3">Status</th>
+                <th class="px-4 py-3">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @forelse ($members as $index => $member)
+                <tr class="border-b">
+                    <td class="px-4 py-4">{{ $loop->iteration }}</td>
+                    <td class="px-4 py-4">{{ $member->name }}</td>
+                    <td class="px-4 py-4">{{ $member->login->email }}</td>
+                    <td class="px-4 py-4">
+                        <a href="{{ route('admin.member.record.report', $member->member_id) }}" 
+                            class="text-blue-500 hover:underline cursor-pointer">Report</a>
+                    </td>
+                    <td class="px-4 py-4">{{ $member->member_status }}</td>
+                    <td class="px-4 py-4 flex space-x-2">
+                        <a href="{{ route('admin.member.record.view', $member->member_id) }}" 
+                           class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-md">View</a>
+                           <a href="{{ route('admin.member.record.edit', $member->member_id) }}" 
+                            class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded-md">Update</a>
+                        <a class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md cursor-pointer" onclick="deleteMember({{ $member->member_id }})">Delete</a>
+                    </td>
+                </tr>
+            @empty
                 <tr>
-                    <th class="px-4 py-3">#</th>
-                    <th class="px-4 py-3">Name</th>
-                    <th class="px-4 py-3">Email</th>
-                    <th class="px-4 py-3">Achievement</th>
-                    <th class="px-4 py-3">Status</th>
-                    <th class="px-4 py-3">Action</th>
+                    <td colspan="6" class="px-4 py-4 text-center text-gray-500">No members found</td>
                 </tr>
-            </thead>
-            <tbody>
-                <!-- Row 1 -->
-                <tr class="border-b">
-                    <td class="px-4 py-4">1</td>
-                    <td class="px-4 py-4">Robert Fox</td>
-                    <td class="px-4 py-4">willie.jennings@example.com</td>
-                    <td class="px-4 py-4">
-                        <a href="/admin/member-record/report" class="text-blue-500 hover:underline cursor-pointer">Report</a>
-                    </td>
-                    <td class="px-4 py-4">MFLS</td>
-                    <td class="px-4 py-4 flex space-x-2">
-                        <a href="/admin/member-record/view" class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-md">View</a>
-                        <a href="/admin/member-record/update" class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded-md">Update</a>
-                        <a class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md">Delete</a>
-                    </td>
-                </tr>
-                <!-- Row 2 -->
-                <tr class="border-b">
-                    <td class="px-4 py-4">2</td>
-                    <td class="px-4 py-4">Esther Howard</td>
-                    <td class="px-4 py-4">nevaeh.simmons@example.com</td>
-                    <td class="px-4 py-4">
-                        <a href="/admin/member-record/report" class="text-blue-500 hover:underline cursor-pointer">Report</a>
-                    </td>
-                    <td class="px-4 py-4">Associated Member</td>
-                    <td class="px-4 py-4 flex space-x-2">
-                        <a href="/admin/member-record/view" class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-md">View</a>
-                        <a href="/admin/member-record/update" class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded-md">Update</a>
-                        <a class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md">Delete</a>
-                    </td>
-                </tr>
-                <!-- Add More Rows as Needed -->
-            </tbody>
-        </table>
-    </div>
+            @endforelse
+        </tbody>
+    </table>
+</div>
+
+
 
     <!-- Pagination -->
     <div class="flex justify-between items-center mt-6">
-        <p class="text-sm text-gray-600">Showing 1 to 10 of 155 entries</p>
+        <p class="text-sm text-gray-600">
+            Showing {{ $members->firstItem() }} to {{ $members->lastItem() }} of {{ $members->total() }} entries
+        </p>
         <div class="flex items-center space-x-1">
-            <button
-                class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
+            <button onclick="changePage({{ $members->currentPage() - 1 }})"
+                {{ $members->onFirstPage() ? 'disabled' : '' }}
+                class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed">
                 Previous
             </button>
-            <button
-                class="px-3 py-1 text-sm text-white bg-blue-500 rounded-md hover:bg-blue-600">
-                1
-            </button>
-            <button
-                class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
-                2
-            </button>
-            <button
-                class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
-                3
-            </button>
-            <button
-                class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
+
+            @for ($i = 1; $i <= $members->lastPage(); $i++)
+                <button onclick="changePage({{ $i }})"
+                    class="px-3 py-1 text-sm {{ $members->currentPage() == $i ? 'text-white bg-blue-500 hover:bg-blue-600' : 'text-gray-500 bg-gray-200 hover:bg-gray-300' }} rounded-md">
+                    {{ $i }}
+                </button>
+            @endfor
+
+            <button onclick="changePage({{ $members->currentPage() + 1 }})"
+                {{ $members->hasMorePages() ? '' : 'disabled' }}
+                class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed">
                 Next
             </button>
         </div>
     </div>
+
+    <script>
+        function changePage(page) {
+            // Get current URL
+            let url = new URL(window.location.href);
+            
+            // Update or add the page parameter
+            url.searchParams.set('page', page);
+            
+            // Redirect to new URL
+            window.location.href = url.toString();
+        }
+    </script>
+    <!-- Hidden Success and Error Messages -->
+    @if(session('success'))
+    <div id="success-message" style="display: none;">{{ session('success') }}</div>
+    @endif
+
+    @if($errors->any())
+        <div id="error-message" style="display: none;">{{ implode(', ', $errors->all()) }}</div>
+    @endif
+
+    <!-- Add SweetAlert2 script -->
+ <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+ <script src="{{ asset('admin/adminMemberRecord.js') }}"></script>
+ <!-- Hidden Success and Error Messages -->
+            @if(session('success'))
+                <div id="success-message" style="display: none;">{{ session('success') }}</div>
+            @endif
+            
+            @if($errors->any())
+                <div id="error-message" style="display: none;">{{ implode(', ', $errors->all()) }}</div>
+            @endif
 </x-admin-layout>

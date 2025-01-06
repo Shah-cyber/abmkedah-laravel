@@ -100,10 +100,10 @@ class AdminMemberVerification extends Controller
 
     public function index()
     {
-        // Fetch data from login and application tables
+        // Fetch data from login and application tables with pagination
         $applications = Application::with('login')
             ->select('application_id', 'login_id', 'applicant_status')
-            ->get();
+            ->paginate(10);
 
         return view('admin.member-verification-list', compact('applications'));
     }

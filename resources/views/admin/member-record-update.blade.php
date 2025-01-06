@@ -13,9 +13,15 @@
     <!-- Horizontal Line -->
     <hr class="border-gray-300 my-2">
 
-    <!-- Form -->
-    <div class="mt-4 px-6 py-4 bg-white shadow-lg rounded-lg">
-        <form action="#" method="POST" class="space-y-4">
+     <!-- Form -->
+     <div class="mt-4 px-6 py-4 bg-white shadow-lg rounded-lg">
+        <form action="{{ route('admin.member.record.update', $member->member_id) }}" 
+              method="POST" 
+              enctype="multipart/form-data" 
+              class="space-y-4">
+            @csrf
+            @method('PUT')
+            
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <!-- Full Name -->
                 <div class="md:col-span-2">
@@ -24,8 +30,11 @@
                         type="text"
                         id="full-name"
                         name="full-name"
-                        value="Albert Flores"
-                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
+                        value="{{ old('full-name', $member->name) }}"
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 @error('full-name') border-red-500 @enderror" />
+                    @error('full-name')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <!-- IC Number -->
@@ -35,8 +44,11 @@
                         type="text"
                         id="ic-number"
                         name="ic-number"
-                        value="910202025432"
-                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
+                        value="{{ old('ic-number', $member->ic_number) }}"
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 @error('ic-number') border-red-500 @enderror" />
+                    @error('ic-number')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <!-- Age -->
@@ -46,8 +58,11 @@
                         type="number"
                         id="age"
                         name="age"
-                        value="23"
-                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
+                        value="{{ old('age', $member->age) }}"
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 @error('age') border-red-500 @enderror" />
+                    @error('age')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <!-- Race -->
@@ -57,8 +72,11 @@
                         type="text"
                         id="race"
                         name="race"
-                        value="Malay"
-                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
+                        value="{{ old('race', $member->race) }}"
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 @error('race') border-red-500 @enderror" />
+                    @error('race')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <!-- Religion -->
@@ -68,19 +86,26 @@
                         type="text"
                         id="religion"
                         name="religion"
-                        value="Islam"
-                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
+                        value="{{ old('religion', $member->religion) }}"
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 @error('religion') border-red-500 @enderror" />
+                    @error('religion')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <!-- Gender -->
                 <div>
                     <label for="gender" class="block text-sm font-medium text-gray-700">Gender</label>
-                    <input
-                        type="text"
+                    <select
                         id="gender"
                         name="gender"
-                        value="Male"
-                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 @error('gender') border-red-500 @enderror">
+                        <option value="Male" {{ old('gender', $member->gender) === 'Male' ? 'selected' : '' }}>Male</option>
+                        <option value="Female" {{ old('gender', $member->gender) === 'Female' ? 'selected' : '' }}>Female</option>
+                    </select>
+                    @error('gender')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <!-- Phone Number -->
@@ -90,8 +115,11 @@
                         type="text"
                         id="phone-number"
                         name="phone-number"
-                        value="0182379045"
-                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
+                        value="{{ old('phone-number', $member->phone_number) }}"
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 @error('phone-number') border-red-500 @enderror" />
+                    @error('phone-number')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <!-- Birth Place -->
@@ -101,8 +129,11 @@
                         type="text"
                         id="birth-place"
                         name="birth-place"
-                        value="HHC Bellevue Hospital Center"
-                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
+                        value="{{ old('birth-place', $member->birthplace) }}"
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 @error('birth-place') border-red-500 @enderror" />
+                    @error('birth-place')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <!-- Birth Date -->
@@ -112,8 +143,11 @@
                         type="date"
                         id="birth-date"
                         name="birth-date"
-                        value="2024-12-20"
-                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
+                        value="{{ old('birth-date', $member->birthdate) }}"
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 @error('birth-date') border-red-500 @enderror" />
+                    @error('birth-date')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <!-- Address -->
@@ -123,8 +157,11 @@
                         type="text"
                         id="address"
                         name="address"
-                        value="4140 Parker Rd. Allentown, New Mexico 31134"
-                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
+                        value="{{ old('address', $member->address) }}"
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 @error('address') border-red-500 @enderror" />
+                    @error('address')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <!-- User Status -->
@@ -133,10 +170,13 @@
                     <select
                         id="user-status"
                         name="user-status"
-                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
-                        <option value="associate-member" selected>Associate Member</option>
-                        <option value="regular-member">MFLS Alumni</option>
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 @error('user-status') border-red-500 @enderror">
+                        <option value="associate-member" {{ old('user-status', $member->member_status) === 'associate-member' ? 'selected' : '' }}>Associate Member</option>
+                        <option value="regular-member" {{ old('user-status', $member->member_status) === 'regular-member' ? 'selected' : '' }}>MFLS Alumni</option>
                     </select>
+                    @error('user-status')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <!-- Proof of Participation -->
@@ -146,7 +186,13 @@
                         type="file"
                         id="proof-file"
                         name="proof-file"
-                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 @error('proof-file') border-red-500 @enderror" />
+                    @if($member->application && $member->application->prove_letter)
+                        <p class="text-sm text-gray-500 mt-1">Current file: {{ basename($member->application->prove_letter) }}</p>
+                    @endif
+                    @error('proof-file')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
                 </div>
             </div>
 
@@ -158,6 +204,17 @@
                     Save
                 </button>
             </div>
+
+            <!-- Hidden Success and Error Messages -->
+            @if(session('success'))
+                <div id="success-message" style="display: none;">{{ session('success') }}</div>
+            @endif
+            
+            @if($errors->any())
+                <div id="error-message" style="display: none;">{{ implode(', ', $errors->all()) }}</div>
+            @endif
         </form>
     </div>
+
+ 
 </x-admin-layout>
