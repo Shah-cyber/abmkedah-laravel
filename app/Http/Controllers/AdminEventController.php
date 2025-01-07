@@ -171,25 +171,25 @@ class AdminEventController extends Controller
             return view('admin.event-report', compact('event', 'participants', 'totalParticipants'));
         }
 
-        public function allocateMerit(Request $request)
-        {
-            $request->validate([
-                'selected_ids' => 'required|array', // Expecting an array of selected IDs
-                'selected_ids.*' => 'exists:member,member_id', // Validate each selected ID
-            ]);
+        // public function allocateMerit(Request $request)
+        // {
+        //     $request->validate([
+        //         'selected_ids' => 'required|array', // Expecting an array of selected IDs
+        //         'selected_ids.*' => 'exists:member,member_id', // Validate each selected ID
+        //     ]);
         
-            foreach ($request->selected_ids as $id) { 
-                AllocatedMerit::create([
-                    'member_id' => $id, // Assuming you are allocating merit to members
-                    'event_id' => $request->event_id, // Pass the event ID if needed
-                    'admin_id' => auth()->user()->id, // Assuming the admin is logged in
-                    'merit_point' => 1.00, // Set the merit point as needed
-                    'allocation_date' => now(), // Set the allocation date to now
-                ]);
-            }
+        //     foreach ($request->selected_ids as $id) { 
+        //         AllocatedMerit::create([
+        //             'member_id' => $id, // Assuming you are allocating merit to members
+        //             'event_id' => $request->event_id, // Pass the event ID if needed
+        //             'admin_id' => auth()->user()->id, // Assuming the admin is logged in
+        //             'merit_point' => 1.00, // Set the merit point as needed
+        //             'allocation_date' => now(), // Set the allocation date to now
+        //         ]);
+        //     }
         
-            return redirect()->route('event.record.index')->with('success', 'Merit allocated successfully!');
-        }
+        //     return redirect()->route('event.record.index')->with('success', 'Merit allocated successfully!');
+        // }
 
 
         public function showParticipants()
@@ -197,10 +197,10 @@ class AdminEventController extends Controller
             // Retrieve all participants who are members, including their event and member details
             $participants = Joinevent::with(['member', 'member.login', 'event'])
                 ->whereNotNull('member_id') // Ensure only members are retrieved
-                ->get();
+                ->paginate(10); // Paginate with 10 records per page
         
             // Count the number of participants
-            $totalParticipants = $participants->count();
+            $totalParticipants = Joinevent::whereNotNull('member_id')->count();
         
             // Pass the participants and total count to the view
             return view('admin.event-volunteer', compact('participants', 'totalParticipants'));

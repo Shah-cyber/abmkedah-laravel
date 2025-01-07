@@ -82,7 +82,7 @@
                         <th class="px-6 py-3">No.</th>
                         <th class="px-6 py-3">Volunteer Name</th>
                         <th class="px-6 py-3">Phone Number</th>
-                        <th class="px-6 py-3">Member Status</th>
+                        <th class="px-6 py-3">Member Status</th> 
                         <th class="px-6 py-3">Allocate Merit</th>
                     </tr>
                 </thead>
@@ -124,45 +124,28 @@
             </table> 
         </div>
 
-    {{-- <!-- Pagination -->
+     <!-- Pagination -->
     <div class="flex justify-between items-center mt-6">
-        <p class="text-sm text-gray-600">Showing 1 to 10 of 155 entries</p>
+        <p class="text-sm text-gray-600">
+            Showing {{ count($participants) }} entries
+        </p>
         <div class="flex items-center space-x-1">
-            <button
-                class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
+            <button disabled
+                class="px-3 py-1 text-sm text-gray-400 bg-gray-100 rounded-md cursor-not-allowed">
                 Previous
             </button>
-            <button
-                class="px-3 py-1 text-sm text-white bg-blue-500 rounded-md hover:bg-blue-600">
+
+            <span class="px-3 py-1 text-sm text-white bg-blue-500 rounded-md">
                 1
-            </button>
-            <button
-                class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
-                2
-            </button>
-            <button
-                class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
-                3
-            </button>
-            <button
-                class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
+            </span>
+
+            <button disabled
+                class="px-3 py-1 text-sm text-gray-400 bg-gray-100 rounded-md cursor-not-allowed">
                 Next
             </button>
         </div>
-    </div> --}}
-    <!-- Pagination -->
-<div class="flex justify-between items-center mt-6">
-    <p class="text-sm text-gray-600" id="pagination-info"></p>
-    <div class="flex items-center space-x-1">
-        <button id="prev-page" class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300" disabled>
-            Previous
-        </button>
-        <div id="page-numbers" class="flex items-center space-x-1"></div>
-        <button id="next-page" class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
-            Next
-        </button>
     </div>
-</div>
+
 
     <!-- JavaScript to Handle PDF Generation -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

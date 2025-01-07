@@ -6,7 +6,9 @@ use App\Http\Controllers\MeritController;
 use App\Http\Controllers\AdminEventController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\AdminMemberVerification;
+use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AdminMemberRecordController;
+
 
 
 /*
@@ -78,9 +80,11 @@ Route::middleware('auth')->prefix('member')->group(function () {
 Route::prefix('admin')->group(function () {
 
     // Dashboard
-    Route::get('/dashboard', function () {
-        return view('admin.dashboard');
-    })->name('admin.dashboard')->middleware('auth');
+    Route::get('/dashboard', [AdminDashboardController::class, 'index'])
+    ->name('admin.dashboard')
+    ->middleware('auth');
+
+    
 
     // Create Admin
     Route::get('/create-admin', [AdminController::class, 'showCreateAdminForm'])->name('admin.create');

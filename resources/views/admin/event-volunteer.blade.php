@@ -71,26 +71,29 @@
 
     <!-- Pagination -->
     <div class="flex justify-between items-center mt-6">
-        <p class="text-sm text-gray-600">Showing 1 to 10 of 155 entries</p>
+        <p class="text-sm text-gray-600">
+            Showing {{ $participants->firstItem() }} to {{ $participants->lastItem() }} of {{ $participants->total() }} entries
+        </p>
         <div class="flex items-center space-x-1">
-            <button
-                class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
+            <button 
+                onclick="window.location.href='{{ $participants->previousPageUrl() }}'"
+                class="px-3 py-1 text-sm {{ !$participants->onFirstPage() ? 'text-gray-500 bg-gray-200 hover:bg-gray-300' : 'text-gray-400 bg-gray-100 cursor-not-allowed' }} rounded-md"
+                {{ $participants->onFirstPage() ? 'disabled' : '' }}>
                 Previous
             </button>
-            <button 
-                class="px-3 py-1 text-sm text-white bg-blue-500 rounded-md hover:bg-blue-600">
-                1
-            </button>
+
+            @for ($i = 1; $i <= $participants->lastPage(); $i++)
+                <button 
+                    onclick="window.location.href='{{ $participants->url($i) }}'"
+                    class="px-3 py-1 text-sm rounded-md {{ $participants->currentPage() == $i ? 'text-white bg-blue-500 hover:bg-blue-600' : 'text-gray-500 bg-gray-200 hover:bg-gray-300' }}">
+                    {{ $i }}
+                </button>
+            @endfor
+
             <button
-                class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
-                2
-            </button>
-            <button
-                class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
-                3
-            </button>
-            <button
-                class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
+                onclick="window.location.href='{{ $participants->nextPageUrl() }}'"
+                class="px-3 py-1 text-sm {{ $participants->hasMorePages() ? 'text-gray-500 bg-gray-200 hover:bg-gray-300' : 'text-gray-400 bg-gray-100 cursor-not-allowed' }} rounded-md"
+                {{ !$participants->hasMorePages() ? 'disabled' : '' }}>
                 Next
             </button>
         </div>
