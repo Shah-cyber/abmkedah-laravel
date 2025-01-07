@@ -75,7 +75,7 @@
                 </div>
                 <div class="flex items-center p-4 border-t  justify-between">
                     <p class="text-xs text-gray-500">#ConcertEvents</p>
-                    <a href="event-registration" class="w-24 block">
+                    <a href="{{ route('member.event-registration', ['id' => 1]) }}" class="w-24 block">
                         <button class="w-full bg-green-500 text-white py-2 px-4 rounded-lg font-medium hover:bg-green-600 transition ">
                             Register
                         </button>
@@ -115,7 +115,7 @@
                 </div>
                 <div class="flex items-center p-4 border-t  justify-between">
                     <p class="text-xs text-gray-500">#TechnologyEvents</p>
-                    <a href="event-registration" class="w-24 block">
+                    <a href="{{ route('member.event-registration', ['id' => 2]) }}" class="w-24 block">
                         <button class="w-full bg-green-500 text-white py-2 px-4 rounded-lg font-medium hover:bg-green-600 transition ">
                             Register
                         </button>
@@ -157,7 +157,7 @@
                 </div>
                 <div class="flex items-center p-4 border-t  justify-between">
                     <p class="text-xs text-gray-500">#SporecEvents</p>
-                    <a href="event-registration" class="w-24 block">
+                    <a href="{{ route('member.event-registration', ['id' => 3]) }}" class="w-24 block">
                         <button class="w-full bg-green-500 text-white py-2 px-4 rounded-lg font-medium hover:bg-green-600 transition ">
                             Register
                         </button>
@@ -199,12 +199,12 @@
                 </div>
                 <div class="flex items-center p-4 border-t  justify-between">
                     <p class="text-xs text-gray-500">#ReligionEvents</p>
-                    <a href="event-registration" class="w-24 block">
+                    <a href="{{ route('member.event-registration', ['id' => 4]) }}" class="w-24 block">
                         <button class="w-full bg-green-500 text-white py-2 px-4 rounded-lg font-medium hover:bg-green-600 transition ">
                             Register
                         </button>
                     </a>
-                </div>
+                </div> 
             </div>
 
             <!-- Card 5 -->
@@ -241,7 +241,7 @@
                 </div>
                 <div class="flex items-center p-4 border-t  justify-between">
                     <p class="text-xs text-gray-500">#FoodEvents</p>
-                    <a href="event-registration" class="w-24 block">
+                    <a href="{{ route('member.event-registration', ['id' => 5]) }}" class="w-24 block">
                         <button class="w-full bg-green-500 text-white py-2 px-4 rounded-lg font-medium hover:bg-green-600 transition ">
                             Register
                         </button>
@@ -285,7 +285,7 @@
                 </div>
                 <div class="flex items-center p-4 border-t  justify-between">
                     <p class="text-xs text-gray-500">#HikingEvents</p>
-                    <a href="event-registration" class="w-24 block">
+                    <a href="{{ route('member.event-registration', ['id' => 6]) }}" class="w-24 block">
                         <button class="w-full bg-green-500 text-white py-2 px-4 rounded-lg font-medium hover:bg-green-600 transition ">
                             Register
                         </button>

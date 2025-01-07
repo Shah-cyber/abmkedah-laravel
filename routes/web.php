@@ -26,8 +26,10 @@ use App\Http\Controllers\AdminMemberRecordController;
 // Authentication Routes
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
-// Logout Route
+// Logout Route Admin
 Route::post('/admin/logout', [LoginController::class, 'logout'])->name('admin.logout');
+//Logout Route Member
+Route::post('/member/logout', [LoginController::class, 'logout'])->name('member.logout');
 
 // Registration Routes
 Route::get('/register', [LoginController::class, 'showRegistrationForm'])->name('register');
@@ -70,6 +72,21 @@ Route::middleware('auth')->prefix('member')->group(function () {
     Route::get('/setting', function () {
         return view('member.setting-account'); // Member account settings
     });
+    ////member event registration
+    Route::get('/member/event-registration', function () {
+        return view('member.event-registration');
+    });
+    Route::get('/member/event-registration/{id?}', function() {
+        return view('member.event-registration');
+    })->name('member.event-registration');
+    ////member event registration
+    Route::get('/member/fee-receipt', function () {
+        return view('member.fee-receipt');
+    });
+    // Add this route for fee receipt view
+    Route::get('/member/fee-receipt/{id?}', function() {
+        return view('member.fee-receipt');
+    })->name('member.fee-receipt');
 });
 
 /////////////////////

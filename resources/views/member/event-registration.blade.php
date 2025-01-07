@@ -14,7 +14,7 @@
     <!-- Horizontal Line -->
     <hr class="border-gray-300 my-2">
     <!-- event details content -->
-    <div class="relative">
+    <div class="relative"> 
         <!-- event image banner -->
         <img
             src="https://images.pexels.com/photos/12439941/pexels-photo-12439941.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
