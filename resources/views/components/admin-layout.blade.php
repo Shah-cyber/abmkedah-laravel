@@ -18,6 +18,8 @@
 
     <!-- Add any custom CSS or other assets -->
     {{-- <link rel="stylesheet" href="{{ asset('css/app.css') }}"> --}}
+    <link rel="icon" type="image/svg+xml" href="{{ asset('images/abm-logo.svg') }}">
+    
 </head>
 
 <body class="bg-gray-100">
@@ -39,7 +41,7 @@
 
   
 
-   
+    <script src="{{ asset('admin/adminFeeCollection.js') }}"></script>
 </body>
 
 </html>

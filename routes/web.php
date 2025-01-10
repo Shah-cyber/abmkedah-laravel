@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\MeritController;
+use App\Http\Controllers\AdminFeeController;
 use App\Http\Controllers\AdminEventController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\AdminMemberVerification;
@@ -145,28 +146,49 @@ Route::prefix('admin')->group(function () {
 
     // Fee Payment
     Route::prefix('fee-payment')->group(function () {
-        Route::get('/', function () {
-            return view('admin.fee-payment-list');
-        });
+        // Route::get('/', function () {
+        //     return view('admin.fee-payment-list');
+        // });
+        Route::get('/', [AdminFeeController::class, 'index'])->name('admin.fee-payment.index');
+        Route::get('/report/{id}', [AdminFeeController::class, 'report'])->name('admin.fee-payment.report');
         Route::get('/report', function () {
             return view('admin.fee-payment-report');
         });
     });
 
-    // Fee Collection
+    // // Fee Collection
+    // Route::prefix('fee-collection')->group(function () {
+    //     Route::get('/', function () {
+    //         return view('admin.fee-collection-list');
+    //     });
+    //     Route::get('/add', function () {
+    //         return view('admin.fee-collection-add');
+    //     });
+    //     Route::get('/update', function () {
+    //         return view('admin.fee-collection-update');
+    //     });
+    //     Route::get('/report', function () {
+    //         return view('admin.fee-collection-report');
+    //     });
+    // });
+    // Fee Collection Routes
     Route::prefix('fee-collection')->group(function () {
-        Route::get('/', function () {
-            return view('admin.fee-collection-list');
-        });
-        Route::get('/add', function () {
-            return view('admin.fee-collection-add');
-        });
-        Route::get('/update', function () {
-            return view('admin.fee-collection-update');
-        });
-        Route::get('/report', function () {
-            return view('admin.fee-collection-report');
-        });
+        Route::get('/', [AdminFeeController::class, 'feeCollectionList'])->name('admin.fee-collection.list');
+        Route::get('/add', [AdminFeeController::class, 'feeCollectionAdd'])->name('admin.fee-collection.add');
+        //store
+        Route::post('/store', [AdminFeeController::class, 'feeCollectionStore'])->name('admin.fee-collection.store');
+        //update
+        Route::get('/update', [AdminFeeController::class, 'feeCollectionUpdate'])->name('admin.fee-collection.update');
+        Route::get('/edit/{id}', [AdminFeeController::class, 'feeCollectionEdit'])->name('admin.fee-collection.edit');
+        Route::put('/update/{id}', [AdminFeeController::class, 'feeCollectionUpdate'])->name('admin.fee-collection.update');
+        //delete
+        Route::delete('/delete/{id}', [AdminFeeController::class, 'feeCollectionDelete'])
+        ->name('admin.fee-collection.delete');
+        //report
+        Route::get('/report/{id}', [AdminFeeController::class, 'feeCollectionReport'])->name('admin.fee-collection.report');
+        Route::get('/reporttest', function () {
+                    return view('admin.fee-collection-report');
+                 });
     });
 
     // Event Record

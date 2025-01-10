@@ -7,6 +7,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/flowbite@1.6.5/dist/flowbite.min.css" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="{{ asset('images/abm-logo.svg') }}">
+    <title>{{ $title ?? 'Member Dashboard' }}</title>
 </head>
  
 

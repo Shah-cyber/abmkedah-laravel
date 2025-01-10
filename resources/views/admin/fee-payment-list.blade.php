@@ -16,7 +16,7 @@
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="absolute left-3 top-3 h-5 w-5 text-gray-400"
-                fill="none"
+                fill="none" 
                 viewBox="0 0 24 24"
                 stroke="currentColor"
                 stroke-width="2">
@@ -29,13 +29,15 @@
         </div>
     </div>
 
-    <!-- Export and Total Members Section -->
-    <div class="flex items-center justify-end mb-6">
+       <!-- Export and Total Members Section -->
+       <div class="flex items-center justify-end mb-6">
         <!-- Total Members -->
         <p class="text-gray-600">Total Fee Payment:
-            <span class="font-medium text-gray-900">24</span>
+            <span class="font-medium text-gray-900">{{ $events->count() }}</span>
         </p>
     </div>
+
+
 
 
 
@@ -51,62 +53,60 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- Row 1 -->
-                <tr class="border-b">
-                    <td class="px-4 py-4">1</td>
-                    <td class="px-4 py-4">Mountain Quest: Hiking Adventure</td>
-                    <td class="px-4 py-4">RM35.00</td>
-                    <td class="px-4 py-4 flex space-x-2">
-                        <a href="/admin/fee-payment/report" class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-md">Report</a>
-                    </td>
-                </tr>
-                <!-- Row 2 -->
-                <tr class="border-b">
-                    <td class="px-4 py-4">2</td>
-                    <td class="px-4 py-4">Run for Health: Charity Sport Run</td>
-                    <td class="px-4 py-4">RM24.90</td>
-                    <td class="px-4 py-4 flex space-x-2">
-                        <a href="/admin/fee-payment/report" class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-md">Report</a>
-                    </td>
-                </tr>
-                <!-- Row 3 -->
-                <tr class="border-b">
-                    <td class="px-4 py-4">3</td>
-                    <td class="px-4 py-4">Khatam al-Quran Ceremony: A Spiritual Milestone</td>
-                    <td class="px-4 py-4">RM2.00</td>
-                    <td class="px-4 py-4 flex space-x-2">
-                        <a href="/admin/fee-payment/report" class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-md">Report</a>
-                    </td>
-                </tr>
-                <!-- Add More Rows as Needed -->
+                @foreach($events as $event)
+                    <tr class="border-b">
+                        <td class="px-4 py-4">{{ $event->event_id }}</td>
+                        <td class="px-4 py-4">{{ $event->event_name }}</td>
+                        <td class="px-4 py-4">RM{{ number_format($event->event_price, 2) }}</td>
+                        <td class="px-4 py-4 flex space-x-2">
+                            <a href="{{ route('admin.fee-payment.report', ['id' => $event->event_id]) }}" 
+                            class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-md">
+                                Report
+                            </a>
+                        </td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
     </div>
 
     <!-- Pagination -->
     <div class="flex justify-between items-center mt-6">
-        <p class="text-sm text-gray-600">Showing 1 to 10 of 155 entries</p>
+        <p class="text-sm text-gray-600">
+            Showing {{ $events->firstItem() }} to {{ $events->lastItem() }} of {{ $events->total() }} entries
+        </p>
         <div class="flex items-center space-x-1">
-            <button
-                class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
-                Previous
-            </button>
-            <button
-                class="px-3 py-1 text-sm text-white bg-blue-500 rounded-md hover:bg-blue-600">
-                1
-            </button>
-            <button
-                class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
-                2
-            </button>
-            <button
-                class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
-                3
-            </button>
-            <button
-                class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
-                Next
-            </button>
+            @if($events->onFirstPage())
+                <button class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md cursor-not-allowed">
+                    Previous
+                </button>
+            @else
+                <a href="{{ $events->previousPageUrl() }}" class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
+                    Previous
+                </a>
+            @endif
+
+            @foreach ($events->getUrlRange(1, $events->lastPage()) as $page => $url)
+                @if ($page == $events->currentPage())
+                    <button class="px-3 py-1 text-sm text-white bg-blue-500 rounded-md">
+                        {{ $page }}
+                    </button>
+                @else
+                    <a href="{{ $url }}" class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
+                        {{ $page }}
+                    </a>
+                @endif
+            @endforeach
+
+            @if($events->hasMorePages())
+                <a href="{{ $events->nextPageUrl() }}" class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
+                    Next
+                </a>
+            @else
+                <button class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md cursor-not-allowed">
+                    Next
+                </button>
+            @endif
         </div>
     </div>
 </x-admin-layout>
