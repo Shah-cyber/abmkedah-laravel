@@ -7,7 +7,7 @@
     </div>
 
     <!-- Search Section -->
-    <div class="mb-6">
+    <div class="mb-6"> 
         <div class="relative w-full">
             <input
                 type="text"
@@ -26,18 +26,18 @@
                     d="M8 4a4 4 0 100 8 4 4 0 000-8zM21 21l-5.197-5.197">
                 </path>
             </svg>
-        </div>
+        </div> 
     </div>
 
-    <!-- Export and Total Members Section -->
-    <div class="flex items-center justify-between mb-6">
-        <!-- Export Button -->
-        <a href="/admin/fee-collection/add" class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg font-medium shadow">
+     <!-- Export and Total Members Section -->
+     <div class="flex items-center justify-between mb-6">
+        <!-- Add New Payment Button -->
+        <a href="{{ route('admin.fee-collection.add') }}" class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg font-medium shadow">
             Add New Payment
         </a>
         <!-- Total Members -->
         <p class="text-gray-600">Total Fee Collection:
-            <span class="font-medium text-gray-900">4</span>
+            <span class="font-medium text-gray-900">{{ $payments->total() }}</span>
         </p>
     </div>
 
@@ -55,33 +55,26 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- Row 1 -->
+                @foreach($payments as $payment)
                 <tr class="border-b">
-                    <td class="px-4 py-4">1</td>
-                    <td class="px-4 py-4">ABMK Yearly Fee</td>
-                    <td class="px-4 py-4">RM5.00</td>
+                    <td class="px-4 py-4">{{ $payment->payment_allocation_id }}</td>
+                    <td class="px-4 py-4">{{ $payment->payment_allocation_name }}</td>
+                    <td class="px-4 py-4">RM{{ number_format($payment->amount, 2) }}</td>
                     <td class="px-4 py-4 flex space-x-2">
-                        <a href="/admin/fee-collection/report" class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-md">Report</a>
-                        <a href="/admin/fee-collection/update" class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded-md">Update</a>
-                        <button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md">Delete</button>
+                        <a href="{{ route('admin.fee-collection.report', $payment->payment_allocation_id) }}" 
+                            class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-md">
+                             Report
+                         </a>
+                        <a href="{{ route('admin.fee-collection.edit', $payment->payment_allocation_id) }}" class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded-md">Update</a>
+                        <button onclick="deletePayment({{ $payment->payment_allocation_id }})" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md">Delete</button>
                     </td>
                 </tr>
-                <!-- Row 2 -->
-                <tr class="border-b">
-                    <td class="px-4 py-4">2</td>
-                    <td class="px-4 py-4">ABMK Lanyard</td>
-                    <td class="px-4 py-4">RM10.90</td>
-                    <td class="px-4 py-4 flex space-x-2">
-                        <a href="/admin/fee-collection/report" class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-md">Report</a>
-                        <a href="/admin/fee-collection/update" class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded-md">Update</a>
-                        <button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md">Delete</button>
-                    </td>
-                </tr>
-                <!-- Add More Rows as Needed -->
+                @endforeach
             </tbody>
         </table>
     </div>
 
+    {{-- <a href="{{ route('admin.fee-collection.report') }}" class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-md">Report</a> --}}
     <!-- Pagination -->
     <div class="flex justify-between items-center mt-6">
         <p class="text-sm text-gray-600">Showing 1 to 10 of 155 entries</p>
@@ -108,4 +101,6 @@
             </button>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+     <script src="{{ asset('admin/adminFeeCollection.js') }}"></script> 
 </x-admin-layout>

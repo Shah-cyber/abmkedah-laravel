@@ -1,8 +1,8 @@
 <x-admin-layout>
-    <!-- Header Section -->
-    <div class="mb-4 flex items-center">
+     <!-- Header Section -->
+     <div class="mb-4 flex items-center">
         <!-- Icon Back Button -->
-        <a href="/admin/fee-collection" class="text-gray-600 hover:text-gray-800">
+        <a href="{{ route('admin.fee-collection.list') }}" class="text-gray-600 hover:text-gray-800">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
             </svg>
@@ -15,7 +15,8 @@
 
     <!-- Form -->
     <div class="mt-4 px-6 py-4 bg-white shadow-lg rounded-lg">
-        <form action="#" method="POST" class="space-y-4">
+        <form id="feeCollectionUpdateForm" data-payment-id="{{ $payment->payment_allocation_id }}" class="space-y-4">
+            @csrf
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <!-- Payment Name -->
                 <div class="md:col-span-2">
@@ -23,9 +24,10 @@
                     <input
                         type="text"
                         id="payment-name"
-                        name="payment-name"
-                        value="ABMK Registration Fee"
-                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
+                        name="payment_allocation_name"
+                        value="{{ $payment->payment_allocation_name }}"
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                        required />
                 </div>
 
                 <!-- Amount with Prefix -->
@@ -40,53 +42,38 @@
                             id="amount"
                             name="amount"
                             step="0.01"
+                            value="{{ $payment->amount }}"
                             class="flex-1 block w-full px-3 py-2 border border-gray-300 rounded-r-lg focus:ring-indigo-500 focus:border-indigo-500"
-                            placeholder="0.00"
-                            value="20.00" />
+                            required />
                     </div>
                 </div>
 
-                <!-- Payment Date -->
+                <!-- Allocation Date -->
                 <div>
-                    <label for="age" class="block text-sm font-medium text-gray-700">Payment Date</label>
+                    <label for="allocation-date" class="block text-sm font-medium text-gray-700">Allocation Date</label>
                     <input
                         type="date"
-                        id="payment-date"
-                        name="payment-date"
-                        value="2024-01-01"
-                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
-                </div>
-
-                <!-- Person In Charge -->
-                <div>
-                    <label for="race" class="block text-sm font-medium text-gray-700">Person In Charge</label>
-                    <input
-                        type="text"
-                        id="pic"
-                        name="pic"
-                        value="Admin"
-                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
-                </div>
-
-                <!-- Phone Number -->
-                <div>
-                    <label for="religion" class="block text-sm font-medium text-gray-700">Phone Number</label>
-                    <input
-                        type="text"
-                        id="phone-number"
-                        name="phone-number"
-                        value="01928873654"
-                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
+                        id="allocation-date"
+                        name="allocation_date"
+                        value="{{ $payment->allocation_date }}"
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                        required />
                 </div>
             </div>
+
             <!-- Submit Button -->
             <div class="text-right">
                 <button
                     type="submit"
                     class="px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                    Add Payment
+                    Update Payment
                 </button>
             </div>
         </form>
     </div>
+
+    <!-- Include SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Include your custom JS -->
+    <script src="{{ asset('admin/adminFeeCollection.js') }}"></script>
 </x-admin-layout>

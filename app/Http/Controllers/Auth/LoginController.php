@@ -25,57 +25,57 @@ class LoginController extends Controller
    
     
     public function register(Request $request)
-{
-    $validator = Validator::make($request->all(), [
-        'username' => 'required|string|max:255|regex:/^[a-zA-Z0-9_]+$/',
-        'email' => 'required|email|unique:login,email',
-        'password' => 'required|min:6|confirmed',
-        'prove_letter' => 'required|file|mimes:pdf|max:2048',
-    ]);
-
-    if ($validator->fails()) {
-        return response()->json(['errors' => $validator->errors()], 422);
-    }
-
-    DB::beginTransaction();
-
-    try {
-        // Save the file
-        $filePath = $request->file('prove_letter')->store('prove_letter_files', 'public');
-
-        // Create the login record
-        $login = Login::create([
-            'username' => $request->username,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-            'acc_status' => 'active',
+    {
+        $validator = Validator::make($request->all(), [
+            'username' => 'required|string|max:255|regex:/^[a-zA-Z0-9_]+$/',
+            'email' => 'required|email|unique:login,email',
+            'password' => 'required|min:6|confirmed',
+            'prove_letter' => 'required|file|mimes:pdf|max:2048',
         ]);
 
-        // Create the application record
-        $application = Application::create([
-            'prove_letter' => $filePath,
-            'applicant_status' => 'pending',
-            'date_application' => now(),
-            'login_id' => $login->login_id,
-        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
 
-        // Link the application ID back to the login
-        $login->application_id = $application->application_id;
-        $login->save();
+        DB::beginTransaction();
 
-        DB::commit();
+        try {
+            // Save the file
+            $filePath = $request->file('prove_letter')->store('prove_letter_files', 'public');
 
-        return response()->json([
-            'success' => 'Registration successful!',
-            'message' => 'Your application is being processed. Once approved, you will be able to log in to your account.',
-        ], 201);
+            // Create the login record
+            $login = Login::create([
+                'username' => $request->username,
+                'email' => $request->email,
+                'password' => bcrypt($request->password),
+                'acc_status' => 'active',
+            ]);
 
-    } catch (\Exception $e) {
-        DB::rollBack();
-        Log::error('Registration Error: ' . $e->getMessage());
-        return response()->json(['message' => 'An unexpected error occurred. Please try again later.'], 500);
+            // Create the application record
+            $application = Application::create([
+                'prove_letter' => $filePath,
+                'applicant_status' => 'pending',
+                'date_application' => now(),
+                'login_id' => $login->login_id,
+            ]);
+
+            // Link the application ID back to the login
+            $login->application_id = $application->application_id;
+            $login->save();
+
+            DB::commit();
+
+            return response()->json([
+                'success' => 'Registration successful!',
+                'message' => 'Your application is being processed. Once approved, you will be able to log in to your account.',
+            ], 201);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Registration Error: ' . $e->getMessage());
+            return response()->json(['message' => 'An unexpected error occurred. Please try again later.'], 500);
+        }
     }
-}
  
 
 //login 
