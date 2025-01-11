@@ -15,6 +15,8 @@ class Admin extends Model
     protected $fillable = [
         'role',
         'login_id',
+        'phone_number',
+        
     ];
 
     // Define relationships

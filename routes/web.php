@@ -9,6 +9,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\AdminMemberVerification;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AdminMemberRecordController;
+use App\Http\Controllers\AdminUserSettingController;
 
 
 
@@ -240,22 +241,26 @@ Route::prefix('admin')->group(function () {
         });
     });
 
-    // Settings
-    Route::prefix('setting')->group(function () {
+       // Settings
+       Route::prefix('setting')->group(function () {
         Route::get('/admin', function () {
             return view('admin.setting-admin');
         });
 
+        // User Settings Routes
         Route::prefix('users')->group(function () {
-            Route::get('/', function () {
-                return view('admin.setting-user-list');
-            });
-            Route::get('/add', function () {
-                return view('admin.setting-user-add');
-            });
-            Route::get('/update', function () {
-                return view('admin.setting-user-update');
-            });
+            Route::get('/', [AdminUserSettingController::class, 'index'])
+                ->name('admin.setting.users');
+            Route::get('/add', [AdminUserSettingController::class, 'add'])
+                ->name('admin.setting.users.add');
+            // Change from 'update' to 'edit' for the GET route
+            Route::get('/update/{id}', [AdminUserSettingController::class, 'edit'])
+                ->name('admin.setting.users.update');
+            // Add PUT route for handling the update
+            Route::put('/update/{id}', [AdminUserSettingController::class, 'update'])
+                ->name('admin.setting.users.update.put');
+            Route::post('/store', [AdminUserSettingController::class, 'store'])
+                ->name('admin.setting.users.store');
         });
     });
 });

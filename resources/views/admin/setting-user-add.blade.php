@@ -13,9 +13,10 @@
     <!-- Horizontal Line -->
     <hr class="border-gray-300 my-2">
 
-    <!-- Form -->
-    <div class="mt-4 px-6 py-4 bg-white shadow-lg rounded-lg">
-        <form action="#" method="POST" class="space-y-4">
+     <!-- Form -->
+     <div class="mt-4 px-6 py-4 bg-white shadow-lg rounded-lg">
+        <form id="adminAddForm" class="space-y-4">
+            @csrf
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <!-- Username -->
                 <div>
@@ -24,7 +25,6 @@
                         type="text"
                         id="username"
                         name="username"
-                        value=""
                         class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
                 </div>
 
@@ -35,29 +35,36 @@
                         type="email"
                         id="email"
                         name="email"
-                        value=""
                         class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
                 </div>
 
-                <!-- New Password -->
-                <div class="relative">
-                    <label for="new-password" class="block text-sm font-medium text-gray-700">New Password</label>
+                <!-- Phone Number -->
+                <div>
+                    <label for="phone-number" class="block text-sm font-medium text-gray-700">Phone Number</label>
+                    <input
+                        type="tel"
+                        id="phone-number"
+                        name="phone_number"
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
+                </div>
+
+                <!-- Password -->
+                <div>
+                    <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
                     <input
                         type="password"
-                        id="new-password"
-                        name="new-password"
-                        value=""
+                        id="password"
+                        name="password"
                         class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
                 </div>
 
                 <!-- Confirm Password -->
-                <div class="relative">
+                <div>
                     <label for="confirm-password" class="block text-sm font-medium text-gray-700">Confirm Password</label>
                     <input
                         type="password"
                         id="confirm-password"
                         name="confirm-password"
-                        value=""
                         class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
                 </div>
 
@@ -96,7 +103,11 @@
                     Add Admin
                 </button>
             </div>
+        </form>
     </div>
-    </form>
-    </div>
+
+    <!-- Include SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Include your custom JS -->
+    <script src="{{ asset('admin/AdminUserSettings.js') }}"></script>
 </x-admin-layout>
