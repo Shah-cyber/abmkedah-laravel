@@ -29,22 +29,20 @@
         </div>
     </div>
 
-    <!-- Export and Total Members Section -->
-    <div class="flex items-center justify-between mb-6">
-        <!-- Export Button -->
-        <a href="/admin/setting/users/add" class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg font-medium shadow">
+     <!-- Export and Total Members Section -->
+     <div class="flex items-center justify-between mb-6">
+        <a href="{{ route('admin.setting.users.add') }}" class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg font-medium shadow">
             Add Admin
         </a>
-        <!-- Total Members -->
         <p class="text-gray-600">Total Users:
-            <span class="font-medium text-gray-900">300</span>
+            <span class="font-medium text-gray-900">{{ $users->total() }}</span>
         </p>
     </div>
+ 
 
 
-
-    <!-- Table -->
-    <div class="overflow-x-auto bg-white rounded-lg shadow-md">
+      <!-- Table -->
+      <div class="overflow-x-auto bg-white rounded-lg shadow-md">
         <table class="w-full text-sm text-left text-gray-500">
             <thead class="bg-gray-50 text-gray-700 uppercase text-xs">
                 <tr>
@@ -57,67 +55,74 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- Row 1 -->
-                <tr class="border-b">
-                    <td class="px-4 py-4">1</td>
-                    <td class="px-4 py-4">Viveka</td>
-                    <td class="px-4 py-4">ulfaha@mail.ru</td>
-                    <td class="px-4 py-4">Super Admin</td>
-                    <td class="px-4 py-4">
-                        <span class="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
-                            <span class="w-2 h-2 me-1 bg-green-500 rounded-full"></span>
-                            Active
-                        </span>
-                    </td>
-                    <td class="px-4 py-4 flex space-x-2">
-                        <a href="/admin/setting/users/update" class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded-md">Update</a>
-                    </td>
-                </tr>
-                <!-- Row 2 -->
-                <tr class="border-b">
-                    <td class="px-4 py-4">2</td>
-                    <td class="px-4 py-4">Akash2411</td>
-                    <td class="px-4 py-4">cedennar@gmail.com</td>
-                    <td class="px-4 py-4">Member</td>
-                    <td class="px-4 py-4">
-                        <span class="inline-flex items-center bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
-                            <span class="w-2 h-2 me-1 bg-red-500 rounded-full"></span>
-                            Deactivate
-                        </span>
-                    </td>
-                    <td class="px-4 py-4 flex space-x-2">
-                        <a href="/admin/setting/users/update" class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded-md">Update</a>
-                    </td>
-                </tr>
-                <!-- Add More Rows as Needed -->
+                @foreach($users as $index => $user)
+                    <tr class="border-b">
+                        <td class="px-4 py-4">{{ $index + 1 }}</td>
+                        <td class="px-4 py-4">{{ $user->username }}</td>
+                        <td class="px-4 py-4">{{ $user->email }}</td>
+                        <td class="px-4 py-4">{{ $user->user_role }}</td>
+                        <td class="px-4 py-4">
+                            @if($user->acc_status == 'active')
+                                <span class="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                                    <span class="w-2 h-2 me-1 bg-green-500 rounded-full"></span>
+                                    Active
+                                </span>
+                            @else
+                                <span class="inline-flex items-center bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                                    <span class="w-2 h-2 me-1 bg-red-500 rounded-full"></span>
+                                    Deactivate
+                                </span>
+                            @endif
+                        </td>
+                        <td class="px-4 py-4 flex space-x-2">
+                            <a href="{{ route('admin.setting.users.update', ['id' => $user->user_type == 'admin' ? $user->admin_id : $user->member_id]) }}" 
+                               class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded-md">
+                                Update
+                            </a>
+                        </td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
     </div>
 
     <!-- Pagination -->
     <div class="flex justify-between items-center mt-6">
-        <p class="text-sm text-gray-600">Showing 1 to 10 of 155 entries</p>
+        <p class="text-sm text-gray-600">
+            Showing {{ $users->firstItem() }} to {{ $users->lastItem() }} of {{ $users->total() }} entries
+        </p>
         <div class="flex items-center space-x-1">
-            <button
-                class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
-                Previous
-            </button>
-            <button
-                class="px-3 py-1 text-sm text-white bg-blue-500 rounded-md hover:bg-blue-600">
-                1
-            </button>
-            <button
-                class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
-                2
-            </button>
-            <button
-                class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
-                3
-            </button>
-            <button
-                class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
-                Next
-            </button>
+            @if($users->onFirstPage())
+                <button class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md cursor-not-allowed">
+                    Previous
+                </button>
+            @else
+                <a href="{{ $users->previousPageUrl() }}" class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
+                    Previous
+                </a>
+            @endif
+
+            @foreach ($users->getUrlRange(1, $users->lastPage()) as $page => $url)
+                @if ($page == $users->currentPage())
+                    <button class="px-3 py-1 text-sm text-white bg-blue-500 rounded-md">
+                        {{ $page }}
+                    </button>
+                @else
+                    <a href="{{ $url }}" class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
+                        {{ $page }}
+                    </a>
+                @endif
+            @endforeach
+
+            @if($users->hasMorePages())
+                <a href="{{ $users->nextPageUrl() }}" class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
+                    Next
+                </a>
+            @else
+                <button class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md cursor-not-allowed">
+                    Next
+                </button>
+            @endif
         </div>
     </div>
 </x-admin-layout>
