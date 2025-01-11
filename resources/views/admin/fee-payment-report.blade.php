@@ -95,30 +95,43 @@
 </div>
 
 
-    <!-- Pagination -->
-    <div class="flex justify-between items-center mt-6">
-        <p class="text-sm text-gray-600">Showing 1 to 10 of 155 entries</p>
+      <!-- Pagination -->
+      <div class="flex justify-between items-center mt-6">
+        <p class="text-sm text-gray-600">
+            Showing {{ $participants->firstItem() }} to {{ $participants->lastItem() }} of {{ $participants->total() }} entries
+        </p>
         <div class="flex items-center space-x-1">
-            <button
-                class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
-                Previous
-            </button>
-            <button
-                class="px-3 py-1 text-sm text-white bg-blue-500 rounded-md hover:bg-blue-600">
-                1
-            </button>
-            <button
-                class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
-                2
-            </button>
-            <button
-                class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
-                3
-            </button>
-            <button
-                class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
-                Next
-            </button>
+            @if($participants->onFirstPage())
+                <button class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md cursor-not-allowed">
+                    Previous
+                </button>
+            @else
+                <a href="{{ $participants->previousPageUrl() }}" class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
+                    Previous
+                </a>
+            @endif
+
+            @foreach ($participants->getUrlRange(1, $participants->lastPage()) as $page => $url)
+                @if ($page == $participants->currentPage())
+                    <button class="px-3 py-1 text-sm text-white bg-blue-500 rounded-md">
+                        {{ $page }}
+                    </button>
+                @else
+                    <a href="{{ $url }}" class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
+                        {{ $page }}
+                    </a>
+                @endif
+            @endforeach
+
+            @if($participants->hasMorePages())
+                <a href="{{ $participants->nextPageUrl() }}" class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
+                    Next
+                </a>
+            @else
+                <button class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md cursor-not-allowed">
+                    Next
+                </button>
+            @endif
         </div>
     </div>
 

@@ -77,28 +77,41 @@
     {{-- <a href="{{ route('admin.fee-collection.report') }}" class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-md">Report</a> --}}
     <!-- Pagination -->
     <div class="flex justify-between items-center mt-6">
-        <p class="text-sm text-gray-600">Showing 1 to 10 of 155 entries</p>
+        <p class="text-sm text-gray-600">
+            Showing {{ $payments->firstItem() }} to {{ $payments->lastItem() }} of {{ $payments->total() }} entries
+        </p>
         <div class="flex items-center space-x-1">
-            <button
-                class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
-                Previous
-            </button>
-            <button
-                class="px-3 py-1 text-sm text-white bg-blue-500 rounded-md hover:bg-blue-600">
-                1
-            </button>
-            <button
-                class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
-                2
-            </button>
-            <button
-                class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
-                3
-            </button>
-            <button
-                class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
-                Next
-            </button>
+            @if($payments->onFirstPage())
+                <button class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md cursor-not-allowed">
+                    Previous
+                </button>
+            @else
+                <a href="{{ $payments->previousPageUrl() }}" class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
+                    Previous
+                </a>
+            @endif
+
+            @foreach ($payments->getUrlRange(1, $payments->lastPage()) as $page => $url)
+                @if ($page == $payments->currentPage())
+                    <button class="px-3 py-1 text-sm text-white bg-blue-500 rounded-md">
+                        {{ $page }}
+                    </button>
+                @else
+                    <a href="{{ $url }}" class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
+                        {{ $page }}
+                    </a>
+                @endif
+            @endforeach
+
+            @if($payments->hasMorePages())
+                <a href="{{ $payments->nextPageUrl() }}" class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
+                    Next
+                </a>
+            @else
+                <button class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md cursor-not-allowed">
+                    Next
+                </button>
+            @endif
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

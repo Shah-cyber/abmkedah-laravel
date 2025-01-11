@@ -186,9 +186,7 @@ Route::prefix('admin')->group(function () {
         ->name('admin.fee-collection.delete');
         //report
         Route::get('/report/{id}', [AdminFeeController::class, 'feeCollectionReport'])->name('admin.fee-collection.report');
-        Route::get('/reporttest', function () {
-                    return view('admin.fee-collection-report');
-                 });
+        
     });
 
     // Event Record

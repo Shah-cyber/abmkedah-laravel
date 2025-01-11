@@ -116,28 +116,41 @@
     </div>
     <!-- Pagination -->
     <div class="flex justify-between items-center mt-6">
-        <p class="text-sm text-gray-600">Showing 1 to 10 of 155 entries</p>
+        <p class="text-sm text-gray-600">
+            Showing {{ $paymentReceipts->firstItem() }} to {{ $paymentReceipts->lastItem() }} of {{ $paymentReceipts->total() }} entries
+        </p>
         <div class="flex items-center space-x-1">
-            <button
-                class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
-                Previous
-            </button>
-            <button
-                class="px-3 py-1 text-sm text-white bg-blue-500 rounded-md hover:bg-blue-600">
-                1
-            </button>
-            <button
-                class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
-                2
-            </button>
-            <button
-                class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
-                3
-            </button>
-            <button
-                class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
-                Next
-            </button>
+            @if($paymentReceipts->onFirstPage())
+                <button class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md cursor-not-allowed">
+                    Previous
+                </button>
+            @else
+                <a href="{{ $paymentReceipts->previousPageUrl() }}" class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
+                    Previous
+                </a>
+            @endif
+
+            @foreach ($paymentReceipts->getUrlRange(1, $paymentReceipts->lastPage()) as $page => $url)
+                @if ($page == $paymentReceipts->currentPage())
+                    <button class="px-3 py-1 text-sm text-white bg-blue-500 rounded-md">
+                        {{ $page }}
+                    </button>
+                @else
+                    <a href="{{ $url }}" class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
+                        {{ $page }}
+                    </a>
+                @endif
+            @endforeach
+
+            @if($paymentReceipts->hasMorePages())
+                <a href="{{ $paymentReceipts->nextPageUrl() }}" class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
+                    Next
+                </a>
+            @else
+                <button class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md cursor-not-allowed">
+                    Next
+                </button>
+            @endif
         </div>
     </div>
     <!-- JavaScript to Handle PDF Generation -->
