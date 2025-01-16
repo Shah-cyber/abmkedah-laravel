@@ -143,7 +143,7 @@
 
                 <!-- Amount with Prefix -->
                 <div>
-                    <label for="amount" class="block text-sm font-medium text-gray-700">Amount</label>
+                    <label for="amount" class="block text-sm font-medium text-gray-700">Event Fee</label>
                     <div class="mt-1 flex rounded-lg shadow-sm">
                         <span class="inline-flex items-center px-3 rounded-l-lg border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
                             RM
