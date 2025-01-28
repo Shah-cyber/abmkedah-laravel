@@ -71,9 +71,16 @@ Route::middleware('auth')->prefix('member')->group(function () {
     Route::get('/achievement', function () {
         return view('member.achievement-list'); // Member achievement list
     });
-    Route::get('/setting', function () {
-        return view('member.setting-account'); // Member account settings
-    });
+   // Settings
+Route::get('/setting', function () {
+    return view('member.setting-account'); // Member account settings
+})->name('member.setting');
+
+Route::get('/setting-personal', function () {
+    return view('member.setting-personal-information'); // Member personal information settings
+})->name('member.setting-personal');
+
+    
     ////member event registration
     Route::get('/member/event-registration', function () {
         return view('member.event-registration');

@@ -48,7 +48,7 @@ class LoginController extends Controller
                 'username' => $request->username,
                 'email' => $request->email,
                 'password' => bcrypt($request->password),
-                'acc_status' => 'active',
+                'acc_status' => 'null',
             ]);
 
             // Create the application record
