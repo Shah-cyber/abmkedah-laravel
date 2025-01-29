@@ -6,19 +6,23 @@
     @endif
 
       <!-- Hero Section -->
-      <div class="w-full bg-white shadow-sm">
-        <div class="container mx-auto p-6">
-            <div class="flex flex-col md:flex-row items-center gap-6">
-                <div class="md:w-1/2">
-                    <h1 class="text-3xl font-bold text-gray-800 mb-4">New Leader are born</h1>
-                    <p class="text-gray-600">ABM seeks to develop leadership qualities in youth nationwide by working on impactful initiatives and mentoring future generations.</p>
-                </div>
-                <div class="md:w-1/2">
-                    <img src="https://images.pexels.com/photos/1187086/pexels-photo-1187086.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Leaders" class="rounded-lg shadow-md">
-                </div>
+<div class="w-full bg-white shadow-sm">
+    <div class="container mx-auto p-6">
+        <div class="flex flex-col md:flex-row items-center gap-6">
+            <div class="md:w-1/2">
+                <h1 class="text-3xl font-bold text-gray-800 mb-4">New Leaders Are Born</h1>
+                <p class="text-gray-600">ABM seeks to develop leadership qualities in youth nationwide by working on impactful initiatives and mentoring future generations.</p>
+            </div>
+            <div class="md:w-1/2">
+                <img src="https://images.pexels.com/photos/1187086/pexels-photo-1187086.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Leaders" class="rounded-lg shadow-md">
+            </div>
+            <!-- Logo Section -->
+            <div class="md:w-1/4 flex justify-center items-center">
+                <img src="{{ asset('images/abm-logo.svg') }}" alt="ABM Logo" class="h-40 w-auto">
             </div>
         </div>
     </div>
+</div>
 
     <!-- Content Section -->
     <div class="container mx-auto py-12">
