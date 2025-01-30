@@ -159,63 +159,21 @@ $(document).ready(function() {
     });
 });
 
-//sweetalert allocate merit
-$(document).ready(function () {
-    // Existing SweetAlert code for success and error messages...
+//search function
+// $(document).ready(function() {
+//     $('#search-input').on('keyup', function() {
+//         var value = $(this).val().toLowerCase(); // Get the search input value
 
-    // SweetAlert confirmation before merit allocation
-    window.submitSelected = function() {
-        const checkboxes = document.querySelectorAll('.allocate-checkbox:checked'); // Get all checked checkboxes
-        const selected = [];
-
-        checkboxes.forEach((checkbox) => {
-            selected.push(checkbox.value); // Collect selected checkbox values
-        });
-
-        if (selected.length > 0) {
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "You are about to allocate merit to the selected participants!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, allocate merit!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // Create a form to submit the selected IDs
-                    const form = document.createElement('form');
-                    form.method = 'POST';
-                    form.action = '/achievement-merit/allocate'; // Update with your route
-
-                    // Create CSRF token input
-                    const csrfInput = document.createElement('input');
-                    csrfInput.type = 'hidden';
-                    csrfInput.name = '_token';
-                    csrfInput.value = '{{ csrf_token() }}'; // Pass the CSRF token
-
-                    // Create input for selected IDs
-                    selected.forEach(id => {
-                        const input = document.createElement('input');
-                        input.type = 'hidden';
-                        input.name = 'selected_ids[]'; // Array input for selected IDs
-                        input.value = id; // Set the value to the selected ID
-                        form.appendChild(input); // Append to form
-                    });
-
-                    form.appendChild(csrfInput); // Append CSRF token
-                    document.body.appendChild(form); // Append form to body
-                    form.submit(); // Submit the form
-                }
-            });
-        } else {
-            Swal.fire({
-                icon: 'info',
-                title: 'No selection',
-                text: 'Please select at least one participant to allocate merit.',
-            });
-        }
-    };
-
-});
-
+//         $('table tbody tr').filter(function() {
+//             // Get the text from the relevant columns
+//             var volunteerName = $(this).find('td:nth-child(2)').text().toLowerCase(); // Volunteer Name
+//             var phoneNumber = $(this).find('td:nth-child(3)').text().toLowerCase(); // Phone Number
+//             var memberStatus = $(this).find('td:nth-child(4)').text().toLowerCase(); // Member Status
+            
+//             // Check if the search value is present in any of the specified columns
+//             return volunteerName.indexOf(value) > -1 || 
+//                    phoneNumber.indexOf(value) > -1 || 
+//                    memberStatus.indexOf(value) > -1;
+//         }).toggle(); // Show or hide the row based on the search
+//     });
+// });

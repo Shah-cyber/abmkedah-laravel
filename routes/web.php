@@ -232,8 +232,10 @@ Route::prefix('admin')->group(function () {
         Route::get('/update/{id}', [MeritController::class, 'edit'])->name('merit.edit');
         Route::post('/update/{id}', [MeritController::class, 'update'])->name('merit.update');
         Route::delete('/delete/{id}', [MeritController::class, 'destroy'])->name('merit.delete');
-        Route::post('/allocate', [AdminEventController::class, 'allocateMerit'])->name('merit.allocate');
     });
+
+    // Merit Allocation Route
+    Route::post('/allocate-merit', [AdminEventController::class, 'allocateMerit'])->name('admin.merit.allocate');
 
     // Achievement Certificate
     Route::prefix('achievement-certificate')->group(function () {

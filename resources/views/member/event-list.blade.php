@@ -50,28 +50,28 @@
                     />
                     <!-- Date Box -->
                     <div class="absolute bottom-2 right-2 bg-white text-gray-800 text-center px-4 py-2 rounded-sm shadow border">
-                        <p class="text-xs font-semibold">Sep</p>
-                        <p class="text-xs font-semibold">Thu</p>
-                        <p class="text-xs font-semibold">14</p>
+                        <p class="text-xs font-semibold">Sep</p> {{---retrieve event_date---}}
+                        <p class="text-xs font-semibold">Thu</p> {{---make event_date seperate like this style , p-Month, p-DAY IN THAT DATE(CHECK TTHE DATE WHAT DAY IS)---}}
+                        <p class="text-xs font-semibold">14</p> {{---retrieve event_date->---}} {{---retrieve event_date->format('d')---}}
                     </div>
                 </div>
                 <div class="p-4">
-                    <h3 class="text-lg font-semibold text-gray-800 ">Finale Concert 2024</h3>
-                    <p class="text-sm text-gray-500 mb-3">Astaka Arena, Bukit Jalil</p>
+                    <h3 class="text-lg font-semibold text-gray-800 ">Finale Concert 2024 </h3>  {{---retrieve event_name---}}
+                    <p class="text-sm text-gray-500 mb-3">Astaka Arena, Bukit Jalil</p> {{---retrieve event_location---}}
                     <p class="text-sm text-gray-500 flex items-center font-bold">
                         <!-- Clock Icon -->
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 mr-2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                         </svg>
                         7:30PM
-                    </p>
+                    </p> {{---retrieve event_start_time---}} 
                     <p class="text-sm text-gray-500 flex items-center font-bold">
                         <!-- Ticket Icon -->
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 mr-2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 6v.75m0 3v.75m0 3v.75m0 3V18m-9-5.25h5.25M7.5 15h3M3.375 5.25c-.621 0-1.125.504-1.125 1.125v3.026a2.999 2.999 0 0 1 0 5.198v3.026c0 .621.504 1.125 1.125 1.125h17.25c.621 0 1.125-.504 1.125-1.125v-3.026a2.999 2.999 0 0 1 0-5.198V6.375c0-.621-.504-1.125-1.125-1.125H3.375Z" />
                         </svg>
                         From: RM 50.00
-                    </p>
+                    </p> {{---retrieve event_price---}}
                 </div>
                 <div class="flex items-center p-4 border-t  justify-between">
                     <p class="text-xs text-gray-500">#ConcertEvents</p>

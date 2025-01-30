@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Merit;
 use App\Models\AbmEvent;
 use App\Models\Joinevent;
 use Illuminate\Http\Request;
@@ -171,25 +172,72 @@ class AdminEventController extends Controller
             return view('admin.event-report', compact('event', 'participants', 'totalParticipants'));
         }
 
-        // public function allocateMerit(Request $request)
-        // {
-        //     $request->validate([
-        //         'selected_ids' => 'required|array', // Expecting an array of selected IDs
-        //         'selected_ids.*' => 'exists:member,member_id', // Validate each selected ID
-        //     ]);
-        
-        //     foreach ($request->selected_ids as $id) { 
-        //         AllocatedMerit::create([
-        //             'member_id' => $id, // Assuming you are allocating merit to members
-        //             'event_id' => $request->event_id, // Pass the event ID if needed
-        //             'admin_id' => auth()->user()->id, // Assuming the admin is logged in
-        //             'merit_point' => 1.00, // Set the merit point as needed
-        //             'allocation_date' => now(), // Set the allocation date to now
-        //         ]);
-        //     }
-        
-        //     return redirect()->route('event.record.index')->with('success', 'Merit allocated successfully!');
-        // }
+        public function allocateMerit(Request $request)
+        {
+            try {
+                // Validate request
+                $request->validate([
+                    'event_id' => 'required|exists:abmevent,event_id',
+                    'member_ids' => 'required|array',
+                    'member_ids.*' => 'exists:member,member_id'
+                ]);
+
+                // Retrieve event
+                $eventId = $request->event_id;
+                $event = AbmEvent::findOrFail($eventId);
+
+                // Get the merit points for this event from the merit table
+                $merit = Merit::where('event_id', $eventId)->first();
+                if (!$merit) {
+                    throw new \Exception('No merit points defined for this event');
+                }
+
+                // Keep track of successful allocations
+                $allocatedCount = 0;
+
+                // Allocate merit points to each selected member
+                foreach ($request->member_ids as $memberId) {
+                    // Check if merit was already allocated
+                    $existingAllocation = AllocatedMerit::where([
+                        'member_id' => $memberId,
+                        'event_id' => $eventId
+                    ])->first();
+
+                    if (!$existingAllocation) {
+                        AllocatedMerit::create([
+                            'admin_id' => auth()->id(),
+                            'member_id' => $memberId,
+                            'event_id' => $eventId,
+                            'merit_id' => $merit->merit_id,
+                            'merit_point' => $merit->merit_point,
+                            'allocation_date' => now(),
+                        ]);
+                        $allocatedCount++;
+                    }
+                }
+
+                if ($allocatedCount === 0) {
+                    throw new \Exception('No members were allocated merit points. They might already have merit points allocated.');
+                }
+
+                return response()->json([
+                    'success' => true,
+                    'message' => "Merit points ({$merit->merit_point} points) allocated successfully to {$allocatedCount} member(s)."
+                ]);
+
+            } catch (\Illuminate\Validation\ValidationException $e) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Validation error',
+                    'errors' => $e->errors()
+                ], 422);
+            } catch (\Exception $e) {
+                return response()->json([
+                    'success' => false,
+                    'message' => $e->getMessage()
+                ], 500);
+            }
+        }
 
 
         public function showParticipants()
