@@ -13,9 +13,9 @@
     <!-- Horizontal Line -->
     <hr class="border-gray-300 my-2">
 
-     <!-- Form -->
-     <div class="mt-4 px-6 py-4 bg-white shadow-lg rounded-lg">
-        <form id="adminAddForm" class="space-y-4">
+    <!-- Form -->
+    <div class="mt-4 px-6 py-4 bg-white shadow-lg rounded-lg">
+        <form id="adminAddForm" class="space-y-4" action="{{ route('admin.store') }}" method="POST">
             @csrf
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <!-- Username -->

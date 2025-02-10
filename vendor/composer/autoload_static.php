@@ -569,6 +569,7 @@ class ComposerStaticInit9c491b8531eec05ba41a11d9276a5749
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
         'App\\Http\\Middleware\\ValidateSignature' => __DIR__ . '/../..' . '/app/Http/Middleware/ValidateSignature.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
+        'App\\Livewire\\SettingsTabs' => __DIR__ . '/../..' . '/app/Livewire/SettingsTabs.php',
         'App\\Models\\AbmEvent' => __DIR__ . '/../..' . '/app/Models/AbmEvent.php',
         'App\\Models\\Admin' => __DIR__ . '/../..' . '/app/Models/Admin.php',
         'App\\Models\\AllocatedMerit' => __DIR__ . '/../..' . '/app/Models/AllocatedMerit.php',

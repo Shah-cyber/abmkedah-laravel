@@ -44,4 +44,6 @@ class AllocatedMerit extends Model
     {
         return $this->hasMany(JoinEvent::class, 'event_id');
     }
+
+    
 }

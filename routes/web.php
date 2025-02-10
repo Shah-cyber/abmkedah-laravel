@@ -112,9 +112,7 @@ Route::prefix('admin')->group(function () {
 
     
 
-    // Create Admin
-    Route::get('/create-admin', [AdminController::class, 'showCreateAdminForm'])->name('admin.create');
-    Route::post('/create-admin', [AdminController::class, 'store'])->name('admin.store');
+   
 
     // Member Record
     Route::prefix('member-record')->group(function () {
@@ -257,20 +255,18 @@ Route::prefix('admin')->group(function () {
         });
 
         // User Settings Routes
-        Route::prefix('users')->group(function () {
-            Route::get('/', [AdminUserSettingController::class, 'index'])
-                ->name('admin.setting.users');
-            Route::get('/add', [AdminUserSettingController::class, 'add'])
-                ->name('admin.setting.users.add');
-            // Change from 'update' to 'edit' for the GET route
-            Route::get('/update/{id}', [AdminUserSettingController::class, 'edit'])
-                ->name('admin.setting.users.update');
-            // Add PUT route for handling the update
-            Route::put('/update/{id}', [AdminUserSettingController::class, 'update'])
-                ->name('admin.setting.users.update.put');
-            Route::post('/store', [AdminUserSettingController::class, 'store'])
-                ->name('admin.setting.users.store');
-        });
+    Route::prefix('users')->group(function () {
+        Route::get('/', [AdminUserSettingController::class, 'index'])
+            ->name('admin.setting.users');
+        Route::get('/add', [AdminUserSettingController::class, 'add'])
+            ->name('admin.setting.users.add');
+        Route::post('/store', [AdminUserSettingController::class, 'store']) // This is the route for adding an admin
+            ->name('admin.store'); // Ensure this matches the form action
+        Route::get('/update/{id}', [AdminUserSettingController::class, 'edit'])
+            ->name('admin.setting.users.update');
+        Route::put('/update/{id}', [AdminUserSettingController::class, 'update'])
+            ->name('admin.setting.users.update.put');
+    });
     });
 });
 

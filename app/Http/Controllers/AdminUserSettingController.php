@@ -58,10 +58,7 @@ class AdminUserSettingController extends Controller
         return view('admin.setting-user-list', compact('users'));
     }
 
-    public function add()
-    {
-        return view('admin.setting-user-add');
-    }
+   
 
     
 
@@ -73,7 +70,7 @@ class AdminUserSettingController extends Controller
                 $query->where('admin_id', $id)
                     ->orWhere('member_id', $id);
             })->first();
-
+ 
             if (!$login) {
                 return redirect()->route('admin.setting.users')
                     ->with('error', 'User not found');
@@ -151,59 +148,75 @@ class AdminUserSettingController extends Controller
         }
     }
 
-    //add admin
+    public function add()
+    {
+        return view('admin.setting-user-add');
+    }
+
+    // Add admin
     public function store(Request $request)
-{
-    try {
-        // Validate the request
-        $validated = $request->validate([
-            'username' => 'required|string|max:255|unique:login,username',
-            'email' => 'required|email|unique:login,email',
-            'password' => 'required|min:6',
-            'phone_number' => 'required|string|max:15',
-            'select-status' => 'required|in:active,deactivate',
-            'select-role' => 'required|in:super-admin,sub-admin',
-        ]);
-
-        // Start transaction
-        DB::beginTransaction();
-
+    {
         try {
-            // First, create the admin record to get the admin_id
-            $admin = new Admin();
-            $admin->role = $validated['select-role'];
-            $admin->phone_number = $validated['phone_number'];
-            $admin->save();
-
-            // Now create the login record with the admin_id
-            $login = new Login();
-            $login->username = $validated['username'];
-            $login->email = $validated['email'];
-            $login->password = bcrypt($validated['password']);
-            $login->acc_status = $validated['select-status'];
-            $login->admin_id = $admin->admin_id; // Use the admin_id from the newly created admin record
-            $login->save();
-
-            // If everything is successful, commit the transaction
-            DB::commit();
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Admin added successfully!'
+            // Validate the request
+            $validated = $request->validate([
+                'username' => 'required|string|max:255|unique:login,username',
+                'email' => 'required|email|unique:login,email',
+                'password' => 'required|min:6',
+                'phone_number' => 'required|string|max:15',
+                'select-status' => 'required|in:active,deactivate',
+                'select-role' => 'required|in:super-admin,sub-admin',
             ]);
 
-        } catch (\Exception $e) {
-            // If there's an error, rollback the transaction
-            DB::rollBack();
-            throw $e;
-        }
+            // Get the currently logged-in admin
+            $currentAdmin = auth()->user();
 
-    } catch (\Exception $e) {
-        return response()->json([
-            'success' => false,
-            'message' => 'Error adding admin: ' . $e->getMessage()
-        ], 500);
+            // Check if the current admin is allowed to assign the requested role
+            if ($currentAdmin->role === 'sub-admin' && $validated['select-role'] === 'super-admin') {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Sub-admins cannot create super-admins.'
+                ], 403);
+            }
+
+            // Start transaction
+            DB::beginTransaction();
+
+            try {
+                // Create the admin record to get the admin_id
+                $admin = new Admin();
+                $admin->role = $validated['select-role'];
+                $admin->phone_number = $validated['phone_number'];
+                $admin->save();
+
+                // Now create the login record with the admin_id
+                $login = new Login();
+                $login->username = $validated['username'];
+                $login->email = $validated['email'];
+                $login->password = bcrypt($validated['password']);
+                $login->acc_status = $validated['select-status'];
+                $login->admin_id = $admin->admin_id; // Use the admin_id from the newly created admin record
+                $login->save();
+
+                // If everything is successful, commit the transaction
+                DB::commit();
+
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Admin added successfully!'
+                ]);
+
+            } catch (\Exception $e) {
+                // If there's an error, rollback the transaction
+                DB::rollBack();
+                throw $e;
+            }
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error adding admin: ' . $e->getMessage()
+            ], 500);
+        }
     }
-}
 
 }
