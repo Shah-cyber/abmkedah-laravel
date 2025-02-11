@@ -83,34 +83,54 @@ class AdminFeeController extends Controller
     }
 
     public function feeCollectionStore(Request $request)
-    {
-        try {
-            $validated = $request->validate([
-                'payment_allocation_name' => 'required|string|max:50',
-                'amount' => 'required|numeric|min:0',
-                'allocation_date' => 'required|date'
-            ]);
+{
+    try {
+        $validated = $request->validate([
+            'payment_allocation_name' => 'required|string|max:50',
+            'amount' => 'required|numeric|min:0',
+            'allocation_date' => 'required|date',
+            'payment_type' => 'required|string|in:annual_fee,registration_fee',
+        ]);
 
-            $payment = new PaymentAllocation();
-            $payment->payment_allocation_name = $validated['payment_allocation_name'];
-            $payment->amount = $validated['amount'];
-            $payment->allocation_date = $validated['allocation_date'];
-            $payment->admin_id = auth()->id(); // Assuming you're using authentication
-            $payment->session = 1; // You might want to adjust this based on your needs
-            $payment->save();
+        // Check if the payment entry already exists
+        $existingPayment = PaymentAllocation::where([
+            ['payment_allocation_name', $validated['payment_allocation_name']],
+            ['allocation_date', $validated['allocation_date']],
+            ['amount', $validated['amount']],
+            ['payment_type', $validated['payment_type']],
+            ['admin_id', auth()->id()]
+        ])->first();
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Fee collection added successfully!'
-            ]);
-
-        } catch (\Exception $e) {
+        if ($existingPayment) {
             return response()->json([
                 'success' => false,
-                'message' => 'Error adding fee collection: ' . $e->getMessage()
-            ], 500);
+                'message' => 'This payment record already exists!'
+            ], 409);
         }
+
+        // If no duplicate found, insert the new payment
+        $payment = new PaymentAllocation();
+        $payment->payment_allocation_name = $validated['payment_allocation_name'];
+        $payment->payment_type = $validated['payment_type'];
+        $payment->amount = $validated['amount'];
+        $payment->allocation_date = $validated['allocation_date'];
+        $payment->admin_id = auth()->id();
+        $payment->session = 1;
+        $payment->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Fee collection added successfully!'
+        ]);
+
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Error adding fee collection: ' . $e->getMessage()
+        ], 500);
     }
+}
+
 
     //function for fee collection update
     public function feeCollectionEdit($id)

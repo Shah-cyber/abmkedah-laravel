@@ -20,12 +20,19 @@ function showError(message) {
 }
 
 // Handle form submission
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const feeCollectionForm = document.getElementById('feeCollectionForm');
-    
+
     if (feeCollectionForm) {
-        feeCollectionForm.addEventListener('submit', async function(e) {
+        feeCollectionForm.addEventListener('submit', async function (e) {
             e.preventDefault();
+
+            const submitButton = this.querySelector('button[type="submit"]');
+
+            // Prevent multiple submissions
+            if (submitButton.disabled) return;
+
+            submitButton.disabled = true;
             
             try {
                 const response = await fetch('/admin/fee-collection/store', {
@@ -39,6 +46,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         payment_allocation_name: document.getElementById('payment-name').value,
                         amount: document.getElementById('amount').value,
                         allocation_date: document.getElementById('allocation-date').value,
+                        payment_type: document.getElementById('payment-type').value,
                     })
                 });
 
@@ -46,9 +54,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 if (response.ok) {
                     showSuccess('Fee collection added successfully!');
-                    // Reset form after successful submission
                     feeCollectionForm.reset();
-                    // Redirect after 1.5 seconds
                     setTimeout(() => {
                         window.location.href = '/admin/fee-collection';
                     }, 1500);
@@ -57,10 +63,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             } catch (error) {
                 showError('An error occurred while submitting the form.');
+            } finally {
+                // Enable submit button after some time (optional)
+                setTimeout(() => {
+                    submitButton.disabled = false;
+                }, 2000);
             }
         });
     }
 });
+
 
 // Handle update form submission
 document.addEventListener('DOMContentLoaded', function() {
@@ -94,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     // Redirect after 1.5 seconds
                     setTimeout(() => {
                         window.location.href = '/admin/fee-collection';
-                    }, 1500);
+                    }, 1000);
                 } else {
                     showError(data.message || 'Something went wrong!');
                 }

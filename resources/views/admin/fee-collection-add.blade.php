@@ -15,61 +15,80 @@
         <hr class="border-gray-300 my-2">
     
         <!-- Form -->
-        <div class="mt-4 px-6 py-4 bg-white shadow-lg rounded-lg">
-            <form id="feeCollectionForm" class="space-y-4">
-                @csrf
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <!-- Payment Name -->
-                    <div class="md:col-span-2">
-                        <label for="payment-name" class="block text-sm font-medium text-gray-700">Payment Name</label>
-                        <input
-                            type="text"
-                            id="payment-name"
-                            name="payment_allocation_name"
-                            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" 
-                            required />
-                    </div>
-    
-                    <!-- Amount with Prefix -->
-                    <div>
-                        <label for="amount" class="block text-sm font-medium text-gray-700">Amount</label>
-                        <div class="mt-1 flex rounded-lg shadow-sm">
-                            <span class="inline-flex items-center px-3 rounded-l-lg border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
-                                RM
-                            </span>
-                            <input
-                                type="number"
-                                id="amount"
-                                name="amount"
-                                step="0.01"
-                                class="flex-1 block w-full px-3 py-2 border border-gray-300 rounded-r-lg focus:ring-indigo-500 focus:border-indigo-500"
-                                placeholder="0.00"
-                                required />
-                        </div>
-                    </div>
-    
-                    <!-- Allocation Date -->
-                    <div>
-                        <label for="allocation-date" class="block text-sm font-medium text-gray-700">Allocation Date</label>
-                        <input
-                            type="date"
-                            id="allocation-date"
-                            name="allocation_date"
-                            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                            required />
-                    </div>
-                </div>
-    
-                <!-- Submit Button -->
-                <div class="text-right">
-                    <button
-                        type="submit"
-                        class="px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                        Add Payment
-                    </button>
-                </div>
-            </form>
+<div class="mt-4 px-6 py-4 bg-white shadow-lg rounded-lg">
+    <form id="feeCollectionForm" class="space-y-4">
+        @csrf
+        <!-- Top Row (2 Columns) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Payment Name -->
+            <div>
+                <label for="payment-name" class="block text-sm font-medium text-gray-700">Payment Name</label>
+                <input
+                    type="text"
+                    id="payment-name"
+                    name="payment_allocation_name"
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                    required />
+            </div>
+
+            <!-- Payment Type -->
+            <div>
+                <label for="payment-type" class="block text-sm font-medium text-gray-700">Payment Type</label>
+                <select
+                    id="payment-type"
+                    name="payment_type"
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                    required>
+                    <option value="" selected disabled>Select Payment Type</option>
+                    <option value="annual_fee">Annual Fee</option>
+                    <option value="registration_fee">Registration Fee</option>
+                </select>
+            </div>
         </div>
+
+        <!-- Bottom Row (2 Columns) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Amount with Prefix -->
+            <div>
+                <label for="amount" class="block text-sm font-medium text-gray-700">Amount</label>
+                <div class="mt-1 flex rounded-lg shadow-sm">
+                    <span class="inline-flex items-center px-3 rounded-l-lg border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
+                        RM
+                    </span>
+                    <input
+                        type="number"
+                        id="amount"
+                        name="amount"
+                        step="0.01"
+                        class="flex-1 block w-full px-3 py-2 border border-gray-300 rounded-r-lg focus:ring-indigo-500 focus:border-indigo-500"
+                        placeholder="0.00"
+                        required />
+                </div>
+            </div>
+
+            <!-- Allocation Date -->
+            <div>
+                <label for="allocation-date" class="block text-sm font-medium text-gray-700">Allocation Date</label>
+                <input
+                    type="date"
+                    id="allocation-date"
+                    name="allocation_date"
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                    required />
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="text-right">
+            <button
+                type="submit"
+                class="px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                Add Payment
+            </button>
+        </div>
+    </form>
+</div>
+
     
         <!-- Include SweetAlert2 -->
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

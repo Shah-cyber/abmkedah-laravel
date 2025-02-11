@@ -1,57 +1,195 @@
 <x-member-layout>
     <div class="p-6">
         <!-- Dashboard Header -->
-        <div class="text-center md:text-left">
-            <h1 class="text-2xl font-bold text-gray-800">Dashboard</h1>
-            <p class="text-gray-600">Welcome, Amin!</p>
+        <div class="text-center md:text-left mb-6">
+            <h1 class="text-2xl font-bold text-gray-800">Member Dashboard</h1>
+            <p class="text-gray-600">Welcome, {{ $memberDetails->name }}!</p>
         </div>
-    
-        <!-- Content Wrapper -->
-        <div class="mt-6 max-w-4xl mx-auto">
-            <!-- Cards Container -->
-            <div class="flex flex-col space-y-4 md:space-y-0 md:flex-row md:space-x-4">
-                <!-- Total Activities Card -->
-                <div class="basis-50 bg-gradient-to-br from-purple-500 to-indigo-500 text-white rounded-lg shadow-md p-6">
-                    <p class="text-lg font-semibold mb-2">Total Activities Joined</p>
-                    <div class="flex items-center justify-center">
-                        
-                        <!-- Icon -->
-                        <div class="text-4xl">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-12">
-                            <path fill-rule="evenodd" d="M2.25 2.25a.75.75 0 0 0 0 1.5H3v10.5a3 3 0 0 0 3 3h1.21l-1.172 3.513a.75.75 0 0 0 1.424.474l.329-.987h8.418l.33.987a.75.75 0 0 0 1.422-.474l-1.17-3.513H18a3 3 0 0 0 3-3V3.75h.75a.75.75 0 0 0 0-1.5H2.25Zm6.54 15h6.42l.5 1.5H8.29l.5-1.5Zm8.085-8.995a.75.75 0 1 0-.75-1.299 12.81 12.81 0 0 0-3.558 3.05L11.03 8.47a.75.75 0 0 0-1.06 0l-3 3a.75.75 0 1 0 1.06 1.06l2.47-2.47 1.617 1.618a.75.75 0 0 0 1.146-.102 11.312 11.312 0 0 1 3.612-3.321Z" clip-rule="evenodd" />
-                            </svg>
-                        </div>
-                        <!-- Text -->
-                        <div class="ml-4 justify-items-center">
-                            
-                            <p class="text-4xl font-bold">15</p>
-                            <p class="text-sm">Jan 01 - Aug 27</p>
-                        </div>
-                    </div>
+
+         <!-- Statistics Cards -->
+         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+            <!-- Profile Overview Card -->
+            <div class="bg-white rounded-lg shadow-md p-6 flex items-center">
+                <div class="p-3 bg-blue-100 text-blue-600 rounded-full">
+                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 12c2.761 0 5-2.239 5-5S14.761 2 12 2 7 4.239 7 7s2.239 5 5 5Zm0 2c-4.418 0-8 3.582-8 8a1 1 0 1 0 2 0c0-3.314 2.686-6 6-6s6 2.686 6 6a1 1 0 1 0 2 0c0-4.418-3.582-8-8-8Z"></path>
+                    </svg>
                 </div>
-    
-                <!-- Total Merit Card -->
-                <div class="basis-48 bg-gradient-to-br from-pink-500 to-red-500 text-white rounded-lg shadow-md p-6">
-                    <p class="text-lg font-semibold mb-2">Total Merit</p>
-                    <div class="flex items-center justify-around">
-                        <!-- Icon -->
-                        <div class="text-4xl">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-12">
-                            <path d="M11.7 2.805a.75.75 0 0 1 .6 0A60.65 60.65 0 0 1 22.83 8.72a.75.75 0 0 1-.231 1.337 49.948 49.948 0 0 0-9.902 3.912l-.003.002c-.114.06-.227.119-.34.18a.75.75 0 0 1-.707 0A50.88 50.88 0 0 0 7.5 12.173v-.224c0-.131.067-.248.172-.311a54.615 54.615 0 0 1 4.653-2.52.75.75 0 0 0-.65-1.352 56.123 56.123 0 0 0-4.78 2.589 1.858 1.858 0 0 0-.859 1.228 49.803 49.803 0 0 0-4.634-1.527.75.75 0 0 1-.231-1.337A60.653 60.653 0 0 1 11.7 2.805Z" />
-                            <path d="M13.06 15.473a48.45 48.45 0 0 1 7.666-3.282c.134 1.414.22 2.843.255 4.284a.75.75 0 0 1-.46.711 47.87 47.87 0 0 0-8.105 4.342.75.75 0 0 1-.832 0 47.87 47.87 0 0 0-8.104-4.342.75.75 0 0 1-.461-.71c.035-1.442.121-2.87.255-4.286.921.304 1.83.634 2.726.99v1.27a1.5 1.5 0 0 0-.14 2.508c-.09.38-.222.753-.397 1.11.452.213.901.434 1.346.66a6.727 6.727 0 0 0 .551-1.607 1.5 1.5 0 0 0 .14-2.67v-.645a48.549 48.549 0 0 1 3.44 1.667 2.25 2.25 0 0 0 2.12 0Z" />
-                            <path d="M4.462 19.462c.42-.419.753-.89 1-1.395.453.214.902.435 1.347.662a6.742 6.742 0 0 1-1.286 1.794.75.75 0 0 1-1.06-1.06Z" />
-                            </svg>
-                        </div>
-                        <!-- Text -->
-                        <div class="ml-4 justify-items-center">
-                            
-                            <p class="text-4xl font-bold">20.5</p>
-                            <p class="text-sm">Merits</p>
-                        </div>
-                    </div>
+                <div class="ml-4">
+                    <h2 class="text-lg font-semibold text-gray-700">Profile Overview</h2>
+                    <div class="text-3xl font-bold text-gray-900">{{ $memberDetails->name }}</div>
+                    <div class="text-sm text-gray-500">Membership Status: <span class="font-bold">{{ $memberDetails->member_status }}</span></div>
+                </div>
+            </div>
+
+            <!-- Total Events Joined Card -->
+            <div class="bg-white rounded-lg shadow-md p-6 flex items-center">
+                <div class="p-3 bg-green-100 text-green-600 rounded-full">
+                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M8 2a1 1 0 0 1 2 0v2h4V2a1 1 0 1 1 2 0v2h3a1 1 0 0 1 1 1v17a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3V2ZM6 6v15h12V6H6Zm6 10a1 1 0 0 1-1-1v-4a1 1 0 1 1 2 0v3h2a1 1 0 1 1 0 2h-3Z"></path>
+                    </svg>
+                </div>
+                <div class="ml-4">
+                    <h2 class="text-lg font-semibold text-gray-700">Total Events Joined</h2>
+                    <div class="text-3xl font-bold text-gray-900">{{ $joinedEvents->count() }}</div>
+                    <div class="text-sm text-gray-500">Events Participated</div>
+                </div>
+            </div>
+
+            <!-- Total Payments Made Card -->
+            <div class="bg-white rounded-lg shadow-md p-6 flex items-center">
+                <div class="p-3 bg-yellow-100 text-yellow-600 rounded-full">
+                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5Zm16 0H5v3h14V5ZM5 10v9h14v-9H5Zm7 5a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path>
+                    </svg>
+                </div>
+                <div class="ml-4">
+                    <h2 class="text-lg font-semibold text-gray-700">Total Payments Made</h2>
+                    <div class="text-3xl font-bold text-gray-900">{{ $totalPayments }}</div>
+                    <div class="text-sm text-gray-500">Payments Completed</div>
+                </div>
+            </div>
+
+            <!-- Upcoming Events Card -->
+            <div class="bg-white rounded-lg shadow-md p-6 flex items-center">
+                <div class="p-3 bg-red-100 text-red-600 rounded-full">
+                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M8 2a1 1 0 0 1 2 0v2h4V2a1 1 0 1 1 2 0v2h3a1 1 0 0 1 1 1v17a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3V2ZM6 6v15h12V6H6Zm2 4a1 1 0 1 1 0-2h8a1 1 0 1 1 0 2H8Z"></path>
+                    </svg>
+                </div>
+                <div class="ml-4">
+                    <h2 class="text-lg font-semibold text-gray-700">Upcoming Events</h2>
+                    <div class="text-3xl font-bold text-gray-900">{{ $upcomingEvents->count() }}</div>
+                    <div class="text-sm text-gray-500">Events Coming Soon</div>
                 </div>
             </div>
         </div>
-    </div>
-    
+
+        {{-- <!-- Merit Points & Allocations -->
+        <div class="mt-6">
+            <h2 class="text-xl font-semibold">Merit Points & Allocations</h2>
+            <div class="bg-white rounded-lg shadow-md p-4">
+                <p><strong>Total Merit Points:</strong> {{ $totalMeritsAwarded }}</p>
+                <h3 class="font-semibold mt-4">Allocations Breakdown</h3>
+                <ul class="list-disc pl-5">
+                    @foreach($topMembers as $member)
+                        <li>{{ $member->name }}: {{ $member->total_merit }} points</li>
+                    @endforeach
+                </ul>
+            </div>
+        </div>
+
+        <!-- Payments & Receipts -->
+        <div class="mt-6">
+            <h2 class="text-xl font-semibold">Payments & Receipts</h2>
+            <div class="bg-white rounded-lg shadow-md p-4">
+                <h3 class="font-semibold">Payment History</h3>
+                <ul class="list-disc pl-5">
+                    @foreach($paymentHistory as $payment)
+                        <li>Payment ID: {{ $payment->id }} - Amount: {{ $payment->amount }} - Date: {{ $payment->created_at }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        </div> --}}
+
+        <!-- Charts Section -->
+        <div class="mt-6 flex justify-between gap-4 w-full">
+            <!-- Total Participation Line Chart -->
+            <div class="w-1/2 bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-xl font-semibold text-gray-700">Total Event Participation</h2>
+                <canvas id="totalParticipationChart"></canvas>
+            </div>
+
+            <!-- Merit Points Bar Chart -->
+            <div class="w-1/2 bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-xl font-semibold text-gray-700">Merit Points Earned</h2>
+                <canvas id="meritPointsChart"></canvas>
+            </div>
+        </div>
+        
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                // Total Participation Line Chart
+                const totalParticipationCtx = document.getElementById('totalParticipationChart').getContext('2d');
+                const totalParticipationData = {
+                    labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'], // Predefined weeks in a month
+                    datasets: [{
+                        label: 'Total Participation',
+                        data: {!! json_encode(array_values(array_replace([0, 0, 0, 0], $totalParticipationData->pluck('count', 'week')->toArray()))) !!},
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 2,
+                        fill: false
+                    }]
+                };
+
+                new Chart(totalParticipationCtx, {
+                    type: 'line',
+                    data: totalParticipationData,
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    stepSize: 1, // Ensure y-axis increments by whole numbers
+                                    precision: 0 // Remove decimal places
+                                },
+                                title: {
+                                    display: true,
+                                    text: 'Number of Events'
+                                }
+                            },
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'Week in Month'
+                                }
+                            }
+                        }
+                    }
+                });
+
+                // Merit Points Bar Chart
+                const meritPointsCtx = document.getElementById('meritPointsChart').getContext('2d');
+                const meritPointsData = {
+                    labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'], // Predefined weeks in a month
+                    datasets: [{
+                        label: 'Merit Points Earned',
+                        data: {!! json_encode(array_values(array_replace([0, 0, 0, 0], $meritPointsData->pluck('total_merit', 'week')->toArray()))) !!},
+                        backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }]
+                };
+
+                new Chart(meritPointsCtx, {
+                    type: 'bar',
+                    data: meritPointsData,
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    stepSize: 1, // Ensure y-axis increments by whole numbers
+                                    precision: 0 // Remove decimal places
+                                },
+                                title: {
+                                    display: true,
+                                    text: 'Total Merit Points'
+                                }
+                            },
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'Week in Month'
+                                }
+                            }
+                        }
+                    }
+                });
+            });
+        </script>
+          
 </x-member-layout>

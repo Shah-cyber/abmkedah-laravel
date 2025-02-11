@@ -12,6 +12,7 @@ class PaymentAllocation extends Model
 
     protected $fillable = [
         'payment_allocation_name',
+        'payment_type',
         'amount',
         'allocation_date',
         'admin_id',

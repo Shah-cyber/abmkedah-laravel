@@ -8,8 +8,9 @@ use App\Http\Controllers\AdminEventController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\AdminMemberVerification;
 use App\Http\Controllers\AdminDashboardController;
-use App\Http\Controllers\AdminMemberRecordController;
+use App\Http\Controllers\MemberDashboardController;
 use App\Http\Controllers\AdminUserSettingController;
+use App\Http\Controllers\AdminMemberRecordController;
 
 
 
@@ -59,9 +60,12 @@ Route::get('/contact', function () {
 ////////////////////
 //member dashboard
 Route::middleware('auth')->prefix('member')->group(function () {
-    Route::get('/member/dashboard', function () {
-        return view('member.dashboard');
-    })->name('member.dashboard')->middleware('auth');
+    Route::get('/member/dashboard', [MemberDashboardController::class, 'index'])
+    ->name('member.dashboard')
+    ->middleware('auth');
+    Route::get('/member/dashboard/data', [MemberDashboardController::class, 'getDashboardData'])
+    ->name('member.dashboard.data')
+    ->middleware('auth');
     Route::get('/fee', function () {
         return view('member.fee'); // Member fee page
     });
