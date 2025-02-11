@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AdminController;
 use App\Http\Controllers\MeritController;
 use App\Http\Controllers\AdminFeeController;
 use App\Http\Controllers\AdminEventController;
@@ -11,6 +10,7 @@ use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\MemberDashboardController;
 use App\Http\Controllers\AdminUserSettingController;
 use App\Http\Controllers\AdminMemberRecordController;
+use App\Http\Controllers\MemberUserSettingController;
 
 
 
@@ -76,14 +76,11 @@ Route::middleware('auth')->prefix('member')->group(function () {
         return view('member.achievement-list'); // Member achievement list
     });
    // Settings
-Route::get('/setting', function () {
-    return view('member.setting-account'); // Member account settings
-})->name('member.setting');
+   Route::get('/setting', [MemberUserSettingController::class, 'showAccountSettings'])->name('member.setting');
+Route::post('/setting', [MemberUserSettingController::class, 'updateAccountDetails'])->name('member.updateAccount');
 
-Route::get('/setting-personal', function () {
-    return view('member.setting-personal-information'); // Member personal information settings
-})->name('member.setting-personal');
-
+Route::get('/setting-personal', [MemberUserSettingController::class, 'show'])->name('member.setting-personal');
+Route::post('/setting-personal', [MemberUserSettingController::class, 'update']);
     
     ////member event registration
     Route::get('/member/event-registration', function () {
@@ -273,12 +270,3 @@ Route::prefix('admin')->group(function () {
     });
     });
 });
-
-
-
-
- 
-
-
-
-    

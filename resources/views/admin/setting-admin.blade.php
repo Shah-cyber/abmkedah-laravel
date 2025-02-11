@@ -109,5 +109,5 @@
 <div id="success-message" style="display: none;">{{ session('success') }}</div>
 @endif
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="{{ asset('non-member/login.js') }}"></script> <!-- Include your existing login.js -->
+<script src="{{ asset('adminn/AdminUserSettings.js') }}"></script> <!-- Include your existing login.js -->
 </x-admin-layout>

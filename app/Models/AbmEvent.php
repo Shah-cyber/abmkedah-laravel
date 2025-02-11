@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class AbmEvent extends Model
 {
+
+    use HasFactory;
+
     protected $table = 'abmevent';
     protected $primaryKey = 'event_id';
 

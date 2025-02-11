@@ -42,6 +42,7 @@
   
 
     <script src="{{ asset('admin/adminFeeCollection.js') }}"></script>
+    
 </body>
 
 </html>

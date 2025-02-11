@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const errorMessage = document.getElementById('error-message');
     if (errorMessage) {
-        Swal.fire({
+        Swal.fire({ 
             icon: 'error',
             title: 'Oops...',
             text: errorMessage.innerText || 'There were some problems with your input!',
