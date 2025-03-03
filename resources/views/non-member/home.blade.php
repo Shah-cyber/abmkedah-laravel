@@ -102,99 +102,30 @@
                 </div>
             </div>
 
-            <!-- Events -->
-            <div class="h-auto bg-white shadow-md rounded-lg p-4 self-start">
-                <h2 class="text-xl font-bold text-gray-900 mb-4">Events</h2>
-                
-                <!-- Calendar Header -->
-                <div class="flex justify-between items-center bg-gray-900 text-white px-4 py-2 rounded-t-lg">
-                    <span>September 2024</span>
-                    <div class="flex gap-2">
-                        <button class="text-white hover:text-gray-300">&lt;</button>
-                        <button class="text-white hover:text-gray-300">&gt;</button>
-                    </div>
-                </div>
+      <!-- Events -->
+        <div class="h-auto bg-white shadow-md rounded-lg p-4 self-start">
+            <h2 class="text-xl font-bold text-gray-900 mb-4">Events</h2>
 
-                <!-- Event List -->
-                <div class="divide-y-2 divide-gray-600">
-                    <!-- Event Item 1 -->
-                    <div class="flex items-center ">
-                        <div class="bg-yellow-400 text-center text-white p-6">
-                            <span class="block text-sm">Sun</span>
-                            <span class="block text-2xl font-bold">1</span>
-                        </div>
-                        <div class="bg-gray-100 flex-1 p-4">
-                            <p class="text-sm font-bold text-gray-900">Marathon Run 2024</p>
-                            <p class="text-sm text-gray-500 flex items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-4 w-4 mr-1 size-6"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" /><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
-                                </svg>
-                            Likas Sport Complex
-                            </p>
-                            <p class="text-sm text-gray-500 flex items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="h-4 w-4 mr-1 size-6">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                                </svg>
-                            6:00AM
-                            </p>
-                        </div>
-                    </div>
-                    <!-- end of event item 1 -->
+            <!-- Calendar Header -->
+            <div class="flex justify-between items-center bg-gray-900 text-white px-4 py-2 rounded-t-lg">
+                <button id="prevMonth" class="text-white hover:text-gray-300">&lt;</button>
+                <span id="calendarHeader" class="text-lg font-semibold">{{ now()->format('F Y') }}</span>
+                <button id="nextMonth" class="text-white hover:text-gray-300">&gt;</button>
+            </div>
 
-                    <!-- Event Item 2 -->
-                    <div class="flex items-center ">
-                        <div class="bg-yellow-400 text-center text-white p-6">
-                            <span class="block text-sm">Sun</span>
-                            <span class="block text-2xl font-bold">1</span>
-                        </div>
-                        <div class="bg-gray-100 flex-1 p-4">
-                            <p class="text-sm font-bold text-gray-900">Kinabalu Hike 2024</p>
-                            <p class="text-sm text-gray-500 flex items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-4 w-4 mr-1 size-6"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" /><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
-                                </svg>
-                            Kota Kinabalu
-                            </p>
-                            <p class="text-sm text-gray-500 flex items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="h-4 w-4 mr-1 size-6">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                                </svg>
-                            6:00AM
-                            </p>
-                        </div>
-                    </div>
-                    <!-- end of event item2 -->
+            <!-- Event List -->
+            <div class="divide-y-2 divide-gray-600 max-h-80 overflow-y-auto" id="eventList">
+                <p class="text-center p-4 text-gray-500">Loading events...</p>
+            </div>
+        </div>
 
-                    <!-- Event Item 2 -->
-                    <div class="flex items-center ">
-                        <div class="bg-yellow-400 text-center text-white p-6">
-                            <span class="block text-sm">Sun</span>
-                            <span class="block text-2xl font-bold">1</span>
-                        </div>
-                        <div class="bg-gray-100 flex-1 p-4">
-                            <p class="text-sm font-bold text-gray-900">NORCH Badminton tour24</p>
-                            <p class="text-sm text-gray-500 flex items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-4 w-4 mr-1 size-6"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" /><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
-                                </svg>
-                            KHTP Kulim
-                            </p>
-                            <p class="text-sm text-gray-500 flex items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="h-4 w-4 mr-1 size-6">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                                </svg>
-                            9:00AM
-                            </p>
-                        </div>
-                    </div>
-                    <!-- end of event item2 -->
 
-                    <!-- Additional Event Items -->
-                </div>
-
-                <!-- More Button -->
+                {{-- <!-- More Button -->
                 <div class="border-t-2 border-gray-600 ">
                     <div class="flex justify-center mt-4">
                         <button class="bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800">More</button>
                     </div>
-                </div>
+                </div> --}}
             </div>
 
         </div>
@@ -202,13 +133,78 @@
 
     @include('non-member.footer')
     
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script src="{{ asset('non-member/NonMemberEventRegister.js') }}"></script>
+<script>
+    let currentDate = new Date();
 
+    function updateEvents() {
+        const month = currentDate.getMonth() + 1; // JS months start from 0
+        const year = currentDate.getFullYear();
+
+        document.getElementById("calendarHeader").innerText = 
+            new Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric' }).format(currentDate);
+
+        fetch(`/events?month=${month}&year=${year}`)
+            .then(response => response.json())
+            .then(data => {
+                const eventList = document.getElementById("eventList");
+                eventList.innerHTML = "";
+
+                if (data.events.length === 0) {
+                    eventList.innerHTML = `<p class="text-center p-4 text-gray-500">No events available in this month.</p>`;
+                } else {
+                    data.events.forEach(event => {
+                        const eventTime = event.event_start_time 
+                            ? new Date('1970-01-01T' + event.event_start_time) 
+                            : null;
+
+                            eventList.innerHTML += `
+                                <div class="flex items-center p-4">
+                                    <div class="bg-yellow-500 text-center text-black w-20 h-20 flex flex-col justify-center items-center rounded-lg">
+                                        <span class="block text-sm">${new Date(event.event_date).toLocaleString('en-US', { weekday: 'short' })}</span>
+                                        <span class="block text-2xl font-bold">${new Date(event.event_date).getDate()}</span>
+                                    </div>
+                                    <div class="bg-gray-100 flex-1 p-4 ml-4 rounded-lg shadow-md">
+                                        <p class="text-sm font-bold text-gray-900">${event.event_name}</p>
+                                        <p class="text-sm text-gray-500 flex items-center">
+                                            <img src="{{ asset('images/location.svg') }}" alt="Location Icon" class="h-4 w-4 mr-1">
+                                            ${event.event_location}
+                                        </p>
+                                        <p class="text-sm text-gray-500 flex items-center">
+                                            <img src="{{ asset('images/time.svg') }}" alt="Time Icon" class="h-4 w-4 mr-1">
+                                            ${eventTime ? eventTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : "No Time Available"}
+                                        </p>
+                                        <a href="/event/${event.event_id}" class="mt-2 inline-block px-3 py-1 text-xs font-medium text-white bg-black rounded-md hover:bg-green-600">
+                                            View Details
+                                        </a>
+                                    </div>
+                                </div>`;
+                    });
+                }
+            });
+    }
+
+    document.getElementById("prevMonth").addEventListener("click", () => {
+        currentDate.setMonth(currentDate.getMonth() - 1);
+        updateEvents();
+    });
+
+    document.getElementById("nextMonth").addEventListener("click", () => {
+        currentDate.setMonth(currentDate.getMonth() + 1);
+        updateEvents();
+    });
+
+    // Load initial events
+    updateEvents();
+</script>
     
     
 </x-non-member-layout>
 
 <!-- Include SweetAlert2 -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <!-- Include your custom JS file -->
 
 

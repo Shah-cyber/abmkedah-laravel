@@ -150,10 +150,19 @@ class AdminEventController extends Controller
         //delete event
         public function destroy($id)
         {
-            $event = AbmEvent::findOrFail($id);
-            $event->delete();
+            try {
+                // Attempt to delete the event
+                $event = AbmEvent::findOrFail($id);
+                $event->delete();
 
-            return redirect()->route('event.record.index')->with('success', 'Event deleted successfully!');
+                return response()->json(['success' => true, 'message' => 'Event deleted successfully!']);
+            } catch (\Illuminate\Database\QueryException $e) {
+                // Check if the error is due to foreign key constraint
+                if ($e->getCode() == 23000) {
+                    return response()->json(['success' => false, 'message' => 'Must delete the merit points first before deleting the event.'], 400);
+                }
+                return response()->json(['success' => false, 'message' => 'An error occurred while deleting the event.'], 500);
+            }
         }
 
         public function report($eventId)
@@ -172,6 +181,7 @@ class AdminEventController extends Controller
             return view('admin.event-report', compact('event', 'participants', 'totalParticipants'));
         }
 
+        //allocate merit point to member that join the event.
         public function allocateMerit(Request $request)
         {
             try {
@@ -255,7 +265,15 @@ class AdminEventController extends Controller
             return view('admin.event-volunteer', compact('participants', 'totalParticipants'));
         }
         
-        
+        public function search(Request $request)
+        {
+            $search = $request->query('search'); // Get the search term from the query string
+
+            $events = AbmEvent::where('event_name', 'like', '%' . $search . '%')
+                            ->paginate(4); // Paginate the results
+
+            return view('admin.event-list-table', compact('events')); // Return a partial view with the search results
+        }
         
         
 

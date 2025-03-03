@@ -39,4 +39,9 @@ class Joinevent extends Model
         return $this->belongsTo(NonMember::class, 'nonmember_id', 'nonmember_id');
     }
 
+    public function allocatedMerit()
+    {
+        return $this->hasOne(Merit::class, 'event_id', 'event_id'); // Adjust the foreign key and local key if necessary
+    }
+
 }

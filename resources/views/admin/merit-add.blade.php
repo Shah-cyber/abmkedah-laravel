@@ -32,7 +32,7 @@
                     </select>
                 </div>
 
-                <!-- Merit Point -->
+                <!-- Merit Point --> 
                 <div>
                     <label for="merit_point" class="block text-sm font-medium text-gray-700">Merit Point</label>
                     <input

@@ -5,6 +5,7 @@
         <hr class="border-gray-300 my-2">
     </div>
 
+    <div id="loading" style="display: none;">Loading...</div>
     <!-- Search Section -->
     <div class="mb-6">
         <div class="relative w-full">
@@ -36,7 +37,7 @@
         <p class="text-gray-600">Total Events: <span class="font-medium text-gray-900">{{ $events->total() }}</span></p>
     </div>
 
-    <!-- Table -->
+    {{-- <!-- Table -->
     <div class="overflow-x-auto bg-white rounded-lg shadow-md">
         <table class="w-full text-sm text-left text-gray-500">
             <thead class="bg-gray-50 text-gray-700 uppercase text-xs"> 
@@ -107,7 +108,25 @@
                 @endforelse
             </tbody>
         </table>
-    </div>
+    </div> --}}
+    <!-- Table -->
+<div class="overflow-x-auto bg-white rounded-lg shadow-md">
+    <table class="w-full text-sm text-left text-gray-500">
+        <thead class="bg-gray-50 text-gray-700 uppercase text-xs"> 
+            <tr>
+                <th class="px-4 py-3">NO.</th>
+                <th class="px-4 py-3">Event Name</th>
+                <th class="px-4 py-3">Banner</th>
+                <th class="px-4 py-3">Event Date</th>
+                <th class="px-4 py-3">Status</th>
+                <th class="px-4 py-3">Action</th>
+            </tr>
+        </thead>
+        <tbody id="event-table">
+            @include('admin.event-list-table', ['events' => $events])
+        </tbody>
+    </table>
+</div>
 
     
     <!-- Modal -->
@@ -121,47 +140,47 @@
     <!-- Pagination -->
     <div class="flex justify-between items-center mt-6">
         @if ($events->hasPages())
-        <div class="flex justify-between items-center mt-6">
-            @if ($events->onFirstPage())
-                <button class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md cursor-not-allowed" disabled>
-                    Previous
-                </button>
-            @else
-                <a href="{{ $events->previousPageUrl() }}" class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
-                    Previous
-                </a>
-            @endif
-    
-            <div class="flex items-center space-x-1">
-                @foreach ($events->links()->elements as $element)
-                    @if (is_string($element))
-                        <span class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md">{{ $element }}</span>
-                    @endif
-    
-                    @if (is_array($element))
-                        @foreach ($element as $page => $url)
-                            @if ($page == $events->currentPage())
-                                <span class="px-3 py-1 text-sm text-white bg-blue-500 rounded-md">{{ $page }}</span>
-                            @else
-                                <a href="{{ $url }}" class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
-                                    {{ $page }}
-                                </a>
-                            @endif
-                        @endforeach
-                    @endif
-                @endforeach
+            <div class="flex items-center space-x-2">
+                @if ($events->onFirstPage())
+                    <button class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md cursor-not-allowed" disabled>
+                        Previous
+                    </button>
+                @else
+                    <a href="{{ $events->previousPageUrl() }}" class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
+                        Previous
+                    </a>
+                @endif
+
+                <div class="flex items-center space-x-1">
+                    @foreach ($events->links()->elements as $element)
+                        @if (is_string($element))
+                            <span class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md">{{ $element }}</span>
+                        @endif
+
+                        @if (is_array($element))
+                            @foreach ($element as $page => $url)
+                                @if ($page == $events->currentPage())
+                                    <span class="px-3 py-1 text-sm text-white bg-blue-500 rounded-md">{{ $page }}</span>
+                                @else
+                                    <a href="{{ $url }}" class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
+                                        {{ $page }}
+                                    </a>
+                                @endif
+                            @endforeach
+                        @endif
+                    @endforeach
+                </div>
+
+                @if ($events->hasMorePages())
+                    <a href="{{ $events->nextPageUrl() }}" class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
+                        Next
+                    </a>
+                @else
+                    <button class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md cursor-not-allowed" disabled>
+                        Next
+                    </button>
+                @endif
             </div>
-    
-            @if ($events->hasMorePages())
-                <a href="{{ $events->nextPageUrl() }}" class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
-                    Next
-                </a>
-            @else
-                <button class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md cursor-not-allowed" disabled>
-                    Next
-                </button>
-            @endif
-        </div>
         @endif
     </div>
 
@@ -184,6 +203,32 @@
 
     <!-- Custom JavaScript to handle messages -->
     <script src="{{ asset('admin/adminEvent.js') }}"></script>
+    <script>
+     $(document).ready(function() {
+    $('input[type="text"]').on('input', function() {
+        const searchTerm = $(this).val();
+
+        // Show loading indicator
+        $('#loading').show();
+
+        $.ajax({
+            url: "{{ route('event.record.search') }}",
+            method: 'GET',
+            data: { search: searchTerm },
+            success: function(response) {
+                $('#event-table').html(response);
+            },
+            error: function(xhr) {
+                console.error('Error:', xhr.responseText);
+            },
+            complete: function() {
+                // Hide loading indicator
+                $('#loading').hide();
+            }
+        });
+    });
+});
+    </script>
     
     
     <script>

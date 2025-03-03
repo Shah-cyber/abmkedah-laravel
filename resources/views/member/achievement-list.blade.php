@@ -32,7 +32,7 @@
         <!-- Total Events -->
         <p class="text-gray-600">
             Total merit: 
-            <span class="font-medium text-gray-900">15.0</span>
+            <span class="font-medium text-gray-900">{{ $data->sum('merit_point') }}</span>
         </p>
     </div>
     <!-- Table -->
@@ -40,89 +40,69 @@
         <table class="w-full text-sm text-left text-gray-500">
             <thead class="bg-gray-50 text-gray-700 uppercase text-xs">
                 <tr>
-                    <th class="px-4 py-3">#</th>
+                    <th class="px-4 py-3">No</th>
                     <th class="px-4 py-3">event Name</th>
                     <th class="px-4 py-3">Merit</th>
-                    <th class="px-4 py-3">certificate</th>
+                    {{-- <th class="px-4 py-3">certificate</th> --}}
                 </tr>
             </thead>
             <tbody>
-                <!-- Row 1 -->
-                <tr class="border-b">
-                    <td class="px-4 py-4">1</td>
-                    <td class="px-4 py-4">ABM KEDAH 2024 RETREAT</td>
-                    <td class="px-4 py-4">5.00</td>
-                    <td class="px-4 py-4 flex space-x-2">
-                        <button
-                            data-modal-target="certificateModal"
-                            data-modal-toggle="certificateModal"
-                            class="text-black hover:text-blue-500 px-3 py-1"
-                        >
-                            View
-                        </button>
-                    </td>
-                </tr>
-                <!-- Row 2 -->
-                <tr class="border-b">
-                    <td class="px-4 py-4">2</td>
-                    <td class="px-4 py-4">Norch Badminton</td>
-                    <td class="px-4 py-4">5.00</td>
-                    <td class="px-4 py-4 flex space-x-2">
-                        <button
-                            data-modal-target="certificateModal"
-                            data-modal-toggle="certificateModal"
-                            class="text-black hover:text-blue-500 px-3 py-1"
-                        >
-                            View
-                        </button>
-                    </td>
-                </tr>
-                <!-- Row 3 -->
-                <tr class="border-b">
-                    <td class="px-4 py-4">3</td>
-                    <td class="px-4 py-4">AGM ABM KEDAH</td>
-                    <td class="px-4 py-4">5.00</td>
-                    <td class="px-4 py-4 flex space-x-2">
-                        <button
-                            data-modal-target="certificateModal"
-                            data-modal-toggle="certificateModal"
-                            class="text-black hover:text-blue-500 px-3 py-1"
-                        >
-                            View
-                        </button>
-                    </td>
-                </tr>
-                <!-- Add More Rows as Needed -->
+                
+                @foreach($data as $key => $item)
+                    <tr class="border-b">
+                        <td class="px-4 py-4">{{ $key + 1 }}</td>
+                        <td class="px-4 py-4">{{ $item->event_name }}</td>
+                        <td class="px-4 py-4">{{  $item->merit_point ?? 'N/A' }}</td>
+                    </tr>
+                @endforeach
+            
+            
+          
             </tbody>
         </table>
     </div>
 
     <!-- Pagination -->
-    <div class="flex justify-between items-center mt-6">
-        <p class="text-sm text-gray-600">Showing 1 to 10 of 155 entries</p>
-        <div class="flex items-center space-x-1">
-            <button
-                class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
+<div class="flex justify-between items-center mt-6">
+    <p class="text-sm text-gray-600">
+        Showing {{ $data->firstItem() }} to {{ $data->lastItem() }} of {{ $data->total() }} entries
+    </p>
+    <div class="flex items-center space-x-1">
+        {{-- Previous Button --}}
+        @if ($data->onFirstPage())
+            <button class="px-3 py-1 text-sm text-gray-400 bg-gray-200 rounded-md cursor-not-allowed">
                 Previous
             </button>
-            <button
-                class="px-3 py-1 text-sm text-white bg-blue-500 rounded-md hover:bg-blue-600">
-                1
-            </button>
-            <button
+        @else
+            <a href="{{ $data->previousPageUrl() }}" 
                 class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
-                2
-            </button>
-            <button
-                class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
-                3
-            </button>
-            <button
+                Previous
+            </a>
+        @endif
+
+        {{-- Page Numbers --}}
+        @foreach ($data->getUrlRange(max(1, $data->currentPage() - 2), min($data->lastPage(), $data->currentPage() + 2)) as $page => $url)
+            <a href="{{ $url }}"
+                class="px-3 py-1 text-sm {{ $page == $data->currentPage() ? 'text-white bg-blue-500' : 'text-gray-500 bg-gray-200 hover:bg-gray-300' }} rounded-md">
+                {{ $page }}
+            </a>
+        @endforeach
+
+        {{-- Next Button --}}
+        @if ($data->hasMorePages())
+            <a href="{{ $data->nextPageUrl() }}" 
                 class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
                 Next
+            </a>
+        @else
+            <button class="px-3 py-1 text-sm text-gray-400 bg-gray-200 rounded-md cursor-not-allowed">
+                Next
             </button>
-        </div>
+        @endif
     </div>
+</div>
+
+    
 
     <!-- Certificate Modal -->
     <div id="certificateModal" tabindex="-1" aria-hidden="true"

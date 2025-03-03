@@ -13,15 +13,17 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 
+
 class LoginController extends Controller
 {
-   
+    // The AuthenticatesUsers trait is not defined, so we will remove it.
 
     public function showRegistrationForm()
     {
         return view('non-member.registration'); // Show the registration view
     }
 
+    
    
     
     public function register(Request $request)

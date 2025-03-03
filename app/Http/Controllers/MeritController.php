@@ -19,11 +19,12 @@ class MeritController extends Controller
  
      // Show form for creating a new merit
      public function create()
-    {
-        $events = AbmEvent::all(); // Retrieve all events for the dropdown
-        $admins = Admin::all(); // Retrieve all admins for the dropdown
-        return view('admin.merit-add', compact('events', 'admins'));
-    }
+     {
+         // Retrieve all events that do not have any associated merit points
+         $events = AbmEvent::whereDoesntHave('merits')->get(); // Adjust the relationship name if necessary
+         $admins = Admin::all(); // Retrieve all admins for the dropdown
+         return view('admin.merit-add', compact('events', 'admins'));
+     }
  
      // Store a newly created merit in storage
      public function store(Request $request)
@@ -42,7 +43,7 @@ class MeritController extends Controller
              'admin_id' => $request->admin_id,
              'allocation_date' => now(), // Automatically set to the current date and time
          ]);
- 
+  
          return redirect()->route('merit.list')->with('success', 'Merit added successfully!');
      }
  
