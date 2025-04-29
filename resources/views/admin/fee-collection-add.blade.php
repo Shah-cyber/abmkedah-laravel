@@ -1,5 +1,5 @@
 <x-admin-layout>
-    
+
         <!-- Header Section -->
         <div class="mb-4 flex items-center">
             <!-- Icon Back Button -->
@@ -13,7 +13,7 @@
         </div>
         <!-- Horizontal Line -->
         <hr class="border-gray-300 my-2">
-    
+
         <!-- Form -->
 <div class="mt-4 px-6 py-4 bg-white shadow-lg rounded-lg">
     <form id="feeCollectionForm" class="space-y-4">
@@ -42,6 +42,7 @@
                     <option value="" selected disabled>Select Payment Type</option>
                     <option value="annual_fee">Annual Fee</option>
                     <option value="registration_fee">Registration Fee</option>
+                    <option value="one_time_fee">OneTime Fee</option>
                 </select>
             </div>
         </div>
@@ -89,10 +90,10 @@
     </form>
 </div>
 
-    
+
         <!-- Include SweetAlert2 -->
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <!-- Include your custom JS -->
         <script src="{{ asset('admin/adminFeeCollection.js') }}"></script>
-    
+
 </x-admin-layout>

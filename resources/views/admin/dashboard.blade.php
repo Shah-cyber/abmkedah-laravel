@@ -64,10 +64,8 @@
             const step = (timestamp) => {
                 if (!startTimestamp) startTimestamp = timestamp;
                 const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-                const value = progress * (end - start) + start;
-                const firstDigit = Math.floor(value);
-                const secondDigit = Math.floor((value - firstDigit) * 10);
-                obj.innerHTML = `${firstDigit}.${secondDigit}`;
+                const value = Math.floor(progress * (end - start) + start);
+                obj.innerHTML = value.toLocaleString();
                 if (progress < 1) {
                     window.requestAnimationFrame(step);
                 }
@@ -78,7 +76,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             animateValue('totalMembers', 0, {{ $totalMembers }}, 1500);
             animateValue('totalEvents', 0, {{ $totalEvents }}, 1500);
-            animateValue('totalMerits', 0, {{ number_format($totalMeritsAwarded, 2) }}, 1000);
+            animateValue('totalMerits', 0, {{ number_format($totalMeritsAwarded, 0) }}, 1000);
             animateValue('pendingApplications', 0, {{ $pendingApplications }}, 1000);
         });
     </script>

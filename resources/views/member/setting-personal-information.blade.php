@@ -1,4 +1,28 @@
 <x-member-layout>
+    <style>
+        .swal-btn {
+    background-color: #3085d6 !important; /* Set background color for the confirm button */
+    color: white !important; /* Set text color for confirm button */
+    border-radius: 5px !important; /* Optional: smooth the corners */
+    padding: 10px 20px !important; /* Optional: adjust padding */
+    border: none !important; /* Remove any default borders */
+}
+
+.swal-btn-cancel {
+    background-color: #d33 !important; /* Set background color for cancel button */
+    color: white !important; /* Set text color for cancel button */
+    border-radius: 5px !important; /* Optional: smooth the corners */
+    padding: 10px 20px !important; /* Optional: adjust padding */
+    border: none !important; /* Remove any default borders */
+}
+
+/* Optional: Adjust the SweetAlert modal button container */
+.swal2-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+    </style>
 
 
 
@@ -9,7 +33,7 @@
     </div>
 
     <!-- Tabs Section -->
-    <div class="mb-6"> 
+    <div class="mb-6">
         <ul class="flex border-b">
             <li class="mr-4">
                 <a href="/member/setting" class="inline-block py-2 px-4  border-b-2  font-semibold">
@@ -24,7 +48,7 @@
         </ul>
     </div>
 
-    <!-- Admin Settings Content -->
+    <!-- MEMBER Settings Content -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <!-- Left Column: Account Details -->
         <div class="md:col-span-2 bg-white shadow-md rounded-lg p-6">
@@ -41,7 +65,7 @@
                             id="full_name"
                             name="full_name"
                             value="{{ $member->name }}"
-                            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
+                            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" required/>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <!-- IC number -->
@@ -52,18 +76,22 @@
                                 id="IC_Number"
                                 name="IC_Number"
                                 value="{{ $member->ic_number }}"
-                                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
+                                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" required/>
                         </div>
 
                         <!-- Age -->
                         <div>
                             <label for="age" class="block text-sm font-medium text-gray-700">Age</label>
                             <input
-                                type="number"
-                                id="age"
-                                name="age"
-                                value="{{ $member->age }}"
-                                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
+                            type="number"
+                            id="age"
+                            name="age"
+                            min="5"
+                            value="{{ $member->age == 0 ? '' : $member->age }}"
+                            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                            required
+                        />
+
                         </div>
 
                         <!-- Race -->
@@ -74,7 +102,7 @@
                                 id="race"
                                 name="race"
                                 value="{{ $member->race }}"
-                                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
+                                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" required/>
                         </div>
 
                         <!-- Gender -->
@@ -85,7 +113,7 @@
                                 id="gender"
                                 name="gender"
                                 value="{{ $member->gender }}"
-                                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
+                                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" required/>
                         </div>
 
                         <!-- Religion -->
@@ -96,7 +124,7 @@
                                 id="religion"
                                 name="religion"
                                 value="{{ $member->religion }}"
-                                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
+                                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" required/>
                         </div>
 
                         <!-- Phone Number -->
@@ -107,7 +135,7 @@
                                 id="phone_num"
                                 name="phone_num"
                                 value="{{ $member->phone_number }}"
-                                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
+                                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" required/>
                         </div>
 
                         <!-- Birth Place -->
@@ -118,7 +146,7 @@
                                 id="birth_place"
                                 name="birth_place"
                                 value="{{ $member->birthplace }}"
-                                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
+                                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" required/>
                         </div>
 
                         <!-- Birth Date -->
@@ -129,7 +157,7 @@
                                 id="birth_date"
                                 name="birth_date"
                                 value="{{ $member->birthdate }}"
-                                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
+                                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" required/>
                         </div>
                     </div>
                     <!-- Address -->
@@ -140,7 +168,7 @@
                             id="Address"
                             name="Address"
                             value="{{ $member->address }}"
-                            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
+                            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" required/>
                     </div>
                 </div>
 

@@ -15,35 +15,28 @@
         </p>
         <div class="mt-4 space-y-2">
             <div class="flex justify-between">
-                <span class="text-gray-600">Billing Order</span>
-                <span class="font-medium">ORD-1562792771583</span>
-            </div>
-            <div class="flex justify-between">
                 <span class="text-gray-600">Transaction ID</span>
-                <span class="font-medium">TP2407161392818934</span>
+                <span class="font-medium">{{ $paymentDetails->transaction_id }}</span>
             </div>
             <div class="flex justify-between">
-                <span class="text-gray-600">Member Name</span>
-                <span class="font-medium">Amin Idris</span>
+                <span class="text-gray-600">Member Name</span> 
+                <span class="font-medium">{{ $paymentDetails->member->name ?? 'N/A' }}</span>
             </div>
             <div class="flex justify-between">
                 <span class="text-gray-600">Address</span>
-                <span class="font-medium text-right">
-                    4140 Parker Rd. Allentown,<br />
-                    New Mexico 31134
-                </span>
+                <span class="font-medium text-right">{{ $paymentDetails->member->address ?? 'N/A' }}</span>
             </div>
             <div class="flex justify-between">
                 <span class="text-gray-600">Email</span>
-                <span class="font-medium">amin@gmail.com</span>
+                <span class="font-medium">{{ $paymentDetails->member->login->email ?? 'N/A' }}</span>
             </div>
             <div class="flex justify-between">
-                <span class="text-gray-600">Payment Amount</span>
-                <span class="font-medium">RM 11.80</span>
+                <span class="text-gray-600">Payment Amount</span> 
+                <span class="font-medium">RM {{ number_format($paymentDetails->payment_fee ?? 0, 2) }}</span>
             </div>
             <div class="flex justify-between">
                 <span class="text-gray-600">Payment Status</span>
-                <span class="font-medium text-green-500">Success</span>
+                <span class="font-medium text-green-500">{{ $paymentDetails->payment_status }}</span>
             </div>
         </div>
         <div class="mt-6">

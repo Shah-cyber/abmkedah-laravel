@@ -1,4 +1,32 @@
 <x-member-layout>
+
+    <style>
+        .swal-btn {
+    background-color: #3085d6 !important; /* Set background color for the confirm button */
+    color: white !important; /* Set text color for confirm button */
+    border-radius: 5px !important; /* Optional: smooth the corners */
+    padding: 10px 20px !important; /* Optional: adjust padding */
+    border: none !important; /* Remove any default borders */
+}
+
+.swal-btn-cancel {
+    background-color: #d33 !important; /* Set background color for cancel button */
+    color: white !important; /* Set text color for cancel button */
+    border-radius: 5px !important; /* Optional: smooth the corners */
+    padding: 10px 20px !important; /* Optional: adjust padding */
+    border: none !important; /* Remove any default borders */
+}
+
+/* Optional: Adjust the SweetAlert modal button container */
+.swal2-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+    </style>
+
+
+
     <div class="mb-4">
         <h1 class="text-2xl font-bold text-gray-800">Account Settings</h1>
         <!-- Horizontal Line -->
@@ -10,21 +38,21 @@
         <ul class="flex border-b">
             <!-- Account Tab -->
             <li class="mr-4">
-                <a href="{{ route('member.setting') }}" 
+                <a href="{{ route('member.setting') }}"
                    class="inline-block py-2 px-4 {{ request()->routeIs('member.setting') ? 'text-yellow-500 border-b-2 border-yellow-500 font-semibold' : 'font-semibold' }}">
                     Account
                 </a>
             </li>
             <!-- Personal Information Tab -->
             <li class="mr-4">
-                <a href="{{ route('member.setting-personal') }}" 
+                <a href="{{ route('member.setting-personal') }}"
                    class="inline-block py-2 px-4 {{ request()->routeIs('member.setting-personal') ? 'text-yellow-500 border-b-2 border-yellow-500 font-semibold' : 'font-semibold' }}">
                     Personal Information
                 </a>
             </li>
         </ul>
     </div>
-    
+
     <!-- Admin Settings Content -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <!-- Left Column: Account Details -->
@@ -42,7 +70,9 @@
                             id="username"
                             name="username"
                             value="{{ $member->login->username }}"
-                            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
+                            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                            required
+                            />
                     </div>
 
                     <!-- Email -->
@@ -53,7 +83,9 @@
                             id="email"
                             name="email"
                             value="{{ $member->login->email }}"
-                            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
+                            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                            required
+                            />
                     </div>
 
                     <!-- Password -->
@@ -103,8 +135,8 @@
             </button>
         </div>
     </div>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('member/memberSetting-personal-information.js') }}"></script>
-    
+
 </x-member-layout>

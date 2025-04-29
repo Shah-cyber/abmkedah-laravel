@@ -1,18 +1,24 @@
 <?php
 
+use Faker\Guesser\Name;
+use App\Models\PaymentReceipt;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MeritController;
 use App\Http\Controllers\AdminFeeController;
+use App\Http\Controllers\MemberFeeController;
+use App\Http\Controllers\NonmemberController;
+use App\Http\Controllers\ToyyibpayController;
 use App\Http\Controllers\AdminEventController;
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\AdminMemberVerification;
+use App\Http\Controllers\MemberEventController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\MemberDashboardController;
 use App\Http\Controllers\AdminUserSettingController;
 use App\Http\Controllers\AdminMemberRecordController;
+use App\Http\Controllers\MemberAchievementController;
 use App\Http\Controllers\MemberUserSettingController;
-
-
+use App\Http\Controllers\AdminMemberVerificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,7 +29,7 @@ use App\Http\Controllers\MemberUserSettingController;
 | routes are loaded by the RouteServiceProvider and all of them will
 | be assigned to the "web" middleware group. Make something great!
 |
-*/ 
+*/
 
 
 // Authentication Routes
@@ -34,14 +40,28 @@ Route::post('/admin/logout', [LoginController::class, 'logout'])->name('admin.lo
 //Logout Route Member
 Route::post('/member/logout', [LoginController::class, 'logout'])->name('member.logout');
 
-// Registration Routes
+// Registration to the system Routes
 Route::get('/register', [LoginController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [LoginController::class, 'register']);
 
+
 // Non-Member Functionality
-Route::get('/', function () {
-    return view('non-member.home');
-});
+// Route::get('/', function () {
+//     return view('non-member.home');
+// });
+// Non-Member Functionality
+Route::get('/', [NonmemberController::class, 'index'])->name('non-member.home'); // Use controller here
+Route::get('/non-member/home', [NonmemberController::class, 'index']); // Optional duplicate, but not needed
+
+Route::get('/event/{id}', [NonmemberController::class, 'showEventDetails'])->name('non-member.event-details');
+Route::get('/events', [NonmemberController::class, 'fetchEvents']);
+
+    //nonmember event ppayment
+Route::post('/event/register-nonmember/{id}', [ToyyibpayController::class, 'registerNonMember'])->name('event.register.nonmember');
+Route::get('/toyyibpay-status-nonmember', [ToyyibpayController::class, 'paymentStatusNonMember'])->name('toyyibpay-status-nonmember');
+Route::post('/toyyibpay-callback-nonmember', [ToyyibpayController::class, 'callbackNonMember'])->name('toyyibpay-callback-nonmember');
+Route::get('/payment/success/nonmember/{id}', [ToyyibpayController::class, 'paymentSuccessNonMember'])->name('payment.success.nonmember');
+
 Route::get('/about', function () {
     return view('non-member.about');
 });
@@ -55,6 +75,37 @@ Route::get('/contact', function () {
     return view('non-member.contact');
 });
 
+/////////////////////
+//PAYMENT TOYYIBPAY//
+////////////////////
+
+
+
+
+
+//member payment event funtion
+Route::get('toyyibpay/{id}', [ToyyibpayController::class, 'createBill'])->name('toyyibpay-create');
+Route::get('/toyyibpay-status', [ToyyibpayController::class, 'paymentStatus'])->name('toyyibpay-status');
+Route::post('/toyyibpay-callback', [ToyyibpayController::class, 'callback'])->name('toyyibpay-callback');
+Route::post('/event/register/{id}', [ToyyibpayController::class, 'register'])->name('event.register');
+Route::get('/payment/success/{id}', [ToyyibpayController::class, 'paymentSuccess'])->name('payment.success');
+    //member payment event funtion
+
+
+
+
+//     // Membership fee payment routes
+// Route::post('/membership/pay/{allocation_id}', [ToyyibpayController::class, 'processMembershipFee'])
+// ->name('membership.pay');
+// Route::get('/toyyibpay-membership-status', [ToyyibpayController::class, 'membershipPaymentStatus'])
+// ->name('toyyibpay-membership-status');
+
+// // Receipt viewing route
+// Route::get('/member/fee-receipt/{id}', [MemberFeeController::class, 'showReceipt'])
+//     ->name('member.fee-receipt');
+////////////////////
+////////////////////
+
 ////////////////////
 // MEMBER FUNCTION//
 ////////////////////
@@ -66,36 +117,50 @@ Route::middleware('auth')->prefix('member')->group(function () {
     Route::get('/member/dashboard/data', [MemberDashboardController::class, 'getDashboardData'])
     ->name('member.dashboard.data')
     ->middleware('auth');
-    Route::get('/fee', function () {
-        return view('member.fee'); // Member fee page
-    });
-    Route::get('/event', function () {
-        return view('member.event-list'); // Member event list
-    });
-    Route::get('/achievement', function () {
-        return view('member.achievement-list'); // Member achievement list
-    });
+
+
+
+     // Member event list
+    // Route::get('/event', function () {
+    //     return view('member.event-list');
+    // });
+    Route::get('/event', [MemberEventController::class, 'index'])->name('member.event.list');
+    //member achievment
+    // Route::get('/achievement', function () {
+    //     return view('member.achievement-list'); // Member achievement list
+    // });
+    Route::get('/achievement', [MemberAchievementController::class, 'index'])
+        ->name('member.achievement');
    // Settings
    Route::get('/setting', [MemberUserSettingController::class, 'showAccountSettings'])->name('member.setting');
 Route::post('/setting', [MemberUserSettingController::class, 'updateAccountDetails'])->name('member.updateAccount');
 
 Route::get('/setting-personal', [MemberUserSettingController::class, 'show'])->name('member.setting-personal');
 Route::post('/setting-personal', [MemberUserSettingController::class, 'update']);
-    
+
     ////member event registration
     Route::get('/member/event-registration', function () {
         return view('member.event-registration');
     });
-    Route::get('/member/event-registration/{id?}', function() {
-        return view('member.event-registration');
-    })->name('member.event-registration');
+    Route::get('/member/event-registration/{id}', [MemberEventController::class, 'show'])->name('member.event-registration');
+    Route::post('/member/event-registration/{id}', [MemberEventController::class, 'registerEvent'])
+        ->name('member.register-event');
+     // Event registration routes
+     Route::get('/event-registration/{id}', [MemberEventController::class, 'showRegistration'])->name('member.event-registration');
+     Route::post('/event/register/{id}', [MemberEventController::class, 'register'])->name('member.event.register');
     ////member event registration
-    Route::get('/member/fee-receipt', function () {
-        return view('member.fee-receipt');
+    Route::get('/fee', function () {
+        return view('member.fee'); // Member fee page
     });
-    // Add this route for fee receipt view
-    Route::get('/member/fee-receipt/{id?}', function() {
-        return view('member.fee-receipt');
+    Route::get('/fee', [MemberFeeController::class, 'index'])->name('member.fee');
+    Route::post('/pay-membership-fee', [ToyyibpayController::class, 'payMembershipFee'])->name('member.payMembershipFee');
+    Route::post('/toyyibpay/callback', [ToyyibpayController::class, 'paymentCallback']);
+    Route::match(['get', 'post'], '/toyyibpay-membership-status', [ToyyibpayController::class, 'paymentStatusMembership'])->name('toyyibpay-membership-status');
+Route::post('/toyyibpay-callback-membership', [ToyyibpayController::class, 'callbackMembership'])->name('toyyibpay-callback-membership');
+    Route::get('/member/fee-receipt/{id}', function ($id) {
+        // Retrieve payment details using the receipt ID
+        $paymentDetails = PaymentReceipt::with(['member', 'member.login'])->findOrFail($id);
+        return view('member.fee-receipt', compact('paymentDetails'));
     })->name('member.fee-receipt');
 });
 
@@ -111,9 +176,6 @@ Route::prefix('admin')->group(function () {
     ->name('admin.dashboard')
     ->middleware('auth');
 
-    
-
-   
 
     // Member Record
     Route::prefix('member-record')->group(function () {
@@ -141,14 +203,14 @@ Route::prefix('admin')->group(function () {
     // Member Verification
     Route::prefix('member-verification')->group(function () {
         // Display list of members for verification
-        Route::get('/', [AdminMemberVerification::class, 'index'])->name('admin.member.verification.list');
-        
+        Route::get('/', [AdminMemberVerificationController::class, 'index'])->name('admin.member.verification.list');
+
         // Display view of verification member details
-        Route::get('/view/{id}', [AdminMemberVerification::class, 'view'])->name('admin.member.verification.view');
-        
+        Route::get('/view/{id}', [AdminMemberVerificationController::class, 'view'])->name('admin.member.verification.view');
+
         // Approve and reject
-        Route::post('/approve/{id}', [AdminMemberVerification::class, 'approve'])->name('admin.member.verification.approve');
-        Route::post('/reject/{id}', [AdminMemberVerification::class, 'reject'])->name('admin.member.verification.reject');
+        Route::post('/approve/{id}', [AdminMemberVerificationController::class, 'approve'])->name('admin.member.verification.approve');
+        Route::post('/reject/{id}', [AdminMemberVerificationController::class, 'reject'])->name('admin.member.verification.reject');
     });
 
     // Fee Payment
@@ -193,13 +255,13 @@ Route::prefix('admin')->group(function () {
         ->name('admin.fee-collection.delete');
         //report
         Route::get('/report/{id}', [AdminFeeController::class, 'feeCollectionReport'])->name('admin.fee-collection.report');
-        
+
     });
 
     // Event Record
     Route::prefix('event-record')->group(function () {
         Route::get('/', [AdminEventController::class, 'index'])->name('event.record.index');
-
+        Route::get('/admin/event-record/search', [AdminEventController::class, 'search'])->name('event.record.search');
         Route::get('/add', function () {
             return view('admin.event-add');
         });
@@ -208,7 +270,7 @@ Route::prefix('admin')->group(function () {
         // Update routes
         Route::get('/update/{id}', [AdminEventController::class, 'edit'])->name('event.record.edit');
         Route::put('/update/{id}', [AdminEventController::class, 'update'])->name('event.record.update');
-        
+
 
         // Delete
         Route::delete('/delete/{id}', [AdminEventController::class, 'destroy'])->name('event.record.delete');

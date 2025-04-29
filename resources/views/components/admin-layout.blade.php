@@ -19,7 +19,8 @@
     <!-- Add any custom CSS or other assets -->
     {{-- <link rel="stylesheet" href="{{ asset('css/app.css') }}"> --}}
     <link rel="icon" type="image/svg+xml" href="{{ asset('images/abm-logo.svg') }}">
-    
+     <!-- Include jQuery -->
+     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body class="bg-gray-100">

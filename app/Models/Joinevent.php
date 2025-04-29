@@ -24,6 +24,13 @@ class Joinevent extends Model
         'nonmember_id',
     ];
 
+     // Add these relationships
+     public function paymentReceipt()
+     {
+         return $this->hasOne(PaymentReceipt::class, 'event_id', 'event_id')
+                     ->where('member_id', $this->member_id);
+     }
+
     public function event()
     {
         return $this->belongsTo(AbmEvent::class, 'event_id', 'event_id'); // Replace column names if needed
@@ -37,6 +44,11 @@ class Joinevent extends Model
     public function nonmember()
     {
         return $this->belongsTo(NonMember::class, 'nonmember_id', 'nonmember_id');
+    }
+
+    public function allocatedMerit()
+    {
+        return $this->hasOne(Merit::class, 'event_id', 'event_id'); // Adjust the foreign key and local key if necessary
     }
 
 }

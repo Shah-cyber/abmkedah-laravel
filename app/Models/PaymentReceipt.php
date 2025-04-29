@@ -28,7 +28,7 @@ class PaymentReceipt extends Model
     // Relationships
     public function member()
     {
-        return $this->belongsTo(Member::class, 'member_id');
+        return $this->belongsTo(Member::class, 'member_id'); // This should be correct
     }
 
     public function nonmember()
@@ -40,4 +40,16 @@ class PaymentReceipt extends Model
     {
         return $this->belongsTo(AbmEvent::class, 'event_id');
     }
+
+     // Add this new relationship
+     public function paymentAllocation()
+     {
+         return $this->belongsTo(PaymentAllocation::class, 'payment_allocation_id', 'payment_allocation_id');
+     }
+
+     // Define the relationship with the Login model
+     public function login()
+     {
+         return $this->belongsTo(Login::class, 'login_id'); // Ensure this foreign key exists in the payment_receipt table
+     }
 }

@@ -36,7 +36,7 @@ class Member extends Model
     // Relationship with Login model
     public function login()
     {
-        return $this->belongsTo(Login::class, 'login_id', 'login_id'); // Assuming login_id is the foreign key
+        return $this->belongsTo(Login::class, 'login_id', 'login_id'); // Ensure this is correct
     }
 
     

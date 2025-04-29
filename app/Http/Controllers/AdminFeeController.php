@@ -27,7 +27,7 @@ class AdminFeeController extends Controller
     {
         // Get specific event details
         $event = AbmEvent::findOrFail($id);
-        
+
         // Get participants based on whether the event has a fee
         if ($event->event_price > 0) {
             // For paid events, get participants with completed payments
@@ -39,15 +39,15 @@ class AdminFeeController extends Controller
                 ->where('payment_receipt.payment_status', 'completed')
                 ->where('payment_receipt.event_id', $id)
                 ->with(['member', 'nonmember'])
-                ->select('joinevent.*', 
-                        DB::raw("DATE_FORMAT(payment_receipt.payment_date, '%d/%m/%Y') as payment_date"), 
+                ->select('joinevent.*',
+                        DB::raw("DATE_FORMAT(payment_receipt.payment_date, '%d/%m/%Y') as payment_date"),
                         'payment_receipt.payment_time')
                 ->paginate(10);
         } else {
             // For free events, get all participants with created_at timestamp
             $participants = Joinevent::where('event_id', $id)
                 ->with(['member', 'nonmember'])
-                ->select('*', 
+                ->select('*',
                     DB::raw("DATE_FORMAT(created_at, '%d/%m/%Y') as join_date"),
                     DB::raw('TIME(created_at) as join_time'))
                 ->paginate(10);
@@ -89,7 +89,7 @@ class AdminFeeController extends Controller
             'payment_allocation_name' => 'required|string|max:50',
             'amount' => 'required|numeric|min:0',
             'allocation_date' => 'required|date',
-            'payment_type' => 'required|string|in:annual_fee,registration_fee',
+            'payment_type' => 'required|string|in:annual_fee,registration_fee,one_time_fee',
         ]);
 
         // Check if the payment entry already exists
@@ -177,10 +177,10 @@ class AdminFeeController extends Controller
     {
         try {
             $payment = PaymentAllocation::findOrFail($id);
-            
+
             // Check if the payment can be deleted (add any necessary business logic)
             // For example, check if it's not referenced elsewhere
-            
+
             $payment->delete();
 
             return response()->json([

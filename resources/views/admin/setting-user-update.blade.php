@@ -71,7 +71,7 @@
                             <option value="sub-admin" {{ $userData->role === 'sub-admin' ? 'selected' : '' }}>Sub Admin</option>
                         @else
                             <option value="member" selected>Member</option>
-                        @endif
+                        @endif 
                     </select>
                 </div>
             </div>

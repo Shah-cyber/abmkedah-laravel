@@ -27,4 +27,14 @@ class AbmEvent extends Model
         'event_location',
         'event_price',
     ];
+
+    public function merits()
+    {
+        return $this->hasMany(Merit::class, 'event_id', 'event_id'); // Adjust the foreign key and local key if necessary
+    }
+
+    public function paymentReceipts()
+    {
+        return $this->hasMany(PaymentReceipt::class, 'event_id', 'event_id');
+    }
 }

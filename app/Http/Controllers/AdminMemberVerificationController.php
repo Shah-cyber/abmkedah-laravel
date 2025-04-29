@@ -2,71 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Login;
 use App\Models\Member;
+use App\Models\Login;
 use App\Models\Application;
-use App\Mail\UserApprovedMail;
-use Illuminate\Http\Request;  
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Jobs\SendUserApprovedEmail;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
 
-class AdminMemberVerification extends Controller
+class AdminMemberVerificationController extends Controller
 {
-        /**
-     * Approve a user and make them a member.
-     */
-    // public function approve(Request $request, $applicationId)
-    // {
-    //     DB::beginTransaction();
-
-    //     try {
-    //         // Find the application by ID
-    //         $application = Application::findOrFail($applicationId);
-
-    //         // Check if the application is already approved
-    //         if ($application->applicant_status === 'approve') {
-    //             return response()->json([
-    //                 'message' => 'This application is already approved.'
-    //             ], 400);
-    //         }
-
-    //         // Update the applicant_status to 'approve'
-    //         $application->update([
-    //             'applicant_status' => 'approve',
-    //         ]);
-
-    //         // Create a new member record
-    //         $member = Member::create([
-    //             'application_id' => $application->application_id,
-    //             'name' => $application->login->username, // Example: use login's username
-    //             'login_id' => $application->login_id,
-
-    //             // Add other default fields or leave them null
-    //         ]);
-
-    //         // Update the member_id in the login table
-    //         $login = $application->login;
-    //         $login->update([
-    //             'member_id' => $member->member_id,
-    //         ]);
-
-    //         DB::commit();
-
-    //         return response()->json([
-    //             'message' => 'The user has been approved and is now a member.',
-    //             'member_id' => $member->member_id,
-    //         ]);
-    //     } catch (\Exception $e) {
-    //         DB::rollBack();
-
-    //         return response()->json([
-    //             'message' => 'An error occurred while approving the user.',
-    //             'error' => $e->getMessage(),
-    //         ], 500);
-    //     }
-    // }
     public function approve(Request $request, $applicationId)
     {
         DB::beginTransaction();
@@ -81,7 +27,7 @@ class AdminMemberVerification extends Controller
             }
     
             // Update applicant status
-            $application->update(['applicant_status' => 'approve']);
+            $application->update(['applicant_status' => 'approve']); 
     
             // Create new member record
             $member = Member::create([
@@ -92,7 +38,10 @@ class AdminMemberVerification extends Controller
     
             // Update login table with member_id
             $login = $application->login;
-            $login->update(['member_id' => $member->member_id]);
+            $login->update([
+                'member_id' => $member->member_id,
+                'acc_status' => 'active'
+            ]);
     
             // Dispatch the email job
             SendUserApprovedEmail::dispatch($login);
@@ -165,8 +114,6 @@ class AdminMemberVerification extends Controller
 
         return view('admin.member-verification-view', compact('application'));
     }
-
-
 
 
 }

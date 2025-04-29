@@ -54,9 +54,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 //delete event
+//delete event
 document.addEventListener('DOMContentLoaded', function () {
-    // Existing SweetAlert code...
-
     // SweetAlert confirmation before delete
     const deleteForms = document.querySelectorAll('.delete-form');
     deleteForms.forEach(form => {
@@ -64,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function () {
             e.preventDefault(); // Prevent the default form submission
             Swal.fire({
                 title: 'Are you sure?',
-                text: "This action cannot be undone!",
+                text: "You must delete the merit points first before you can delete the event. This action cannot be undone!",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -72,7 +71,31 @@ document.addEventListener('DOMContentLoaded', function () {
                 confirmButtonText: 'Yes, delete it!'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    this.submit(); // Submit the form if confirmed
+                    // Perform AJAX request to delete the event
+                    const formData = new FormData(this);
+                    fetch(this.action, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                        }
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            // If deletion is successful, redirect or refresh the page
+                            Swal.fire('Deleted!', 'The event has been deleted.', 'success').then(() => {
+                                location.reload(); // Reload the page to see the changes
+                            });
+                        } else {
+                            // If deletion fails, show an error message
+                            return response.json().then(data => {
+                                Swal.fire('Error!', data.message || 'Event not deleted successfully.', 'error');
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        Swal.fire('Error!', 'An error occurred while deleting the event.', 'error');
+                    });
                 }
             });
         };
@@ -160,20 +183,23 @@ $(document).ready(function() {
 });
 
 //search function
-// $(document).ready(function() {
-//     $('#search-input').on('keyup', function() {
-//         var value = $(this).val().toLowerCase(); // Get the search input value
+$(document).ready(function() {
+    // Listen for input in the search bar
+    $('input[type="text"]').on('input', function() {
+        const searchTerm = $(this).val(); // Get the search term
 
-//         $('table tbody tr').filter(function() {
-//             // Get the text from the relevant columns
-//             var volunteerName = $(this).find('td:nth-child(2)').text().toLowerCase(); // Volunteer Name
-//             var phoneNumber = $(this).find('td:nth-child(3)').text().toLowerCase(); // Phone Number
-//             var memberStatus = $(this).find('td:nth-child(4)').text().toLowerCase(); // Member Status
-            
-//             // Check if the search value is present in any of the specified columns
-//             return volunteerName.indexOf(value) > -1 || 
-//                    phoneNumber.indexOf(value) > -1 || 
-//                    memberStatus.indexOf(value) > -1;
-//         }).toggle(); // Show or hide the row based on the search
-//     });
-// });
+        // Make an AJAX request to the search route
+        $.ajax({
+            url: "{{ route('event.record.search') }}",
+            method: 'GET',
+            data: { search: searchTerm },
+            success: function(response) {
+                // Replace the table content with the updated results
+                $('#event-table').html(response);
+            },
+            error: function(xhr) {
+                console.error('Error:', xhr.responseText);
+            }
+        });
+    });
+});

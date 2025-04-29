@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Member;
 use App\Models\Login;
+use App\Models\Member;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
 
 class MemberUserSettingController extends Controller
 {
@@ -14,8 +16,12 @@ class MemberUserSettingController extends Controller
         return view('member.setting-personal-information', compact('member'));
     }
 
+   
     public function update(Request $request)
     {
+        // Log the incoming request data for debugging
+        Log::info('Update request received:', $request->all());
+    
         $request->validate([
             'full_name' => 'required|string|max:255',
             'IC_Number' => 'required|string|max:255',
@@ -28,13 +34,38 @@ class MemberUserSettingController extends Controller
             'birth_date' => 'required|date',
             'Address' => 'required|string|max:255',
         ]);
-
+    
         $member = auth()->user()->member; // Assuming the user is authenticated and has a member relationship
-        $member->update($request->all());
-
-        return response()->json(['success' => 'Member information updated successfully.']);
         
+        // Check if the member object is retrieved correctly
+        if (!$member) {
+            Log::error('Member not found for user: ' . auth()->id());
+            return response()->json(['error' => 'Member not found.'], 404);
+        }
+    
+        // Attempt to update and check if it's successful
+        $updateSuccess = $member->update([
+            'name' => $request->full_name,
+            'ic_number' => $request->IC_Number,
+            'age' => $request->age,
+            'race' => $request->race,
+            'gender' => $request->gender,
+            'religion' => $request->religion,
+            'phone_number' => $request->phone_num,
+            'birthplace' => $request->birth_place,
+            'birthdate' => $request->birth_date,
+            'address' => $request->Address,
+        ]);
+    
+        if ($updateSuccess) {
+            Log::info('Member updated successfully for user ID: ' . auth()->id(), $member->toArray());
+            return response()->json(['success' => 'Member information updated successfully.']);
+        } else {
+            Log::error('Member update failed for user ID: ' . auth()->id());
+            return response()->json(['error' => 'Failed to update member information.'], 500);
+        }
     }
+    
 
     public function showAccountSettings()
     {

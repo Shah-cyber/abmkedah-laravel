@@ -40,6 +40,16 @@
                 </a>
             </li>
             <li>
+                <a href="/member/attendance" class="flex group hover:bg-gray-700 items-center p-2 rounded-lg text-white">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g id="member-attendance">
+                            <path id="Vector" d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20ZM12.5 7H11V13L16.2 16.2L17 14.9L12.5 12.2V7Z" fill="white"/>
+                        </g>
+                    </svg>
+                    <span class="ms-3">Attendance</span>
+                </a>
+            </li>
+            <li>
                 <a href="/member/achievement" class="flex group hover:bg-gray-700 items-center p-2 rounded-lg text-white">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g id="member-achievement">
