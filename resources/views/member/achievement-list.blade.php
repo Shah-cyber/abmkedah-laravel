@@ -1,128 +1,195 @@
 <x-member-layout>
-      <!-- Header Section -->
-      <div class="mb-4">
-        <h1 class="text-2xl font-bold text-gray-800">Achievement List</h1>
-        <!-- Horizontal Line -->
-        <hr class="border-gray-300 my-2">
+    <style>
+        .search-input:focus + .search-icon {
+            @apply text-blue-500;
+        }
+
+        .pagination-btn {
+            @apply px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200;
+        }
+
+        .pagination-btn.active {
+            @apply bg-blue-600 text-white hover:bg-blue-700;
+        }
+
+        .pagination-btn.inactive {
+            @apply bg-gray-100 text-gray-600 hover:bg-gray-200;
+        }
+
+        .pagination-btn.disabled {
+            @apply opacity-50 cursor-not-allowed pointer-events-none;
+        }
+
+        .achievement-row {
+            @apply transition-all duration-200;
+        }
+
+        .achievement-row:hover {
+            @apply bg-gray-50;
+        }
+
+        .merit-badge {
+            @apply inline-flex items-center px-2.5 py-1 rounded-full text-sm font-medium;
+        }
+
+        .merit-badge.positive {
+            @apply bg-green-100 text-green-800;
+        }
+
+        .merit-badge.zero {
+            @apply bg-gray-100 text-gray-800;
+        }
+    </style>
+
+    <div class="p-6 space-y-6">
+        <!-- Header Section with Stats -->
+        <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-800">Achievement Records</h1>
+                    <p class="text-gray-500 mt-1">Track your event participation and merit points</p>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div class="bg-blue-50 text-blue-600 px-4 py-2 rounded-lg flex items-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <span class="font-medium">Total Events: {{ $data->total() }}</span>
+                    </div>
+                    <div class="bg-green-50 text-green-600 px-4 py-2 rounded-lg flex items-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <span class="font-medium">Total Merit: {{ $data->sum('merit_point') }}</span>
+                    </div>
+                </div>
+            </div>
     </div>
 
-    <!-- Search Section -->
-    <div class="mb-6">
-        <div class="relative w-full">
+        <!-- Search and Filter Section -->
+        <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+            <div class="flex flex-col md:flex-row md:items-center gap-4">
+                <div class="relative flex-1">
             <input
                 type="text"
-                class="w-full p-2 pl-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                placeholder="Search achievement">
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="absolute left-3 top-3 h-5 w-5 text-gray-400"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                stroke-width="2">
-                <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M8 4a4 4 0 100 8 4 4 0 000-8zM21 21l-5.197-5.197">
-                </path>
+                        id="searchInput"
+                        class="search-input w-full pl-12 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
+                        placeholder="Search by event name..." />
+                    <svg class="search-icon absolute left-4 top-3.5 h-5 w-5 text-gray-400 transition-colors duration-200"
+                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
         </div>
     </div>
-    <div class="flex justify-end mb-6">
-        <!-- Total Events -->
-        <p class="text-gray-600">
-            Total merit: 
-            <span class="font-medium text-gray-900">15.0</span>
-        </p>
-    </div>
-    <!-- Table -->
-    <div class="overflow-x-auto bg-white rounded-lg shadow-md ">
-        <table class="w-full text-sm text-left text-gray-500">
-            <thead class="bg-gray-50 text-gray-700 uppercase text-xs">
-                <tr>
-                    <th class="px-4 py-3">#</th>
-                    <th class="px-4 py-3">event Name</th>
-                    <th class="px-4 py-3">Merit</th>
-                    <th class="px-4 py-3">certificate</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Row 1 -->
-                <tr class="border-b">
-                    <td class="px-4 py-4">1</td>
-                    <td class="px-4 py-4">ABM KEDAH 2024 RETREAT</td>
-                    <td class="px-4 py-4">5.00</td>
-                    <td class="px-4 py-4 flex space-x-2">
-                        <button
-                            data-modal-target="certificateModal"
-                            data-modal-toggle="certificateModal"
-                            class="text-black hover:text-blue-500 px-3 py-1"
-                        >
-                            View
-                        </button>
-                    </td>
-                </tr>
-                <!-- Row 2 -->
-                <tr class="border-b">
-                    <td class="px-4 py-4">2</td>
-                    <td class="px-4 py-4">Norch Badminton</td>
-                    <td class="px-4 py-4">5.00</td>
-                    <td class="px-4 py-4 flex space-x-2">
-                        <button
-                            data-modal-target="certificateModal"
-                            data-modal-toggle="certificateModal"
-                            class="text-black hover:text-blue-500 px-3 py-1"
-                        >
-                            View
-                        </button>
-                    </td>
-                </tr>
-                <!-- Row 3 -->
-                <tr class="border-b">
-                    <td class="px-4 py-4">3</td>
-                    <td class="px-4 py-4">AGM ABM KEDAH</td>
-                    <td class="px-4 py-4">5.00</td>
-                    <td class="px-4 py-4 flex space-x-2">
-                        <button
-                            data-modal-target="certificateModal"
-                            data-modal-toggle="certificateModal"
-                            class="text-black hover:text-blue-500 px-3 py-1"
-                        >
-                            View
-                        </button>
-                    </td>
-                </tr>
-                <!-- Add More Rows as Needed -->
-            </tbody>
-        </table>
     </div>
 
-    <!-- Pagination -->
-    <div class="flex justify-between items-center mt-6">
-        <p class="text-sm text-gray-600">Showing 1 to 10 of 155 entries</p>
-        <div class="flex items-center space-x-1">
-            <button
-                class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
-                Previous
-            </button>
-            <button
-                class="px-3 py-1 text-sm text-white bg-blue-500 rounded-md hover:bg-blue-600">
-                1
-            </button>
-            <button
-                class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
-                2
-            </button>
-            <button
-                class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
-                3
-            </button>
-            <button
-                class="px-3 py-1 text-sm text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300">
-                Next
-            </button>
+        <!-- Achievement Records Table -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th scope="col" class="px-6 py-4 text-xs font-medium text-gray-500 uppercase tracking-wider text-center">no.</th>
+                            <th scope="col" class="px-6 py-4 text-xs font-medium text-gray-500 uppercase tracking-wider text-center">Event Details</th>
+                            <th scope="col" class="px-6 py-4 text-xs font-medium text-gray-500 uppercase tracking-wider text-center">Merit Points</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200" id="achievementTable">
+                        @forelse($data as $key => $item)
+                            <tr class="achievement-row text-center">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    {{ $key + 1 }}
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div class="text-sm font-medium text-gray-900">{{ $item->event_name }}</div>
+                                    {{-- <div class="text-sm text-gray-500">Event ID: #{{ $item->event_id }}</div> --}}
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span class="merit-badge flex items-center gap-2 justify-center {{ $item->merit_point > 0 ? 'positive' : 'zero' }}">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            @if($item->merit_point > 0)
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                            @else
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                            @endif
+                                        </svg>
+                                        <span>
+                                            {{ $item->merit_point > 0 ? $item->merit_point : 'No Merit' }}
+                                        </span>
+                                    </span>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="3" class="px-6 py-10 text-center">
+                                    <div class="flex flex-col items-center justify-center">
+                                        <svg class="w-12 h-12 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                                        </svg>
+                                        <p class="text-gray-500 text-lg font-medium">No achievements found</p>
+                                        <p class="text-gray-400 text-sm mt-1">Participate in events to earn merit points</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
         </div>
+
+    <!-- Pagination -->
+        @if($data->hasPages())
+            <div class="bg-white rounded-xl shadow-sm p-4 border border-gray-100">
+                <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
+    <p class="text-sm text-gray-600">
+                        Showing <span class="font-medium">{{ $data->firstItem() }}</span> to 
+                        <span class="font-medium">{{ $data->lastItem() }}</span> of 
+                        <span class="font-medium">{{ $data->total() }}</span> achievements
+    </p>
+                    <div class="flex items-center gap-2">
+        @if ($data->onFirstPage())
+                            <button class="pagination-btn disabled">Previous</button>
+        @else
+                            <a href="{{ $data->previousPageUrl() }}" class="pagination-btn inactive">Previous</a>
+        @endif
+
+        @foreach ($data->getUrlRange(max(1, $data->currentPage() - 2), min($data->lastPage(), $data->currentPage() + 2)) as $page => $url)
+                            <a href="{{ $url }}" class="pagination-btn {{ $page == $data->currentPage() ? 'active' : 'inactive' }}">
+                {{ $page }}
+            </a>
+        @endforeach
+
+        @if ($data->hasMorePages())
+                            <a href="{{ $data->nextPageUrl() }}" class="pagination-btn inactive">Next</a>
+        @else
+                            <button class="pagination-btn disabled">Next</button>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        @endif
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Search functionality
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput) {
+                searchInput.addEventListener('input', (e) => {
+                    const searchTerm = e.target.value.toLowerCase();
+                    const rows = document.querySelectorAll('#achievementTable tr');
+                    
+                    rows.forEach(row => {
+                        const eventName = row.querySelector('td:nth-child(2)')?.textContent.toLowerCase() || '';
+                        const matches = eventName.includes(searchTerm);
+                        row.style.display = matches ? '' : 'none';
+                    });
+                });
+            }
+        });
+    </script>
 
     <!-- Certificate Modal -->
     <div id="certificateModal" tabindex="-1" aria-hidden="true"

@@ -1,186 +1,281 @@
 <x-member-layout>
-<div class="p-6 max-w-[60rem]">
-    <!-- Header Section -->
-    <div class="mb-4 flex items-center">
-        <!-- Icon Back Button -->
-        <a href="/member/event" class="text-gray-600 hover:text-gray-800">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
-            </svg>
-        </a> 
-        <!-- Title -->
-        <h1 class="ml-4 text-2xl font-bold text-gray-800">EVENT NAME</h1>
-    </div>
-    <!-- Horizontal Line -->
-    <hr class="border-gray-300 my-2">
-    <!-- event details content -->
-    <div class="relative"> 
-        <!-- event image banner -->
-        <img
-            src="https://images.pexels.com/photos/12439941/pexels-photo-12439941.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-            alt="Finale Concert 2024"
-            class="w-full h-60 object-cover rounded-lg pb-3"
-        />
-        <div class="">
-            <!-- Event information -->
-            <div class="relative">
-                <div class="flex items-center p-2 justify-between">
-                    <h1 class="text-2xl font-bold text-gray-800">About this event</h1>
-                    <a href="event-registration" class="w-40 block justify-between">
-                        <button class="w-full flex bg-green-500 text-white py-2 px-4 rounded-lg font-medium hover:bg-green-600 transitio justify-around items-center">
-                            <!-- Ticket Icon -->
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4 rotate-[135deg]">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 6v.75m0 3v.75m0 3v.75m0 3V18m-9-5.25h5.25M7.5 15h3M3.375 5.25c-.621 0-1.125.504-1.125 1.125v3.026a2.999 2.999 0 0 1 0 5.198v3.026c0 .621.504 1.125 1.125 1.125h17.25c.621 0 1.125-.504 1.125-1.125v-3.026a2.999 2.999 0 0 1 0-5.198V6.375c0-.621-.504-1.125-1.125-1.125H3.375Z" />
-                            </svg>
-                            Register now
-                        </button>
-                    </a>
-                </div>
-                <hr class="border-gray-300 my-1">
-                <div class="w-full flex justify-between items-start space-x-6">
-                    <!-- event description -->
-                    <div class="m-4 flex-1">
-                        <p class="font-semibold">CATEGORY</p>
-                        <ul class="list-disc text-sm ml-6"> 
-                            <li>
-                                Participant's age category is based on his/her age on the date of the Race.
-                            </li>
-                            <li>
-                                Participants must fulfill the minimum age requirement in their respective age category.
-                            </li>
-                        </ul>
-                        <br>
-                        <p class="font-semibold">Half Marathon</p>
-                        <ul class="list-disc text-sm ml-6">
-                            <li>
-                                Open Category – all male and female participants must be a minimum of 16 years to 30 years as of 23 February 2025, i.e. born before 23 February 2009.
-                            </li>
-                            <li>
-                                Junior Veteran Category – all male and female participants must be a minimum of 31 years to 40 years as of 23 February 2025, i.e. born before 23 February 1994.
-                            </li>
-                            <li>
-                                Veteran Category – all male and female participants must be a minimum of 41 years to 50 years as of 23 February 2025, i.e. born before 23 February 1984.
-                            </li>
-                            <li>
-                                Senior Veteran Category – all male and female participants must be a minimum of 51 years and above as of 23 February 2025, i.e. born before 23 February 1974.
-                            </li>
-                        </ul>                   
-                    </div>
-                    <!-- date, time, location, capacity -->
-                    <div class="border-2 p-4 shadow-md w-80 rounded-lg flex-shrink-0">
-                        <p class="font-bold">Date & Time</p>
-                        <p class="flex items-start ml-4 mb-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 mr-1">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 2.994v2.25m10.5-2.25v2.25m-14.252 13.5V7.491a2.25 2.25 0 0 1 2.25-2.25h13.5a2.25 2.25 0 0 1 2.25 2.25v11.251m-18 0a2.25 2.25 0 0 0 2.25 2.25h13.5a2.25 2.25 0 0 0 2.25-2.25m-18 0v-7.5a2.25 2.25 0 0 1 2.25-2.25h13.5a2.25 2.25 0 0 1 2.25 2.25v7.5m-6.75-6h2.25m-9 2.25h4.5m.002-2.25h.005v.006H12v-.006Zm-.001 4.5h.006v.006h-.006v-.005Zm-2.25.001h.005v.006H9.75v-.006Zm-2.25 0h.005v.005h-.006v-.005Zm6.75-2.247h.005v.005h-.005v-.005Zm0 2.247h.006v.006h-.006v-.006Zm2.25-2.248h.006V15H16.5v-.005Z" />
-                            </svg>
-                            Thursday, Sep 14 2024 6:00 am - 12:00 pm
-                        </p>
-                        <p class="font-bold">Location</p>
-                        <p class="flex items-start ml-4 mb-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 mr-1">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
-                            </svg>
-                            Kota Kinabalu Sabah 
-                        </p>
-                        <p class="font-bold">Price</p>
-                        <p class="flex items-start ml-4 mb-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 mr-1">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0 1 15.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 0 1 3 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 0 0-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 0 1-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 0 0 3 15h-.75M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm3 0h.008v.008H18V10.5Zm-12 0h.008v.008H6V10.5Z" />
-                            </svg>
-                            RM 5900.00
-                        </p>
-                        <p class="font-bold">Capacity</p>
-                        <p class="flex items-start ml-4 mb-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 mr-1">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
-                            </svg>
-                            100 slots
-                        </p>
-                    </div>
+    <style>
+        .swal-btn {
+            background-color: #EAB308 !important;
+            color: white !important;
+            border-radius: 8px !important;
+            padding: 12px 24px !important;
+            border: none !important;
+            font-weight: 500 !important;
+            transition: all 0.3s ease !important;
+        }
+
+        .swal-btn:hover {
+            background-color: #CA8A04 !important;
+            transform: translateY(-1px) !important;
+        }
+
+        .swal-btn-cancel {
+            background-color: #EF4444 !important;
+            color: white !important;
+            border-radius: 8px !important;
+            padding: 12px 24px !important;
+            border: none !important;
+            font-weight: 500 !important;
+            transition: all 0.3s ease !important;
+        }
+
+        .swal-btn-cancel:hover {
+            background-color: #DC2626 !important;
+            transform: translateY(-1px) !important;
+        }
+
+        .swal2-actions {
+            gap: 16px !important;
+        }
+
+        button.disabled {
+            pointer-events: none;
+            background-color: #6B7280 !important;
+            opacity: 0.7;
+        }
+
+        .form-input-container {
+            @apply border-2 border-gray-300 rounded-lg transition-all duration-200;
+        }
+
+        .form-input-container:hover {
+            @apply border-yellow-500 shadow-md;
+        }
+
+        .form-icon-container {
+            @apply bg-yellow-50 flex items-center justify-center rounded-l-lg transition-all duration-200;
+        }
+
+        .form-input-container:hover .form-icon-container {
+            @apply bg-yellow-100;
+        }
+
+        .form-input {
+            @apply w-full p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500;
+        }
+    </style>
+
+    <div class="max-w-7xl mx-auto p-6">
+        <!-- Header Section -->
+        <div class="flex items-center mb-6">
+            <a href="/member/event" class="flex items-center text-gray-600 hover:text-yellow-600 transition-colors duration-200">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                </svg>
+                <span class="ml-2 font-medium">Back to Events</span>
+            </a>
+        </div>
+
+        <!-- Event Details Card -->
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden mb-8">
+            <!-- Event Banner -->
+            <div class="relative h-72">
+                <img src="{{ asset('storage/' . $event->banner) }}"
+                     alt="{{ $event->event_name }}"
+                     class="w-full h-full object-cover"
+                />
+                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6">
+                    <h1 class="text-3xl font-bold text-white">{{ $event->event_name }}</h1>
                 </div>
             </div>
 
-            <!-- Personal information -->
-            <div class="w-full items-center content-around">
-                <h1 class="mx-4 my-2  text-2xl font-bold text-gray-800">Personal information</h1>
-                <hr class="border-gray-300 my-2">
-                <form method="post" action="" class="">
-                    <!-- first row -->
-                    <div class="flex place-content-center justify-evenly">
-                        <!-- username -->
-                        <div class="border-2 border-gray-400 w-3/5 content-around items-center flex-row flex rounded-lg m-2">
-                            <div class="flex bg-gray-300 h-full w-1/6 items-center justify-center rounded-l-md">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-9">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                                </svg>
-                            </div>
-                            <div class="p-2 w-full border-l-2 border-gray-400 ">
-                                <label class="block text-sm font-medium text-gray-500" for="username">
-                                    Username
-                                </label>
-                                <input class="w-full" type="text" id="username" name="username"    placeholder="Username">
-                            </div>
-                        </div>
-
-                        <!-- phone number -->
-                        <div class="border-2 border-gray-400 w-3/5 content-around items-center flex-row flex rounded-lg m-2">
-                            <div class="flex bg-gray-300 h-full w-1/6 items-center justify-center rounded-l-md">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-9">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 0 0 6 3.75v16.5a2.25 2.25 0 0 0 2.25 2.25h7.5A2.25 2.25 0 0 0 18 20.25V3.75a2.25 2.25 0 0 0-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" />
-                                </svg>
-                            </div>
-                            <div class="p-2 w-full border-l-2 border-gray-400">
-                                <label class="block text-sm font-medium text-gray-500" for="username">
-                                    Phone Number
-                                </label>
-                                <input class="w-full" type="tel" id="PhoneNumber" name="Phone Number" placeholder="Phone Number" pattern="[0-9]{10,15}">
-                            </div>
-                            
-                        </div>
-                    </div>
-
-                    <!-- second row -->
-                    <div class="flex place-content-center justify-evenly ">
-                        <!-- identity card -->
-                        <div class="border-2 border-gray-400 w-3/5 content-around items-center flex-row flex rounded-lg m-2">
-                            <div class="flex bg-gray-300 h-full w-1/6 items-center justify-center rounded-l-md">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-9">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Zm6-10.125a1.875 1.875 0 1 1-3.75 0 1.875 1.875 0 0 1 3.75 0Zm1.294 6.336a6.721 6.721 0 0 1-3.17.789 6.721 6.721 0 0 1-3.168-.789 3.376 3.376 0 0 1 6.338 0Z" />
-                                </svg>
-                            </div>
-                            <div class="p-2 w-full border-l-2 border-gray-400">
-                                <label class="block text-sm font-medium text-gray-500" for="username">
-                                    Identity Card
-                                </label>
-                                <input class="w-full" type="number" id="IC number" name="IC number" placeholder="Identity Card">
-                            </div>  
-                        </div>
-
-                        <!-- email -->
-                        <div class="border-2 border-gray-400 w-3/5 content-around items-center flex-row flex rounded-lg m-2">
-                            <div class="flex bg-gray-300 h-full w-1/6 items-center justify-center rounded-l-md">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-9">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
-                                </svg>
-                            </div>
-                            <div class="p-2 w-full border-l-2 border-gray-400">
-                                <label class="block text-sm font-medium text-gray-500" for="username">
-                                    Email
-                                </label>
-                                <input class="w-full" type="email" id="email" name="email" placeholder="email" >
+            <!-- Event Content -->
+            <div class="p-6">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Event Description -->
+                    <div class="lg:col-span-2 space-y-6">
+                        <div>
+                            <h2 class="text-xl font-semibold text-gray-800 mb-4">About this event</h2>
+                            <div class="space-y-4">
+                                <div>
+                                    <h3 class="font-medium text-gray-700 mb-2">CATEGORY</h3>
+                                    <ul class="list-disc text-gray-600 ml-6 space-y-1">
+                                        @foreach(explode(',', $event->event_category) as $category)
+                                            <li>{{ trim($category) }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h3 class="font-medium text-gray-700 mb-2">EVENT DESCRIPTION</h3>
+                                    <ul class="list-disc text-gray-600 ml-6 space-y-1">
+                                        @foreach(explode(',', $event->event_description) as $description)
+                                            <li>{{ trim($description) }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="m-2 p-2 flex w-full border-black justify-center place-content-center">
-                        <button type="submit" class="text-white rounded-lg bg-black hover:bg-green-600 py-3 px-6">
-                            Register
-                        </button>
+                    <!-- Event Details Sidebar -->
+                    <div class="lg:col-span-1">
+                        <div class="bg-gray-50 rounded-lg p-6 space-y-4">
+                            <div>
+                                <h3 class="font-semibold text-gray-800 mb-2">Date & Time</h3>
+                                <p class="flex items-center text-gray-600">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                    </svg>
+                                    {{ \Carbon\Carbon::parse($event->event_date)->format('l, M d Y h:i A') }} - {{ \Carbon\Carbon::parse($event->event_end_time)->format('h:i A') }}
+                                </p>
+                            </div>
+
+                            <div>
+                                <h3 class="font-semibold text-gray-800 mb-2">Location</h3>
+                                <p class="flex items-center text-gray-600">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    </svg>
+                                    {{ $event->event_location }}
+                                </p>
+                            </div>
+
+                            <div>
+                                <h3 class="font-semibold text-gray-800 mb-2">Price</h3>
+                                <p class="flex items-center text-gray-600">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    RM {{ number_format($event->event_price, 2) }}
+                                </p>
+                            </div>
+
+                            <div>
+                                <h3 class="font-semibold text-gray-800 mb-2">Capacity</h3>
+                                <p class="flex items-center text-gray-600">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                                    </svg>
+                                    {{ max(0, $event->total_participation) }} slots
+                                    @if($event->total_participation <= 0)
+                                    <span class="ml-2 inline-block px-2 py-1 text-xs font-semibold text-white bg-red-500 rounded-full">FULLY BOOKED</span>
+                                    @elseif($event->total_participation < 10)
+                                    <span class="ml-2 inline-block px-2 py-1 text-xs font-semibold text-white bg-yellow-500 rounded-full">LIMITED SPOTS</span>
+                                    @endif
+                                </p>
+                            </div>
+                        </div>
                     </div>
-                </form>
-            </div>                
+                </div>
+            </div>
+        </div>
+
+        <!-- Personal Information Form -->
+        <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">Personal Information</h2>
+            <form id="registrationForm" data-event-fee="{{ $event->event_price }}" action="{{ route('event.join', ['id' => $event->event_id]) }}" method="POST">
+                @csrf
+                <input type="hidden" name="event_name" value="{{ $event->event_name }}" />
+                <input type="hidden" name="event_price" value="{{ $event->event_price }}" />
+                <input type="hidden" name="event_id" value="{{ $event->event_id }}" />
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+                    <!-- Name -->
+                    <div class="space-y-2">
+                        <div class="flex items-center gap-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                            </svg>
+                            <label class="block text-sm font-medium text-gray-700" for="name">Name</label>
+                        </div>
+                        <input class="w-full p-2 border border-gray-300 rounded-lg bg-gray-50" 
+                               type="text" 
+                               id="name" 
+                               name="name" 
+                               value="{{ auth()->user()->member->name }}" 
+                               readonly>
+                    </div>
+
+                    <!-- Phone Number -->
+                    <div class="space-y-2">
+                        <div class="flex items-center gap-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                            </svg>
+                            <label class="block text-sm font-medium text-gray-700" for="phone_number">Phone Number</label>
+                        </div>
+                        <input class="w-full p-2 border border-gray-300 rounded-lg bg-gray-50" 
+                               type="tel" 
+                               id="phone_number" 
+                               name="phone_number" 
+                               value="{{ auth()->user()->member->phone_number }}" 
+                               readonly>
+                    </div>
+
+                    <!-- Identity Card -->
+                    <div class="space-y-2">
+                        <div class="flex items-center gap-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2" />
+                            </svg>
+                            <label class="block text-sm font-medium text-gray-700" for="ic_number">Identity Card</label>
+                        </div>
+                        <input class="w-full p-2 border border-gray-300 rounded-lg bg-gray-50" 
+                               type="text" 
+                               id="ic_number" 
+                               name="ic_number" 
+                               value="{{ auth()->user()->member->ic_number }}" 
+                               readonly>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="space-y-2">
+                        <div class="flex items-center gap-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                            </svg>
+                            <label class="block text-sm font-medium text-gray-700" for="email">Email</label>
+                        </div>
+                        <input class="w-full p-2 border border-gray-300 rounded-lg bg-gray-50" 
+                               type="email" 
+                               id="email" 
+                               name="email" 
+                               value="{{ auth()->user()->member->login->email }}" 
+                               readonly>
+                    </div>
+                </div>
+
+                <!-- Register Button -->
+                <div class="flex justify-center mt-8">
+                    <button type="submit" id="registerButton" 
+                            class="inline-flex items-center px-6 py-3 text-lg font-medium rounded-lg text-white
+                                   @if($isRegistered || $event->total_participation <= 0) 
+                                   bg-gray-500 cursor-not-allowed
+                                   @else 
+                                   bg-yellow-500 hover:bg-yellow-600 transform hover:-translate-y-0.5 transition-all duration-200
+                                   @endif">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+                        </svg>
+                        @if($isRegistered)
+                            Already Registered
+                        @elseif($event->total_participation <= 0)
+                            Event Fully Booked
+                        @else
+                            Register Now
+                        @endif
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
-</div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{{ asset('member/eventRegistration.js') }}"></script>
+    <script>
+        function scrollToRegistration() {
+            const registrationButton = document.getElementById('registerButton');
+            if (registrationButton) {
+                registrationButton.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+    </script>
 </x-member-layout>

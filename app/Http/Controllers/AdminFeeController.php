@@ -89,7 +89,7 @@ class AdminFeeController extends Controller
             'payment_allocation_name' => 'required|string|max:50',
             'amount' => 'required|numeric|min:0',
             'allocation_date' => 'required|date',
-            'payment_type' => 'required|string|in:annual_fee,registration_fee',
+            'payment_type' => 'required|string|in:annual_fee,registration_fee,one_time_fee',
         ]);
 
         // Check if the payment entry already exists

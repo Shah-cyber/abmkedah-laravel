@@ -7,6 +7,7 @@ use App\Models\Member;
 use App\Models\AbmEvent;
 use App\Models\AllocatedMerit;
 use App\Models\Application;
+use App\Models\PaymentReceipt;
 use Carbon\Carbon;
 
 class AdminDashboardController extends Controller
@@ -31,21 +32,39 @@ class AdminDashboardController extends Controller
         $endedEvents = AbmEvent::where('event_status', 'ended')->count();
 
         // Merit Statistics
-        $totalMeritsAwarded = AllocatedMerit::sum('merit_point');
-        $topMembers = Member::select('member.*')
-            ->leftJoin('allocated_merit', 'member.member_id', '=', 'allocated_merit.member_id')
-            ->selectRaw('SUM(allocated_merit.merit_point) as total_merit')
-            ->groupBy(
-                'member.member_id',
-                'member.name',
-                'member.member_status',
-                'member.phone_number',
-                'member.ic_number',
-                'member.application_id'
-            )
-            ->orderByRaw('SUM(allocated_merit.merit_point) DESC')
-            ->take(5)
-            ->get();
+        $totalRevenue = PaymentReceipt::where('payment_status', 'completed')->sum('payment_fee');
+
+        // Get payment statistics for chart
+        $paymentData = PaymentReceipt::selectRaw('
+            SUM(CASE WHEN payment_status = "completed" THEN payment_fee ELSE 0 END) as completed,
+            SUM(CASE WHEN payment_status = "pending" THEN payment_fee ELSE 0 END) as pending
+        ')->first();
+
+        // Add these to your index method
+        $selectedYear = request()->get('year') ?? date('Y');
+        $months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+
+        // Modify the monthly revenue query
+        $monthlyRevenue = PaymentReceipt::selectRaw('
+            YEAR(payment_date) as year,
+            MONTH(payment_date) as month_num,
+            DATE_FORMAT(payment_date, "%M") as month_name,
+            SUM(payment_fee) as total
+        ')
+        ->where('payment_status', 'completed')
+        ->when($selectedYear, function($query) use ($selectedYear) {
+            $query->whereYear('payment_date', $selectedYear);
+        })
+        ->groupBy('year', 'month_num', 'month_name')
+        ->orderBy('year')
+        ->orderBy('month_num')
+        ->get();
+
+        // Get available years for filter
+        $availableYears = PaymentReceipt::selectRaw('YEAR(payment_date) as year')
+            ->groupBy('year')
+            ->orderBy('year', 'DESC')
+            ->pluck('year');
 
         // Monthly Events Data
         $monthlyData = AbmEvent::selectRaw('DATE_FORMAT(event_date, "%Y-%m") as month, COUNT(*) as count')
@@ -53,7 +72,7 @@ class AdminDashboardController extends Controller
             ->groupBy('month')
             ->orderBy('month')
             ->get();
-
+   
         $monthlyLabels = $monthlyData->pluck('month')->map(function($month) {
             return Carbon::createFromFormat('Y-m', $month)->format('M Y');
         });
@@ -69,29 +88,33 @@ class AdminDashboardController extends Controller
             'totalEvents',
             'upcomingEvents',
             'ongoingEvents',
-            'draftEvents',    // Added this
-            'endedEvents',    // Added this
-            'totalMeritsAwarded',
-            'topMembers',
+            'draftEvents',
+            'endedEvents',
+            'totalRevenue',
+            'paymentData',
+            'monthlyRevenue',
             'pendingApplications',
             'monthlyLabels',
-            'monthlyEventCounts'
+            'monthlyEventCounts',
+            'availableYears',
+            'selectedYear',
+            'months'
         ));
 
         // System Health Monitoring
-        $systemHealth = [
-            'database_size' => $this->getDatabaseSize(),
-            'total_members' => $this->getTotalRecords('member'),
-            'total_events' => $this->getTotalRecords('abmevent'),
-            'storage_usage' => $this->getStorageUsage(),
-            'last_backup' => $this->getLastBackupDate(),
-            'system_status' => $this->getSystemStatus(),
-        ];
+        // $systemHealth = [
+        //     'database_size' => $this->getDatabaseSize(),
+        //     'total_members' => $this->getTotalRecords('member'),
+        //     'total_events' => $this->getTotalRecords('abmevent'),
+        //     'storage_usage' => $this->getStorageUsage(),
+        //     'last_backup' => $this->getLastBackupDate(),
+        //     'system_status' => $this->getSystemStatus(),
+        // ];
 
-        return view('admin.dashboard', compact(
-            // ... your existing variables ...
-            'systemHealth'
-        ));
+        // return view('admin.dashboard', compact(
+        //     // ... your existing variables ...
+        //     'systemHealth'
+        // ));
     }
 
     

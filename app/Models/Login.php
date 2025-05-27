@@ -9,7 +9,7 @@ use Illuminate\Notifications\Notifiable;
 
 class Login extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, HasFactory;
 
     protected $table = 'login';  // Specify the table name
     protected $primaryKey = 'login_id';  // Specify the primary key
@@ -22,6 +22,16 @@ class Login extends Authenticatable
         'password', 
         'email',
         'application_id',
+    ];
+
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
+    protected $casts = [
+        'acc_status' => 'string', // Explicit cast for status
+        'email_verified_at' => 'datetime',
     ];
 
     // Define relationships if necessary
@@ -46,5 +56,10 @@ class Login extends Authenticatable
         return $this->hasOne(Member::class, 'login_id', 'login_id');
     }
 
+    // Add scope for active accounts
+    public function scopeActive($query)
+    {
+        return $query->where('acc_status', 'active');
+    }
 
 }

@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\AllocatedMerit;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
 class AdminEventController extends Controller
 {
@@ -78,82 +79,84 @@ class AdminEventController extends Controller
 
         public function update(Request $request, $id)
         {
-            // Validate the request
-            $request->validate([
-                'event-name' => 'required|string|max:255',
-                'description' => 'required|string',
-                'event-banner' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-                'total-participant' => 'required|integer',
-                'category' => 'required|string',
-                'event-status' => 'required|string',
-                'event-session' => 'required|string',
-                'location' => 'required|string',
-                'start-time' => 'required',
-                'end-time' => 'required',
-                'event-date' => 'required|date',
-                'amount' => 'required|numeric',
-            ]);
+            try {
+                // Validate the request
+                $validated = $request->validate([
+                    'event-name' => 'required|string|max:255',
+                    'description' => 'required|string',
+                    'event-banner' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+                    'total-participant' => 'required|integer',
+                    'category' => 'required|in:private,public',
+                    'event-status' => 'required|in:running,draft,ended',
+                    'event-session' => 'required|string',
+                    'location' => 'required|string',
+                    'start-time' => 'required',
+                    'end-time' => 'required',
+                    'event-date' => 'required|date_format:Y-m-d',
+                    'amount' => 'required|numeric|min:0',
+                ]);
 
-            // Find the event
-            $event = AbmEvent::findOrFail($id);
+                // Find the event
+                $event = AbmEvent::findOrFail($id);
 
-            // Track if any changes are made
-            $changesMade = false;
+                // Handle file upload for event-banner
+                if ($request->hasFile('event-banner')) {
+                    // Delete the old banner if it exists
+                    if ($event->banner) {
+                        Storage::disk('public')->delete($event->banner);
+                    }
 
-            // Handle file upload for event-banner
-            if ($request->hasFile('event-banner')) {
-                // Delete the old banner if it exists
-                if ($event->banner) {
-                    Storage::disk('public')->delete($event->banner);
+                    // Store the new banner
+                    $bannerPath = $request->file('event-banner')->store('event_banner', 'public');
+                    $event->banner = $bannerPath;
                 }
 
-                // Store the new banner
-                $bannerPath = $request->file('event-banner')->store('event_banner', 'public');
-                $event->banner = $bannerPath;
-                $changesMade = true; // Mark that a change was made
-            }
+                // Update the event fields
+                $event->event_name = $request->input('event-name');
+                $event->event_description = $request->input('description');
+                $event->total_participation = $request->input('total-participant');
+                $event->event_category = $request->input('category');
+                $event->event_status = $request->input('event-status');
+                $event->event_date = date('Y-m-d', strtotime($request->input('event-date')));
+                $event->event_session = $request->input('event-session');
+                $event->event_start_time = $request->input('start-time');
+                $event->event_end_time = $request->input('end-time');
+                $event->event_location = $request->input('location');
+                $event->event_price = $request->input('amount');
 
-            // Update the event fields if they have changed
-            $fields = [
-                'event_name' => 'event-name',
-                'event_description' => 'description',
-                'total_participation' => 'total-participant',
-                'event_category' => 'category',
-                'event_status' => 'event-status',
-                'event_date' => 'event-date',
-                'event_session' => 'event-session',
-                'event_start_time' => 'start-time',
-                'event_end_time' => 'end-time',
-                'event_location' => 'location',
-                'event_price' => 'amount',
-            ];
-
-            foreach ($fields as $dbField => $formField) {
-                $newValue = $request->input($formField);
-                if ($event->$dbField != $newValue) { // Check if the value has changed
-                    $event->$dbField = $newValue;
-                    $changesMade = true; // Mark that a change was made
-                }
-            }
-
-            // Save the event only if changes were made
-            if ($changesMade) {
                 $event->save();
-                return redirect()->route('event.record.index')->with('success', 'Event updated successfully!');
-            }
 
-            // If no changes were made, redirect with a neutral message
-            return redirect()->route('event.record.index')->with('info', 'No changes were made to the event.');
+                return redirect()->route('event.record.index')->with('success', 'Event updated successfully!');
+            } catch (\Exception $e) {
+                return back()->withInput()->withErrors(['error' => 'Failed to update event. ' . $e->getMessage()]);
+            }
         }
 
 
         //delete event
         public function destroy($id)
         {
-            $event = AbmEvent::findOrFail($id);
-            $event->delete();
+            try {
+                $event = AbmEvent::findOrFail($id);
+                
+                DB::transaction(function() use ($event) {
+                    // Delete related records in proper order
+                    $event->joinevents()->delete();      // Delete participation records
+                    AllocatedMerit::where('event_id', $event->event_id)->delete();
+                    $event->merits()->delete();          // Delete merit definitions
+                    $event->paymentReceipts()->delete(); // Delete payment receipts
+                    
+                    // Finally delete the event
+                    $event->delete();
+                });
 
-            return redirect()->route('event.record.index')->with('success', 'Event deleted successfully!');
+                return response()->json(['success' => true, 'message' => 'Event deleted successfully!']);
+            } catch (\Exception $e) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Error deleting event: ' . $e->getMessage()
+                ], 500);
+            }
         }
 
         public function report($eventId)
@@ -172,6 +175,7 @@ class AdminEventController extends Controller
             return view('admin.event-report', compact('event', 'participants', 'totalParticipants'));
         }
 
+        //allocate merit point to member that join the event.
         public function allocateMerit(Request $request)
         {
             try {
@@ -255,7 +259,15 @@ class AdminEventController extends Controller
             return view('admin.event-volunteer', compact('participants', 'totalParticipants'));
         }
         
-        
+        public function search(Request $request)
+        {
+            $search = $request->query('search'); // Get the search term from the query string
+
+            $events = AbmEvent::where('event_name', 'like', '%' . $search . '%')
+                            ->paginate(4); // Paginate the results
+
+            return view('admin.event-list-table', compact('events')); // Return a partial view with the search results
+        }
         
         
 

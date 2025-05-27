@@ -22,7 +22,7 @@ class Merit extends Model
     // Define relationships if necessary
     public function event()
     {
-        return $this->belongsTo(AbmEvent::class, 'event_id');
+        return $this->belongsTo(AbmEvent::class, 'event_id', 'event_id');
     }
 
     public function admin()

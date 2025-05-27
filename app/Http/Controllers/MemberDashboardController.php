@@ -49,55 +49,76 @@ class MemberDashboardController extends Controller
         $draftEvents = AbmEvent::where('event_status', 'draft')->count();
         $endedEvents = AbmEvent::where('event_status', 'ended')->count();
 
-        // ========== Event Participation Data ========== //
-
         // Fetch payment history
         $paymentHistory = PaymentReceipt::where('member_id', $memberDetails->member_id)->get();
-        $totalPayments = $paymentHistory->sum('amount'); // Assuming 'amount' is a field in the payment_receipt table
+        $totalPayments = $paymentHistory->sum('payment_fee');
 
-       // Fetch total participation data grouped by week of the month
-    $totalParticipationData = Joinevent::selectRaw('WEEK(created_at, 1) - WEEK(DATE_SUB(created_at, INTERVAL DAYOFMONTH(created_at)-1 DAY), 1) + 1 as week, COUNT(DISTINCT event_id) as count')
-    ->where('member_id', $memberDetails->member_id)
-    ->groupBy('week')
-    ->orderBy('week')
-    ->get();
+        // Get the current month's start and end dates
+        $startOfMonth = now()->startOfMonth();
+        $endOfMonth = now()->endOfMonth();
 
-     // Fetch merit points data grouped by week of the month
-     $meritPointsData = AllocatedMerit::selectRaw('WEEK(created_at, 1) - WEEK(DATE_SUB(created_at, INTERVAL DAYOFMONTH(created_at)-1 DAY), 1) + 1 as week, SUM(merit_point) as total_merit')
-     ->where('member_id', $memberDetails->member_id)
-     ->whereMonth('created_at', now()->month) // Filter for the current month
-     ->groupBy('week')
-     ->orderBy('week')
-     ->get();
-      
+        // Initialize arrays for all weeks of the current month
+        $weeks = [];
+        $currentDate = $startOfMonth->copy();
+        while ($currentDate <= $endOfMonth) {
+            $weekNumber = $currentDate->weekOfMonth;
+            $weeks[$weekNumber] = 0;
+            $currentDate->addDay();
+        }
 
-// Pass the updated data to the view
-    return view('member.dashboard', compact(
-    'memberDetails',
-    'upcomingEvents',
-    'pastEvents',
-    'joinedEvents',
-    'totalMembers',
-    'activeMembers',
-    'totalEvents',
-    'ongoingEvents',
-    'draftEvents',
-    'endedEvents',
-    'totalParticipationData',
-        'meritPointsData',
-    //'totalMeritsAwarded',
-   // 'topMembers',
-    'paymentHistory',
-    'totalPayments',
-    // 'predefinedMonthlyLabels', // ✅ Use predefined labels to avoid format errors
-    // 'monthlyMeritPoints',
-    // 'predefinedDailyLabels',
-    // 'dailyDataset',
-    // 'predefinedWeeklyLabels',
-    // 'weeklyDataset',
-    // 'predefinedMonthlyLabels',
-    // 'monthlyDataset'
-    ));
+        // Fetch total participation data by week
+        $totalParticipationData = Joinevent::selectRaw('WEEK(created_at) as week, COUNT(*) as count')
+            ->where('member_id', $memberDetails->member_id)
+            ->whereBetween('created_at', [$startOfMonth, $endOfMonth])
+            ->groupBy('week')
+            ->get()
+            ->mapWithKeys(function ($item) use ($startOfMonth) {
+                $weekNumber = Carbon::parse($startOfMonth)->setISODate(now()->year, $item->week)->weekOfMonth;
+                return [$weekNumber => $item->count];
+            })
+            ->toArray();
 
+        // Merge with initialized weeks
+        $totalParticipationData = array_replace($weeks, $totalParticipationData);
+        ksort($totalParticipationData);
+
+        // Fetch merit points data by week
+        $meritPointsData = AllocatedMerit::selectRaw('WEEK(created_at) as week, SUM(merit_point) as total_merit')
+            ->where('member_id', $memberDetails->member_id)
+            ->whereBetween('created_at', [$startOfMonth, $endOfMonth])
+            ->groupBy('week')
+            ->get()
+            ->mapWithKeys(function ($item) use ($startOfMonth) {
+                $weekNumber = Carbon::parse($startOfMonth)->setISODate(now()->year, $item->week)->weekOfMonth;
+                return [$weekNumber => $item->total_merit];
+            })
+            ->toArray();
+
+        // Merge with initialized weeks
+        $meritPointsData = array_replace($weeks, $meritPointsData);
+        ksort($meritPointsData);
+
+        // Get week labels
+        $weekLabels = array_map(function($weekNum) {
+            return 'Week ' . $weekNum;
+        }, array_keys($weeks));
+
+        return view('member.dashboard', compact(
+            'memberDetails',
+            'upcomingEvents',
+            'pastEvents',
+            'joinedEvents',
+            'totalMembers',
+            'activeMembers',
+            'totalEvents',
+            'ongoingEvents',
+            'draftEvents',
+            'endedEvents',
+            'totalParticipationData',
+            'meritPointsData',
+            'weekLabels',
+            'paymentHistory',
+            'totalPayments'
+        ));
     }
 }

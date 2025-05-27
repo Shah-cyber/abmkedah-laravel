@@ -10,18 +10,23 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
+
 
 
 class LoginController extends Controller
 {
-   
+    // The AuthenticatesUsers trait is not defined, so we will remove it.
 
     public function showRegistrationForm()
     {
         return view('non-member.registration'); // Show the registration view
     }
 
+    
    
     
     public function register(Request $request)
@@ -48,7 +53,7 @@ class LoginController extends Controller
                 'username' => $request->username,
                 'email' => $request->email,
                 'password' => bcrypt($request->password),
-                'acc_status' => 'null',
+                'acc_status' => 'pending',
             ]);
 
             // Create the application record
@@ -105,8 +110,9 @@ public function login(Request $request)
         return response()->json(['message' => 'Your application is not approved yet.', 'status' => 'error'], 403);
     }
 
-    // Login the login
-    Auth::login($login);
+    // Login the login with remember me functionality
+    $remember = $request->has('remember') && $request->remember == 'on';
+    Auth::login($login, $remember);
 
     // Determine login type and redirect
     if ($login->admin_id) {
@@ -135,7 +141,114 @@ public function logout(Request $request)
 }
 
 
+public function showLoginForm()
+{
+    return redirect()->route('non-member.home');
+}
 
+public function showForgotPasswordForm()
+{
+    return view('auth.forgot-password');
+}
+
+public function sendResetLink(Request $request)
+{
+    $request->validate([
+        'email' => 'required|email|exists:login,email',
+    ]);
+
+    $token = Str::random(64);
+
+    DB::table('password_resets')->insert([
+        'email' => $request->email,
+        'token' => $token,
+        'created_at' => now()
+    ]);
+
+    // Record the reset request in history
+    DB::table('password_reset_history')->insert([
+        'email' => $request->email,
+        'reset_token' => $token,
+        'requested_at' => now(),
+        'completed_at' => null,
+        'ip_address' => $request->ip(),
+        'user_agent' => $request->userAgent(),
+        'success' => false,
+        'created_at' => now(),
+        'updated_at' => now()
+    ]);
+
+    try {
+        // Include the email in the reset link
+        $resetLink = route('password.reset', [
+            'token' => $token,
+            'email' => $request->email
+        ]);
+
+        Mail::send('emails.forgot-password', ['token' => $token, 'resetLink' => $resetLink], function($message) use($request) {
+            $message->to($request->email);
+            $message->subject('Reset Password');
+        });
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Password reset link has been sent to your email.'
+        ]);
+    } catch (\Exception $e) {
+        Log::error('Password Reset Email Error: ' . $e->getMessage());
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Could not send reset password link. Please try again later.'
+        ], 500);
+    }
+}
+
+public function showResetPasswordForm($token)
+{
+    return view('auth.reset-password', ['token' => $token]);
+}
+
+public function resetPassword(Request $request)
+{
+    $request->validate([
+        'email' => 'required|email|exists:login,email',
+        'password' => 'required|min:6|confirmed',
+        'token' => 'required'
+    ]);
+
+    $updatePassword = DB::table('password_resets')
+        ->where([
+            'email' => $request->email,
+            'token' => $request->token
+        ])->first();
+
+    if (!$updatePassword) {
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Invalid token!'
+        ], 400);
+    }
+
+    $user = Login::where('email', $request->email)->first();
+    $user->password = Hash::make($request->password);
+    $user->save();
+
+    // Update password reset history
+    DB::table('password_reset_history')
+        ->where('reset_token', $request->token)
+        ->update([
+            'completed_at' => now(),
+            'success' => true,
+            'updated_at' => now()
+        ]);
+
+    DB::table('password_resets')->where(['email'=> $request->email])->delete();
+
+    return response()->json([
+        'status' => 'success',
+        'message' => 'Your password has been changed!'
+    ]);
+}
     
     
 }

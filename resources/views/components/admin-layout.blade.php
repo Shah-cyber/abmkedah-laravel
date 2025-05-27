@@ -7,7 +7,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
 
-    <!-- Page Title -->
+    <!-- Page Title -->l
     <title>{{ $title ?? 'Admin Dashboard' }}</title>
 
     <!-- Tailwind CSS -->
@@ -19,7 +19,8 @@
     <!-- Add any custom CSS or other assets -->
     {{-- <link rel="stylesheet" href="{{ asset('css/app.css') }}"> --}}
     <link rel="icon" type="image/svg+xml" href="{{ asset('images/abm-logo.svg') }}">
-    
+     <!-- Include jQuery -->
+     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body class="bg-gray-100">
@@ -35,12 +36,13 @@
         <main class="p-6 bg-white min-h-screen">
             {{ $slot }}
         </main>
+
     </div>
 
     
 
   
-
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="{{ asset('admin/adminFeeCollection.js') }}"></script>
     
 </body>

@@ -1,4 +1,7 @@
 <x-admin-layout>
+    <!-- Add CSRF Token Meta -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    
     <!-- Header Section -->
     <div class="mb-4 flex items-center">
         <!-- Icon Back Button -->

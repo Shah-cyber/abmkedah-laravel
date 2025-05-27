@@ -13,10 +13,19 @@ class Application extends Model
     protected $primaryKey = 'application_id';  // Specify the primary key
 
     protected $fillable = [
+        'login_id',
+        'name',
+        'ic_number',
+        'age',
+        'race',
+        'religion',
+        'gender',
+        'phone_number',
+        'birthplace',
+        'birthdate',
+        'address',
         'prove_letter',
-        'applicant_status',
-        'date_application',
-        'login_id', // Include login_id for the relationship
+        'application_status'
     ];
 
    // Define the relationship with the Login model

@@ -70,7 +70,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Asia/Kuala_Lumpur',
 
     /*
     |--------------------------------------------------------------------------
@@ -168,6 +168,8 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        Laravolt\Avatar\ServiceProvider::class,
+        App\Providers\ViewServiceProvider::class,
     ])->toArray(),
 
     /*
@@ -183,6 +185,7 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
+        'Avatar' => Laravolt\Avatar\Facade::class,
     ])->toArray(),
 
 ];

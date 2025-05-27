@@ -1,122 +1,176 @@
 <x-admin-layout>
-    <!-- Header Section -->
-    <div class="mb-4 flex items-center">
-        <!-- Icon Back Button -->
-        <a href="/admin/achievement-merit" class="text-gray-600 hover:text-gray-800">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
-            </svg>
-        </a>
-        <!-- Title -->
-        <h1 class="ml-4 text-2xl font-bold text-gray-800">Update Merit</h1>
-    </div>
-    <!-- Horizontal Line -->
-    <hr class="border-gray-300 my-2">
-
-   <!-- Form -->
-<div class="mt-4 px-6 py-4 bg-white shadow-lg rounded-lg">
-    <form id="update-merit-form" action="{{ route('merit.update', $merit->merit_id) }}" method="POST" class="space-y-4">
-        @csrf
-        @method('POST') <!-- Use POST for updating -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-
-            <!-- Select Event -->
-            <div>
-                <label for="event_id" class="block text-sm font-medium text-gray-700">Select Event</label>
-                <select
-                    id="event_id"
-                    name="event_id"
-                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" required disabled>
-                    <option value="" disabled>Select Event</option>
-                    @foreach ($events as $event)
-                        <option value="{{ $event->event_id }}" {{ $event->event_id == $merit->event_id ? 'selected' : '' }}>{{ $event->event_name }}</option>
-                    @endforeach
-                </select>
-                <!-- Hidden input to submit the event_id -->
-                <input type="hidden" name="event_id" value="{{ $merit->event_id }}">
-            </div>
-
-            <!-- Merit Point -->
-            <div>
-                <label for="merit_point" class="block text-sm font-medium text-gray-700">Merit Point</label>
-                <input
-                    type="number"
-                    id="merit_point" 
-                    name="merit_point"
-                    step="0.01"
-                    value="{{ old('merit_point', $merit->merit_point) }}"
-                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                    {{ auth()->user()->admin_id == $merit->admin_id ? '' : 'readonly' }} required />
-            </div>
-
-            <!-- Person In Charge -->
-            <div>
-                <label for="admin_id" class="block text-sm font-medium text-gray-700">Person In Charge</label>
-                <select
-                    id="admin_id"
-                    name="admin_id"
-                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" required {{ auth()->user()->admin_id == $merit->admin_id ? '' : 'disabled' }}>
-                    <option value="" selected>Choose Admin</option>
-                    @foreach ($admins as $admin)
-                        <option value="{{ $admin->admin_id }}" {{ $admin->admin_id == $merit->admin_id ? 'selected' : '' }}>
-                            {{ $admin->login->username ?? 'N/A' }} (ID: {{ $admin->admin_id }})
-                        </option>
-                    @endforeach
-                </select>
-            </div>
-
-            <!-- Phone Number -->
-            <div>
-                <label for="phone_number" class="block text-sm font-medium text-gray-700">Phone Number</label>
-                <input
-                    type="text"
-                    id="phone_number"
-                    name="phone_number"
-                    value="{{ old('phone_number', $merit->admin->phone_number ?? '') }}"  
-                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" readonly />
+    <!-- Header Section with Breadcrumb -->
+    <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center">
+                <a href="/admin/achievement-merit" 
+                   class="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors duration-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                    </svg>
+                </a>
+                <div class="ml-4">
+                    <h1 class="text-2xl font-bold text-gray-800">Update Merit Points</h1>
+                    <p class="text-sm text-gray-600 mt-1">Modify existing merit point allocation</p>
+                </div>
             </div>
         </div>
+    </div>
 
-        <!-- Submit Button -->
-        @if (auth()->user()->admin_id == $merit->admin_id)
-            <div class="text-right">
-                <button
-                    type="submit"
-                    class="px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                    Update Merit
-                </button>
-            </div>
-        @endif
-    </form>
+    <!-- Form Card -->
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+        <div class="p-6">
+            <form id="update-merit-form" action="{{ route('merit.update', $merit->merit_id) }}" method="POST" class="space-y-6">
+                @csrf
+                @method('POST')
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Event Information -->
+                    <div>
+                        <label for="event_id" class="block text-sm font-medium text-gray-700 mb-1">Event Name</label>
+                        <select id="event_id" name="event_id" 
+                                class="w-full rounded-lg border-gray-300 bg-gray-50 text-gray-500 focus:ring-yellow-500 focus:border-yellow-500 transition-colors duration-200" 
+                                required disabled>
+                            <option value="" disabled>Select Event</option>
+                            @foreach ($events as $event)
+                                <option value="{{ $event->event_id }}" {{ $event->event_id == $merit->event_id ? 'selected' : '' }}>
+                                    {{ $event->event_name }}
+                                </option>
+                            @endforeach
+                        </select>
+                        <input type="hidden" name="event_id" value="{{ $merit->event_id }}">
+                    </div>
 
-    <!-- Hidden Success and Error Messages -->
+                    <!-- Merit Points -->
+                    <div>
+                        <label for="merit_point" class="block text-sm font-medium text-gray-700 mb-1">Merit Points</label>
+                        <div class="relative">
+                            <input type="number" id="merit_point" name="merit_point" step="0.01"
+                                   value="{{ old('merit_point', $merit->merit_point) }}"
+                                   class="w-full rounded-lg border-gray-300 focus:ring-yellow-500 focus:border-yellow-500 transition-colors duration-200 pl-7 {{ auth()->user()->admin_id != $merit->admin_id ? 'bg-gray-50' : '' }}"
+                                   {{ auth()->user()->admin_id == $merit->admin_id ? '' : 'readonly' }} 
+                                   required>
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Person In Charge -->
+                    <div>
+                        <label for="admin_id" class="block text-sm font-medium text-gray-700 mb-1">Person In Charge</label>
+                        <select id="admin_id" name="admin_id" 
+                                class="w-full rounded-lg border-gray-300 focus:ring-yellow-500 focus:border-yellow-500 transition-colors duration-200 {{ auth()->user()->admin_id != $merit->admin_id ? 'bg-gray-50' : '' }}"
+                                required {{ auth()->user()->admin_id == $merit->admin_id ? '' : 'disabled' }}>
+                            <option value="" disabled>Select admin</option>
+                            @foreach ($admins as $admin)
+                                <option value="{{ $admin->admin_id }}" {{ $admin->admin_id == $merit->admin_id ? 'selected' : '' }}>
+                                    {{ $admin->login->username ?? 'N/A' }} (ID: {{ $admin->admin_id }})
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <!-- Phone Number -->
+                    <div>
+                        <label for="phone_number" class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                        <div class="relative">
+                            <input type="text" id="phone_number" name="phone_number"
+                                   value="{{ old('phone_number', $merit->admin->phone_number ?? '') }}"
+                                   class="w-full rounded-lg bg-gray-50 border-gray-300 text-gray-500 pl-7" 
+                                   readonly>
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                @if (auth()->user()->admin_id == $merit->admin_id)
+                    <div class="flex justify-end space-x-3 mt-6 pt-6 border-t border-gray-100">
+                        <a href="/admin/achievement-merit" 
+                           class="px-4 py-2 text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors duration-200">
+                            Cancel
+                        </a>
+                        <button type="submit"
+                                class="px-4 py-2 bg-yellow-500 hover:bg-yellow-600 text-white rounded-lg transition-colors duration-200 flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                            </svg>
+                            Update Merit Points
+                        </button>
+                    </div>
+                @endif
+            </form>
+        </div>
+    </div>
+
+    <!-- Hidden Messages for SweetAlert -->
     @if(session('success'))
-        <div id="success-message" style="display: none;">{{ session('success') }}</div>
+        <div id="success-message" class="hidden">{{ session('success') }}</div>
     @endif
     
     @if($errors->any())
-        <div id="error-message" style="display: none;">{{ implode(', ', $errors->all()) }}</div>
+        <div id="error-message" class="hidden">{{ implode(', ', $errors->all()) }}</div>
     @endif
-</div>
-    <!-- SweetAlert2 -->
+
+    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    <!-- Custom JS for Merit -->
-    <script src="{{ asset('admin/adminMerit.js') }}"></script>
-
     <script>
-        // Update phone number based on selected admin
-        document.getElementById('admin_id').addEventListener('change', function() {
-            const selectedAdminId = this.value;
-            const selectedAdmin = @json($admins); // Pass the admin data to JavaScript
+        document.addEventListener('DOMContentLoaded', function () {
+            // Admin selection handler
+            document.getElementById('admin_id').addEventListener('change', function() {
+                const selectedAdminId = this.value;
+                const admins = @json($admins);
+                const phoneNumberField = document.getElementById('phone_number');
+                
+                const selectedAdmin = admins.find(admin => admin.admin_id == selectedAdminId);
+                phoneNumberField.value = selectedAdmin ? selectedAdmin.phone_number : '';
+            });
 
-            const phoneNumberField = document.getElementById('phone_number');
-            const selected = selectedAdmin.find(admin => admin.admin_id == selectedAdminId);
+            // Form submission handler
+            document.getElementById('update-merit-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                Swal.fire({
+                    title: 'Confirm Update',
+                    text: 'Are you sure you want to update these merit points?',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#EAB308',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, update points'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        this.submit();
+                    }
+                });
+            });
 
-            if (selected) {
-                phoneNumberField.value = selected.phone_number; // Update phone number field
-            } else {
-                phoneNumberField.value = ''; // Clear the field if no admin is selected
+            // Success message
+            const successMessage = document.getElementById('success-message');
+            if (successMessage) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success!',
+                    text: successMessage.textContent,
+                    confirmButtonColor: '#EAB308'
+                });
+            }
+
+            // Error message
+            const errorMessage = document.getElementById('error-message');
+            if (errorMessage) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: errorMessage.textContent,
+                    confirmButtonColor: '#EAB308'
+                });
             }
         });
     </script>

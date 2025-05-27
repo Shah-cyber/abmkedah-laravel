@@ -182,19 +182,23 @@ class AdminUserSettingController extends Controller
             DB::beginTransaction();
 
             try {
-                // Create the admin record to get the admin_id
-                $admin = new Admin();
-                $admin->role = $validated['select-role'];
-                $admin->phone_number = $validated['phone_number'];
-                $admin->save();
-
-                // Now create the login record with the admin_id
+                // Create the login record first to get login_id
                 $login = new Login();
                 $login->username = $validated['username'];
                 $login->email = $validated['email'];
                 $login->password = bcrypt($validated['password']);
                 $login->acc_status = $validated['select-status'];
-                $login->admin_id = $admin->admin_id; // Use the admin_id from the newly created admin record
+                $login->save();
+
+                // Create the admin record with login_id
+                $admin = new Admin();
+                $admin->role = $validated['select-role'];
+                $admin->phone_number = $validated['phone_number'];
+                $admin->login_id = $login->login_id;
+                $admin->save();
+
+                // Update login record with admin_id
+                $login->admin_id = $admin->admin_id;
                 $login->save();
 
                 // If everything is successful, commit the transaction
@@ -219,6 +223,21 @@ class AdminUserSettingController extends Controller
         }
     }
 
-    
+    public function getAdminData()
+    {
+        try {
+            $admins = Admin::with(['login' => function($query) {
+                    $query->select('login_id', 'admin_id', 'acc_status', 'email', 'username');
+                }])
+                ->join('login', 'admin.admin_id', '=', 'login.admin_id')
+                ->select('admin.*', 'login.email', 'login.username', 'login.acc_status')
+                ->paginate(10);
+
+            return view('admin.setting-admin', compact('admins'));
+
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Error retrieving admin data: ' . $e->getMessage());
+        }
+    }
 
 }

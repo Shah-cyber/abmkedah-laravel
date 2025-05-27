@@ -8,11 +8,14 @@
         "php": "^8.1",
         "guzzlehttp/guzzle": "^7.9",
         "laravel/framework": "^10.10",
+        "laravel/pulse": "^1.4",
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
-        "livewire/livewire": "^3.5",
+        "laravolt/avatar": "^6.2",
+        "livewire/livewire": "^3.6",
         "spatie/laravel-responsecache": "^7.6",
-        "symfony/mailer": "^6.4"
+        "symfony/mailer": "^6.4",
+        "yajra/laravel-datatables": "^10.1"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.14",

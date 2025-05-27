@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Handle add admin form submission
 document.getElementById('adminAddForm').addEventListener('submit', function(event) {
-    event.preventDefault(); // Prevent default form submission
+    event.preventDefault();
 
     const form = event.target;
     const formData = new FormData(form);
@@ -102,7 +102,6 @@ document.getElementById('adminAddForm').addEventListener('submit', function(even
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            // Success Alert
             Swal.fire({
                 icon: 'success',
                 title: 'Success!',
@@ -111,11 +110,12 @@ document.getElementById('adminAddForm').addEventListener('submit', function(even
                 confirmButtonText: 'OK'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    window.location.href = '/admin/setting/users'; // Redirect to users page
+                    // Redirect to the user list page
+                    window.location.reload();
+
                 }
             });
         } else {
-            // Error Alert
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
@@ -125,7 +125,6 @@ document.getElementById('adminAddForm').addEventListener('submit', function(even
         }
     })
     .catch(error => {
-        // Catch any network or unexpected errors
         Swal.fire({
             icon: 'error',
             title: 'Unexpected Error',

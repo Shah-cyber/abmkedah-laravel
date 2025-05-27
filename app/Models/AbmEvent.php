@@ -27,4 +27,25 @@ class AbmEvent extends Model
         'event_location',
         'event_price',
     ];
+
+    protected $casts = [
+        'event_date' => 'datetime',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
+
+    public function joinevents()
+    {
+        return $this->hasMany(Joinevent::class, 'event_id');
+    }
+
+    public function merits()
+    {
+        return $this->hasMany(Merit::class, 'event_id');
+    }
+
+    public function paymentReceipts()
+    {
+        return $this->hasMany(PaymentReceipt::class, 'event_id');
+    }
 }

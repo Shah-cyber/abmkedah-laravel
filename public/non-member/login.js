@@ -9,6 +9,12 @@ document.addEventListener('DOMContentLoaded', function () {
             const submitButton = this.querySelector('button[type="submit"]'); // Get the submit button
             submitButton.disabled = true; // Disable the submit button
 
+            // Ensure remember checkbox value is properly included
+            const rememberCheckbox = document.getElementById('remember');
+            if (rememberCheckbox) {
+                formData.set('remember', rememberCheckbox.checked ? 'on' : 'off');
+            }
+
             try {
                 const response = await fetch(this.action, {
                     method: 'POST',

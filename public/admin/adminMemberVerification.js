@@ -1,53 +1,49 @@
 // Approve function
 window.approveMember = function(applicationId) {
     Swal.fire({
-        title: 'Are you sure?',
-        text: "You are about to approve this user as a member.",
-        icon: 'warning',
+        title: 'Approve Member Application',
+        text: 'Are you sure you want to approve this member application?',
+        icon: 'question',
         showCancelButton: true, 
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, approve it!'
+        confirmButtonText: 'Yes, approve',
+        cancelButtonText: 'Cancel',
+        confirmButtonColor: '#059669',
+        cancelButtonColor: '#6B7280',
+        reverseButtons: true
     }).then((result) => {
         if (result.isConfirmed) {
             const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-            fetch(`/admin/member-verification/approve/${applicationId}`, {
+            
+            fetch(`/admin/member/verification/${applicationId}/approve`, {
                 method: 'POST',
                 headers: {
-                    'X-CSRF-TOKEN': csrfToken,
                     'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken,
+                    'Accept': 'application/json'
                 },
             })
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('Network response was not ok');
+                    return response.json().then(err => Promise.reject(err));
                 }
                 return response.json();
             })
             .then(data => {
-                if (data.message) {
+                console.log('Success:', data);
                     Swal.fire({
                         icon: 'success',
-                        title: 'Approved!',
+                    title: 'Success!',
                         text: data.message,
                     }).then(() => {
-                        // Redirect to the member verification view
-                        window.location.href = `/admin/member-verification/view/${applicationId}`;
+                    window.location.href = '/admin/member/verification/list';
                     });
-                } else {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error!',
-                        text: data.error || 'An error occurred.',
-                    });
-                }
             })
             .catch(error => {
                 console.error('Error:', error);
                 Swal.fire({
                     icon: 'error',
                     title: 'Error!',
-                    text: 'An unexpected error occurred.',
+                    text: error.message || 'An error occurred while approving the application.',
                 });
             });
         }
@@ -57,53 +53,49 @@ window.approveMember = function(applicationId) {
 // Reject function
 window.rejectMember = function(applicationId) {
     Swal.fire({
-        title: 'Are you sure?',
-        text: "You are about to reject this user application.",
+        title: 'Reject Member Application',
+        text: 'Are you sure you want to reject this member application?',
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#d33',
-        cancelButtonColor: '#3085d6',
-        confirmButtonText: 'Yes, reject it!'
+        confirmButtonText: 'Yes, reject',
+        cancelButtonText: 'Cancel',
+        confirmButtonColor: '#DC2626',
+        cancelButtonColor: '#6B7280',
+        reverseButtons: true
     }).then((result) => {
         if (result.isConfirmed) {
             const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-            fetch(`/admin/member-verification/reject/${applicationId}`, {
+
+            fetch(`/admin/member/verification/${applicationId}/reject`, {
                 method: 'POST',
                 headers: {
-                    'X-CSRF-TOKEN': csrfToken,
                     'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken,
+                    'Accept': 'application/json'
                 },
             })
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('Network response was not ok');
+                    return response.json().then(err => Promise.reject(err));
                 }
                 return response.json();
             })
             .then(data => {
-                if (data.message) {
+                console.log('Success:', data);
                     Swal.fire({
                         icon: 'success',
-                        title: 'Rejected!',
+                    title: 'Success!',
                         text: data.message,
                     }).then(() => {
-                        // Redirect to the member verification view
-                        window.location.href = `/admin/member-verification/view/${applicationId}`;
+                    window.location.href = '/admin/member/verification/list';
                     });
-                } else {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error!',
-                        text: data.error || 'An error occurred.',
-                    });
-                }
             })
             .catch(error => {
                 console.error('Error:', error);
                 Swal.fire({
                     icon: 'error',
                     title: 'Error!',
-                    text: 'An unexpected error occurred.',
+                    text: error.message || 'An error occurred while rejecting the application.',
                 });
             });
         }

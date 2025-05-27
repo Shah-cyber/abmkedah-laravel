@@ -20,6 +20,11 @@ return new class extends Migration
             if (!Schema::hasColumn('login', 'created_at')) {
                 $table->timestamps(); // This will add created_at and updated_at columns
             }
+            
+            // Add remember_token column for "remember me" functionality
+            if (!Schema::hasColumn('login', 'remember_token')) {
+                $table->rememberToken();
+            }
         });
     }
 
@@ -36,6 +41,11 @@ return new class extends Migration
             // Drop timestamps if they exist
             if (Schema::hasColumn('login', 'created_at')) {
                 $table->dropTimestamps(); // This will remove created_at and updated_at columns
+            }
+            
+            // Drop remember_token if it exists
+            if (Schema::hasColumn('login', 'remember_token')) {
+                $table->dropColumn('remember_token');
             }
         });
     }
